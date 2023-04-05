@@ -10,7 +10,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 const Header: React.FC = () => {
+	const router = useRouter();
+	function routePage() {
+		router.push("/");
+	}
 	return (
 		<header id={styles.header}>
 			<div className={styles.header_coin_bar}>
@@ -85,6 +91,7 @@ const Header: React.FC = () => {
 						<img
 							src='https://branchimg.sedaily.com/Decenter/logo2.png'
 							alt='Decenter'
+							onClick={routePage}
 						/>
 					</div>
 					<div className={styles.menu}>
