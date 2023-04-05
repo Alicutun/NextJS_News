@@ -11,12 +11,17 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Grid } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+
 const Header: React.FC = () => {
 	const router = useRouter();
 	function routePage() {
 		router.push("/");
 	}
+
 	return (
 		<header id={styles.header}>
 			<div className={styles.header_coin_bar}>

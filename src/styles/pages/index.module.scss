@@ -6,19 +6,11 @@
 		display: flex;
 		gap: 10px;
 		.main_left {
-			width: 714px;
-			height: 474px;
-			float: left;
-			position: relative;
+			min-width: 714px;
 		}
 		.main_right {
-			width: 474px;
-			height: 474px;
 			float: right;
-			position: relative;
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			gap: 10px;
+
 			.item {
 				border: 1px solid #d9d9d9;
 				width: 230px;
@@ -90,9 +82,6 @@
 				}
 			}
 			.list_item {
-				display: grid;
-				grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-				gap: 10px;
 				.item {
 					border: 1px solid #d9d9d9;
 					cursor: pointer;
@@ -182,9 +171,6 @@
 				}
 			}
 			.list_item {
-				display: grid;
-				grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-				gap: 10px;
 				.item {
 					border: 1px solid #d9d9d9;
 					cursor: pointer;
