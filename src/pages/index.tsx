@@ -160,6 +160,116 @@ const index = () => {
 					</div>
 				</div>
 			</section>
+			<section className={s.sec2}>
+				<div className={s.main}>
+					<h3 className={s.top}>
+						<div className={s.title}>IT산업</div>
+						<div className={s.text}>ITIndustry</div>
+					</h3>
+					<div className={s.list_item}>
+						<div className={s.item}>
+							<img
+								src='https://newsimg.sedaily.com/2023/04/03/29O5R0QAIH_1_m.jpg'
+								alt=''
+							/>
+							<div className={s.text}>
+								<div className={s.title}>
+									[코인가십] 아비트럼 거버넌스 논란…폭락 이유는?
+								</div>
+								<div className={s.content}>
+									스마트사운드가 미국 원격진료 전문 회사 아조바헬스(Azova
+									Health)에 스마트청진기 ‘스키퍼’를 공급한다고 3일 밝혔다.
+									스마트사운드는 아조바헬스와 최근 이같은 내용의 사업협약을
+									맺었다. 아조바헬스는 스마트사운드의 실시간 청진 기술을 자사
+									플랫폼에 도입한다. 양사는 향후 미국내 원격의료 플랫폼 회사들을
+									상대
+								</div>
+								<div className={s.time}>임진혁 기자 2023-04-03</div>
+							</div>
+						</div>
+						<div className={s.item}>
+							<img
+								src='https://newsimg.sedaily.com/2023/04/03/29O5R0QAIH_1_m.jpg'
+								alt=''
+							/>
+							<div className={s.text}>
+								<div className={s.title}>
+									[코인가십] 아비트럼 거버넌스 논란…폭락 이유는?
+								</div>
+								<div className={s.content}>
+									스마트사운드가 미국 원격진료 전문 회사 아조바헬스(Azova
+									Health)에 스마트청진기 ‘스키퍼’를 공급한다고 3일 밝혔다.
+									스마트사운드는 아조바헬스와 최근 이같은 내용의 사업협약을
+									맺었다. 아조바헬스는 스마트사운드의 실시간 청진 기술을 자사
+									플랫폼에 도입한다. 양사는 향후 미국내 원격의료 플랫폼 회사들을
+									상대
+								</div>
+								<div className={s.time}>임진혁 기자 2023-04-03</div>
+							</div>
+						</div>
+						<div className={s.item}>
+							<img
+								src='https://newsimg.sedaily.com/2023/04/03/29O5R0QAIH_1_m.jpg'
+								alt=''
+							/>
+							<div className={s.text}>
+								<div className={s.title}>
+									[코인가십] 아비트럼 거버넌스 논란…폭락 이유는?
+								</div>
+								<div className={s.content}>
+									스마트사운드가 미국 원격진료 전문 회사 아조바헬스(Azova
+									Health)에 스마트청진기 ‘스키퍼’를 공급한다고 3일 밝혔다.
+									스마트사운드는 아조바헬스와 최근 이같은 내용의 사업협약을
+									맺었다. 아조바헬스는 스마트사운드의 실시간 청진 기술을 자사
+									플랫폼에 도입한다. 양사는 향후 미국내 원격의료 플랫폼 회사들을
+									상대
+								</div>
+								<div className={s.time}>임진혁 기자 2023-04-03</div>
+							</div>
+						</div>
+						<div className={s.item}>
+							<img
+								src='https://newsimg.sedaily.com/2023/04/03/29O5R0QAIH_1_m.jpg'
+								alt=''
+							/>
+							<div className={s.text}>
+								<div className={s.title}>
+									[코인가십] 아비트럼 거버넌스 논란…폭락 이유는?
+								</div>
+								<div className={s.content}>
+									스마트사운드가 미국 원격진료 전문 회사 아조바헬스(Azova
+									Health)에 스마트청진기 ‘스키퍼’를 공급한다고 3일 밝혔다.
+									스마트사운드는 아조바헬스와 최근 이같은 내용의 사업협약을
+									맺었다. 아조바헬스는 스마트사운드의 실시간 청진 기술을 자사
+									플랫폼에 도입한다. 양사는 향후 미국내 원격의료 플랫폼 회사들을
+									상대
+								</div>
+								<div className={s.time}>임진혁 기자 2023-04-03</div>
+							</div>
+						</div>
+						<div className={s.item}>
+							<img
+								src='https://newsimg.sedaily.com/2023/04/03/29O5R0QAIH_1_m.jpg'
+								alt=''
+							/>
+							<div className={s.text}>
+								<div className={s.title}>
+									[코인가십] 아비트럼 거버넌스 논란…폭락 이유는?
+								</div>
+								<div className={s.content}>
+									스마트사운드가 미국 원격진료 전문 회사 아조바헬스(Azova
+									Health)에 스마트청진기 ‘스키퍼’를 공급한다고 3일 밝혔다.
+									스마트사운드는 아조바헬스와 최근 이같은 내용의 사업협약을
+									맺었다. 아조바헬스는 스마트사운드의 실시간 청진 기술을 자사
+									플랫폼에 도입한다. 양사는 향후 미국내 원격의료 플랫폼 회사들을
+									상대
+								</div>
+								<div className={s.time}>임진혁 기자 2023-04-03</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 		</section>
 	);
 };
