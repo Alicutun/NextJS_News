@@ -11,10 +11,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Grid, Stack } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 
 const Header: React.FC = () => {
 	const router = useRouter();
@@ -125,13 +121,13 @@ const Header: React.FC = () => {
 					</div>
 					<div className={styles.main_menu_mid}>
 						<div className={styles.parent_menu}>
-							<Link href='/menu01'>블록체인 </Link>
-							<Link href='/menu02'> IT산업</Link>
-							<Link href='/menu03'> 정책</Link>
-							<Link href='/'> 동영상</Link>
-							<Link href='/'> 피플·라이프</Link>
-							<Link href='/'> 오피니언</Link>
-							<Link href='/'> 이슈</Link>
+							<Link href='/Menu01'>블록체인 </Link>
+							<Link href='/Menu01'> IT산업</Link>
+							<Link href='/Menu01'> 정책</Link>
+							<Link href='/Menu01'> 동영상</Link>
+							<Link href='/Menu01'> 피플·라이프</Link>
+							<Link href='/Menu01'> 오피니언</Link>
+							<Link href='/Menu01'> 이슈</Link>
 						</div>
 					</div>
 					<div className={styles.main_menu_right}>
