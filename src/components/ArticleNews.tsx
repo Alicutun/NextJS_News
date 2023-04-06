@@ -8,6 +8,7 @@ import SubjectIcon from "@mui/icons-material/Subject";
 import LinkIcon from "@mui/icons-material/Link";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TextField from "@mui/material/TextField";
+import s from "../styles/components/articleNews.module.scss";
 
 export interface ArticleNewsProps {}
 
@@ -26,7 +27,13 @@ export default function ArticleNews(props: ArticleNewsProps) {
 	};
 
 	return (
-		<article>
+		<article className='articleNews' style={{ position: "relative" }}>
+			<Box sx={{ position: "absolute", left: "-180px" }}>
+				<img
+					src='https://tpc.googlesyndication.com/simgad/6913498388766754588'
+					alt=''
+				/>
+			</Box>
 			<Grid
 				container
 				direction='column'
