@@ -11,9 +11,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
-import SubjectIcon from "@mui/icons-material/Subject";
 import LinkIcon from "@mui/icons-material/Link";
-import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TextField from "@mui/material/TextField";
 
 export interface FooterProps {}

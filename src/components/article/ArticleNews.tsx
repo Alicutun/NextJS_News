@@ -26,7 +26,7 @@ export function ArticleNews(props: ArticleNewsProps) {
 	};
 
 	return (
-		<article className='articleNews' style={{ position: "relative" }}>
+		<article style={{ position: "relative" }}>
 			<Box sx={{ position: "absolute", left: "-180px" }}>
 				<img
 					src='https://tpc.googlesyndication.com/simgad/6913498388766754588'
