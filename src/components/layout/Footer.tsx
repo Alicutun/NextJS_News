@@ -18,7 +18,7 @@ import TextField from "@mui/material/TextField";
 
 export interface FooterProps {}
 
-export default function Footer(props: FooterProps) {
+export function Footer(props: FooterProps) {
 	const options = ["Option 1", "Option 2", "Option 1asd", "Option 2asda"];
 
 	const [value, setValue] = React.useState<string | null>(options[0]);
@@ -90,7 +90,7 @@ export default function Footer(props: FooterProps) {
 						</Stack>
 					</Grid>
 					<Container>
-						<Grid direction='column' mb={"50px"}>
+						<Grid container direction='column' mb={"50px"}>
 							<Box>
 								<img
 									src='https://branchimg.sedaily.com/Decenter/footer_logo.jpg'

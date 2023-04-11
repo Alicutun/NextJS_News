@@ -1,7 +1,8 @@
-import Header from "@/components/Header";
-import "../styles/globals.scss";
+// Main scss
+import "@/styles/globals.scss";
+
+import { Header, Footer } from "@/components";
 import type { AppProps } from "next/app";
-import Footer from "@/components/Footer";
 
 export default function App({ Component, pageProps }: AppProps) {
 	return (

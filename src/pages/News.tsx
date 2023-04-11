@@ -1,8 +1,6 @@
 import * as React from "react";
-import s from "../styles/pages/news.module.scss";
-import ArticleNews from "@/components/ArticleNews";
+import { ArticleNews, AsidePage } from "@/components";
 import { Container, Grid } from "@mui/material";
-import AsidePage from "@/components/AsidePage";
 
 export interface NewsProps {}
 

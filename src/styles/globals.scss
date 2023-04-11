@@ -1,5 +1,9 @@
-// @import url(./components/header.module.css);
-// @import url(../styles/components/header.module.scss);
+@import "./color";
+@import "./_mixin";
+
+@import "./components";
+@import "./pages";
+
 :root {
 	--max-width: 1100px;
 	--border-radius: 12px;

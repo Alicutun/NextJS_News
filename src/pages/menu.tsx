@@ -1,11 +1,10 @@
 import React from "react";
 import { Container, Grid } from "@mui/material";
-import AsidePage from "@/components/AsidePage";
-import ArticlePage from "@/components/ArticlePage";
+import { AsidePage, ArticlePage } from "@/components";
 
 export interface Menu01Props {}
 
-export default function Menu01(props: Menu01Props) {
+export default function Menu(props: Menu01Props) {
 	return (
 		<Container disableGutters>
 			<Grid container spacing={5} mt={"30px"}>

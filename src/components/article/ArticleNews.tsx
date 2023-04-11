@@ -8,13 +8,12 @@ import SubjectIcon from "@mui/icons-material/Subject";
 import LinkIcon from "@mui/icons-material/Link";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TextField from "@mui/material/TextField";
-import s from "../styles/components/articleNews.module.scss";
 
 export interface ArticleNewsProps {}
 
 const LIMIT_LENGTH = 500;
 
-export default function ArticleNews(props: ArticleNewsProps) {
+export function ArticleNews(props: ArticleNewsProps) {
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
 
