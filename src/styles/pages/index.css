@@ -1,5 +1,5 @@
-@import './menu.module';
-@import './news.module';
+@import './menu';
+@import './news';
 
 .index .hotnews {
 	max-width: 1198px;
