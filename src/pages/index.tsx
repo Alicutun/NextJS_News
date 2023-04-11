@@ -16,7 +16,6 @@ const index = () => {
 	return (
 		<section className="index">
 			<section className="hotnews">
-				<div className='aaa'>aaaaaaa</div>
 				<div className="main_left">
 					<img src='https://img.sedaily.com/Web/BlockChain/8931.jpg' alt='' />
 				</div>
