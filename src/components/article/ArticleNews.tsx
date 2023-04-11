@@ -36,11 +36,11 @@ export function ArticleNews(props: ArticleNewsProps) {
 			<Grid
 				container
 				direction='column'
-				rowSpacing={2}
 				sx={{ paddingBottom: "20px", borderBottom: "1px solid #ced2d7" }}
 			>
 				<Grid item xs>
 					<Typography
+						marginBottom='10px'
 						variant='h2'
 						sx={{ fontSize: "32px", fontWeight: "bold" }}
 					>
@@ -48,7 +48,12 @@ export function ArticleNews(props: ArticleNewsProps) {
 					</Typography>
 				</Grid>
 
-				<Grid item container sx={{ fontSize: "12px", gap: "32px" }}>
+				<Grid
+					item
+					container
+					marginBottom='15px'
+					sx={{ fontSize: "12px", gap: "32px" }}
+				>
 					<Box>입력 2023-04-05 11:16:37</Box>
 					<Box>수정 2023.04.05 11:16:37</Box>
 					<Box>김정우 기자</Box>
