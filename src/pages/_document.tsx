@@ -1,13 +1,10 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import { augmentDocumentWithEmotionCache } from "./_app";
 
-export default function Document() {
+function Document() {
 	return (
 		<Html lang='en'>
 			<Head />
-			<link
-				rel='stylesheet'
-				href='path/to/font-awesome/css/font-awesome.min.css'
-			/>
 
 			<body>
 				<Main />
@@ -16,3 +13,6 @@ export default function Document() {
 		</Html>
 	);
 }
+augmentDocumentWithEmotionCache(Document);
+
+export default Document;

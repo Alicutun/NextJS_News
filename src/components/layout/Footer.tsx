@@ -14,9 +14,39 @@ import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import LinkIcon from "@mui/icons-material/Link";
 import TextField from "@mui/material/TextField";
 
+import { makeStyles } from "tss-react/mui";
+
+const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+	root: {
+		"&:hover": {
+			backgroundColor: theme.palette.primary.main,
+		},
+	},
+	navFooter: {
+		color: "#666666",
+		background: "#f8f8f8 !important",
+		padding: "15px 20px",
+		border: "solid 1px #eaeaea;",
+	},
+	optionFooter: {
+		borderRadius: "50px",
+		background: "#fff",
+		width: 200,
+		".MuiAutocomplete-inputRoot": {
+			height: "40px",
+			borderRadius: "50px",
+		},
+		".MuiAutocomplete-input": {
+			padding: "0.5px 4px 7.5px 6px !important",
+		},
+	},
+}));
+
 export interface FooterProps {}
 
 export function Footer(props: FooterProps) {
+	const { classes, cx } = useStyles({ color: "red" });
+
 	const options = ["Option 1", "Option 2", "Option 1asd", "Option 2asda"];
 
 	const [value, setValue] = React.useState<string | null>(options[0]);
@@ -26,7 +56,7 @@ export function Footer(props: FooterProps) {
 			<Container fixed disableGutters>
 				<Grid container direction='column' mt={"100px"}>
 					<Grid item>
-						<Grid justifyContent='flex-end' container sx={{ gap: "10px" }}>
+						<Grid justifyContent='flex-end' container columnGap='10px'>
 							디센터를 Follow 하세요
 							<FacebookIcon />
 							<TwitterIcon />
@@ -34,25 +64,16 @@ export function Footer(props: FooterProps) {
 							<LinkIcon />
 						</Grid>
 					</Grid>
-					<Grid
-						item
-						m={"20px 0"}
-						sx={{
-							color: "#666666",
-							background: "#f8f8f8 !important",
-							padding: "15px 20px",
-							border: "solid 1px #eaeaea;",
-						}}
-					>
+					<Grid item m={"20px 0"} className={classes.navFooter}>
 						<Stack
 							direction='row'
 							justifyContent='center'
 							alignItems='center'
 							spacing={2}
 						>
-							<Grid item container sx={{ gap: "20px" }}>
+							<Grid item container gap='20px'>
 								<Typography>회사소개</Typography>
-								<Typography sx={{ fontWeight: "bold", color: "black" }}>
+								<Typography fontWeight='bold' color='black'>
 									회사소개
 								</Typography>
 								<Typography>회사소개</Typography>
@@ -70,18 +91,7 @@ export function Footer(props: FooterProps) {
 									}}
 									id='controllable-states-demo'
 									options={options}
-									sx={{
-										borderRadius: "50px",
-										background: "#fff",
-										width: 300,
-										".MuiAutocomplete-inputRoot": {
-											height: "40px",
-											borderRadius: "50px",
-										},
-										".MuiAutocomplete-input": {
-											padding: "0.5px 4px 7.5px 6px !important",
-										},
-									}}
+									className={classes.optionFooter}
 									renderInput={(params) => <TextField {...params} />}
 								/>
 							</Grid>

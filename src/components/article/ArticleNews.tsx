@@ -9,11 +9,33 @@ import LinkIcon from "@mui/icons-material/Link";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TextField from "@mui/material/TextField";
 
+import { makeStyles } from "tss-react/mui";
+
+const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+	root: {
+		"&:hover": {
+			backgroundColor: theme.palette.primary.main,
+		},
+	},
+	topNews: {
+		paddingBottom: "20px",
+		borderBottom: "1px solid #ced2d7",
+	},
+	buttonP: {
+		cursor: "pointer",
+		textAlign: "right",
+	},
+	buttonC: {
+		color: "gray.500",
+	},
+}));
 export interface ArticleNewsProps {}
 
 const LIMIT_LENGTH = 500;
 
 export function ArticleNews(props: ArticleNewsProps) {
+	const { classes, cx } = useStyles({ color: "red" });
+
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
 
@@ -27,33 +49,25 @@ export function ArticleNews(props: ArticleNewsProps) {
 
 	return (
 		<article style={{ position: "relative" }}>
-			<Box sx={{ position: "absolute", left: "-180px" }}>
+			<Box position='absolute' left='-180px'>
 				<img
 					src='https://tpc.googlesyndication.com/simgad/6913498388766754588'
 					alt=''
 				/>
 			</Box>
-			<Grid
-				container
-				direction='column'
-				sx={{ paddingBottom: "20px", borderBottom: "1px solid #ced2d7" }}
-			>
+			<Grid container direction='column' className={classes.topNews}>
 				<Grid item xs>
 					<Typography
 						marginBottom='10px'
 						variant='h2'
-						sx={{ fontSize: "32px", fontWeight: "bold" }}
+						fontSize='32px'
+						fontWeight='bold'
 					>
 						델리오 “토큰증권 지갑 서비스 제공”
 					</Typography>
 				</Grid>
 
-				<Grid
-					item
-					container
-					marginBottom='15px'
-					sx={{ fontSize: "12px", gap: "32px" }}
-				>
+				<Grid item container marginBottom='15px' fontSize='12px' gap='32px'>
 					<Box>입력 2023-04-05 11:16:37</Box>
 					<Box>수정 2023.04.05 11:16:37</Box>
 					<Box>김정우 기자</Box>
@@ -66,31 +80,20 @@ export function ArticleNews(props: ArticleNewsProps) {
 					justifyContent='space-between'
 					alignItems='center'
 				>
-					<Grid item xs={6} container sx={{ gap: "10px" }}>
+					<Grid item xs={6} container gap='10px'>
 						<FacebookIcon />
 						<TwitterIcon />
 						<ForwardToInboxIcon />
 						<LinkIcon />
 					</Grid>
-					<Grid
-						item
-						xs={6}
-						container
-						justifyContent='flex-end'
-						sx={{ gap: "10px" }}
-					>
+					<Grid item xs={6} container justifyContent='flex-end' gap='10px'>
 						<SubjectIcon />
 						<PrintIcon />
 					</Grid>
 				</Grid>
 			</Grid>
 			<h1>Call api text editor</h1>
-			<Grid
-				container
-				direction='column'
-				spacing={2}
-				sx={{ paddingTop: "100px" }}
-			>
+			<Grid container direction='column' spacing={2} paddingTop='100px'>
 				<Grid
 					item
 					container
@@ -98,7 +101,7 @@ export function ArticleNews(props: ArticleNewsProps) {
 					justifyContent='space-between'
 					alignItems='center'
 				>
-					<Grid item xs={6} container sx={{ gap: "10px" }}>
+					<Grid item xs={6} container gap='10px'>
 						<FacebookIcon />
 						<TwitterIcon />
 						<ForwardToInboxIcon />
@@ -111,22 +114,18 @@ export function ArticleNews(props: ArticleNewsProps) {
 				</Grid>
 
 				<Grid item container justifyContent='space-between' alignItems='center'>
-					<Grid item xs={6} container sx={{ gap: "10px" }}>
-						<Typography sx={{ fontWeight: "bold" }}>최신순</Typography>
-						<Typography sx={{ color: "red", fontWeight: "bold" }}>0</Typography>
+					<Grid item xs={6} container gap='10px'>
+						<Typography fontWeight='bold'>최신순</Typography>
+						<Typography color='red' fontWeight='bold'>
+							0
+						</Typography>
 					</Grid>
 
-					<Grid
-						item
-						xs={6}
-						container
-						sx={{ gap: "15px" }}
-						justifyContent='flex-end'
-					>
-						<Typography sx={{ color: "red", fontWeight: "bold" }}>
+					<Grid item xs={6} container gap='15px' justifyContent='flex-end'>
+						<Typography color='red' fontWeight='bold'>
 							최신순
 						</Typography>
-						<Typography sx={{ fontWeight: "bold" }}>인기순</Typography>
+						<Typography fontWeight='bold'>인기순</Typography>
 					</Grid>
 				</Grid>
 
@@ -151,13 +150,13 @@ export function ArticleNews(props: ArticleNewsProps) {
 						alignItems='center'
 					>
 						<Grid item xs={6}>
-							<Typography variant='body2' sx={{ color: "grey.500" }}>
+							<Typography variant='body2' color='grey.500'>
 								{count}/{LIMIT_LENGTH}
 							</Typography>
 						</Grid>
 
-						<Grid item xs={6} sx={{ cursor: "pointer", textAlign: "right" }}>
-							<Button variant='text' sx={{ color: "grey.500" }}>
+						<Grid item xs={6} className={classes.buttonP}>
+							<Button variant='text' className={classes.buttonC}>
 								댓글등록
 							</Button>
 						</Grid>
