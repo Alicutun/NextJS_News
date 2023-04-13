@@ -10,10 +10,10 @@ export default function News(props: NewsProps) {
 	return (
 		<Container disableGutters>
 			<Grid container spacing={5} mt={"30px"}>
-				<Grid item xs={w1024 ? 8.7 : 12}>
+				<Grid item xs={w1024 ? 9 : 12}>
 					<ArticleNews />
 				</Grid>
-				<Grid item xs={w1024 ? 3.3 : 12}>
+				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
 				</Grid>
 			</Grid>

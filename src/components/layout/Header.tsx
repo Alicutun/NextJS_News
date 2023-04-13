@@ -31,21 +31,11 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		fontSize: "30px",
 		color: "blue",
 	},
-	searchLeft: {
-		transform: "scale(1.5)",
-		paddingLeft: "32px",
-	},
-	searchRight: {
-		float: "right",
-		transform: "scale(1.5)",
-	},
 	boxMenu: {
 		borderTop: "1px solid #e6e6e6",
 		borderBottom: "1px solid #888",
 	},
 	boxMenuBackground: {
-		borderTop: "1px solid #e6e6e6",
-		borderBottom: "1px solid #888",
 		background: "#28417a",
 	},
 	subMenuMid: {
@@ -55,6 +45,9 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	subMenuMidRes: {
 		textDecoration: "none",
 		color: "#FFFFFF",
+	},
+	backgroundAD: {
+		background: "#004a90",
 	},
 }));
 
@@ -143,22 +136,18 @@ export const Header: FC = () => {
 					spacing={2}
 				>
 					{/* Search left */}
-					<Box width='150px'>
-						<Stack direction='row' paddingTop='5px' columnGap={1.5}>
-							<Box
-								className={classes.searchLeft}
-								display={w1024 ? "none" : "unset"}
-							>
-								<MenuIcon sx={{ fontSize: "25px" }} />
-							</Box>
-							<Box marginTop='4px' display={w1024 ? "unset" : "none"}>
-								<img
-									src='https://branchimg.sedaily.com/Decenter/top_verbal.jpg'
-									alt='블록체인의 모든 것, 디센터'
-								/>
-							</Box>
-						</Stack>
-					</Box>
+					<Stack direction='row' paddingTop='5px' columnGap={1.5} width='150px'>
+						<Box display={w1024 ? "none" : "unset"}>
+							<MenuIcon sx={{ fontSize: "35px" }} />
+						</Box>
+						<Box marginTop='4px' display={w1024 ? "unset" : "none"}>
+							<img
+								src='https://branchimg.sedaily.com/Decenter/top_verbal.jpg'
+								alt='블록체인의 모든 것, 디센터'
+							/>
+						</Box>
+					</Stack>
+
 					{/* Search mid */}
 					<Box>
 						<img
@@ -168,20 +157,18 @@ export const Header: FC = () => {
 						/>
 					</Box>
 					{/* Search right */}
-					<Box width='150px'>
-						<Stack
-							direction='row'
-							paddingTop='5px'
-							paddingRight='30px'
-							className={classes.searchRight}
-							columnGap={1.5}
-							display={w1024 ? "none" : "unset"}
-						>
-							<Box>
-								<SearchIcon sx={{ fontSize: "25px" }} />
-							</Box>
-						</Stack>
-					</Box>
+
+					<Stack
+						direction='row'
+						paddingTop='5px'
+						justifyContent='flex-end'
+						columnGap={1.5}
+						width='150px'
+					>
+						<Box display={w1024 ? "none" : "unset"}>
+							<SearchIcon sx={{ fontSize: "35px" }} />
+						</Box>
+					</Stack>
 				</Stack>
 			</Container>
 
@@ -195,27 +182,21 @@ export const Header: FC = () => {
 						direction='row'
 						justifyContent={w1024 ? "space-between" : "center"}
 						alignItems='center'
-						spacing={2}
 					>
 						{/* Menu left */}
-						<Box width='150px' display={w1024 ? "unset" : "none"}>
-							<Stack direction='row' paddingTop='5px' columnGap={1.5}>
-								<Box>
-									<TelegramIcon sx={{ fontSize: "25px" }} />
-								</Box>
-								<Box>
-									<YouTubeIcon sx={{ fontSize: "25px" }} />
-								</Box>
+						<Stack
+							direction='row'
+							paddingTop='5px'
+							columnGap={1.5}
+							width='150px'
+							display={w1024 ? "flex" : "none"}
+						>
+							<TelegramIcon sx={{ fontSize: "25px" }} />
+							<YouTubeIcon sx={{ fontSize: "25px" }} />
+							<FacebookIcon sx={{ fontSize: "25px" }} />
+							<InstagramIcon sx={{ fontSize: "25px" }} />
+						</Stack>
 
-								<Box>
-									<FacebookIcon sx={{ fontSize: "25px" }} />
-								</Box>
-
-								<Box>
-									<InstagramIcon sx={{ fontSize: "25px" }} />
-								</Box>
-							</Stack>
-						</Box>
 						{/* Menu mid */}
 						<Stack
 							direction='row'
@@ -223,10 +204,9 @@ export const Header: FC = () => {
 							fontSize={w1024 ? "20px" : "18px"}
 						>
 							<Typography
-								onClick={() => router.push("/menu")}
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								블록체인
@@ -234,7 +214,7 @@ export const Header: FC = () => {
 							<Typography
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								IT산업
@@ -242,7 +222,7 @@ export const Header: FC = () => {
 							<Typography
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								정책
@@ -250,7 +230,7 @@ export const Header: FC = () => {
 							<Typography
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								동영상
@@ -258,7 +238,7 @@ export const Header: FC = () => {
 							<Typography
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								피플·라이프
@@ -266,7 +246,7 @@ export const Header: FC = () => {
 							<Typography
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								오피니언
@@ -274,74 +254,41 @@ export const Header: FC = () => {
 							<Typography
 								noWrap
 								component='a'
-								href='#'
+								href='/menu'
 								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
 							>
 								이슈
 							</Typography>
-							{/* <Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								블록체인
-							</Link>
-							<Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								IT산업
-							</Link>
-							<Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								정책
-							</Link>
-							<Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								동영상
-							</Link>
-							<Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								피플·라이프
-							</Link>
-							<Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								오피니언
-							</Link>
-							<Link
-								href='/menu'
-								className={w1024 ? classes.subMenuMid : classes.subMenuMidRes}
-							>
-								이슈
-							</Link> */}
 						</Stack>
 						{/* Menu right */}
-						<Box width='150px' display={w1024 ? "unset" : "none"}>
-							<Stack
-								direction='row'
-								paddingTop='5px'
-								columnGap={1.5}
-								justifyContent='flex-end'
-							>
-								<Box>
-									<EmailIcon sx={{ fontSize: "25px" }} />
-								</Box>
+						<Stack
+							direction='row'
+							paddingTop='5px'
+							columnGap={1.5}
+							justifyContent='flex-end'
+							width='150px'
+							display={w1024 ? "flex" : "none"}
+						>
+							<EmailIcon sx={{ fontSize: "25px" }} />
 
-								<Box>
-									<SearchIcon sx={{ fontSize: "25px" }} />
-								</Box>
-							</Stack>
-						</Box>
+							<SearchIcon sx={{ fontSize: "25px" }} />
+						</Stack>
 					</Stack>
 				</Container>
 			</Box>
+			{/* ad */}
+			<Stack
+				direction='row'
+				justifyContent='center'
+				className={classes.backgroundAD}
+				display={w1024 ? "none" : "flex"}
+			>
+				<img
+					width='350px'
+					src='https://branchimg.sedaily.com/Decenter/Banner/decenter_plus_mobile_9.jpg'
+					alt=''
+				/>
+			</Stack>
 		</header>
 	);
 };

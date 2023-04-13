@@ -9,10 +9,10 @@ export default function Menu(props: Menu01Props) {
 	return (
 		<Container disableGutters>
 			<Grid container spacing={5} mt={"30px"}>
-				<Grid item xs={w1024 ? 8.7 : 12}>
+				<Grid item xs={w1024 ? 9 : 12}>
 					<ArticlePage />
 				</Grid>
-				<Grid item xs={w1024 ? 3.3 : 12}>
+				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
 				</Grid>
 			</Grid>
