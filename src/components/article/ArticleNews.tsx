@@ -28,7 +28,10 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		position: "relative",
 		marginBottom: "30px",
 	},
-	articleNewsRes: {
+	articleNewsRes1220: {
+		margin: "0 0 30px 20px",
+	},
+	articleNewsRes1024: {
 		margin: "0 20px 30px",
 	},
 	topNews: {
@@ -61,9 +64,19 @@ export function ArticleNews(props: ArticleNewsProps) {
 		}
 	};
 	const w1024 = useMediaQuery("(min-width:1024px)");
+	const w1220 = useMediaQuery("(min-width:1220px)");
 
 	return (
-		<article className={w1024 ? classes.articleNews : classes.articleNewsRes}>
+		<article
+			className={
+				w1220
+					? classes.articleNews
+					: w1024
+					? classes.articleNewsRes1220
+					: classes.articleNewsRes1024
+				// w1220 ? classes.articleNews : w1024 ? C : classes.articleNewsRes1024
+			}
+		>
 			<Box position='absolute' left='-180px'>
 				<img
 					src='https://tpc.googlesyndication.com/simgad/6913498388766754588'

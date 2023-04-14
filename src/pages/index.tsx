@@ -87,9 +87,9 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 export default function Index() {
 	const { classes, cx } = useStyles({ color: "red" });
+	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w480 = useMediaQuery("(min-width:480px)");
-	const w500 = useMediaQuery("(min-width:500px)");
 
 	return (
 		<section>
@@ -98,7 +98,7 @@ export default function Index() {
 				<Grid
 					container
 					fontSize='16px'
-					margin='20px 0 40px 0'
+					margin={w1220 ? "20px 0 40px 0" : "20px 0 40px 20px"}
 					justifyContent={w1024 ? "flex-start" : "center"}
 				>
 					<Typography color='#448aff' fontWeight='bold'>

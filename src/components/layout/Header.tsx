@@ -58,6 +58,7 @@ export const Header: FC = () => {
 	function routePage() {
 		router.push("/");
 	}
+	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
 	const fixedNavBar = () => {
@@ -137,10 +138,18 @@ export const Header: FC = () => {
 				>
 					{/* Search left */}
 					<Stack direction='row' paddingTop='5px' columnGap={1.5} width='150px'>
-						<Box display={w1024 ? "none" : "unset"}>
-							<MenuIcon sx={{ fontSize: "35px" }} />
-						</Box>
-						<Box marginTop='4px' display={w1024 ? "unset" : "none"}>
+						<MenuIcon
+							sx={{
+								fontSize: "35px",
+								display: w1024 ? "none" : "",
+								marginLeft: "30px",
+							}}
+						/>
+						<Box
+							marginTop='4px'
+							display={w1024 ? "" : "none"}
+							paddingLeft={w1220 ? "" : "20px"}
+						>
 							<img
 								src='https://branchimg.sedaily.com/Decenter/top_verbal.jpg'
 								alt='블록체인의 모든 것, 디센터'
@@ -156,18 +165,18 @@ export const Header: FC = () => {
 							onClick={routePage}
 						/>
 					</Box>
-					{/* Search right */}
 
+					{/* Search right */}
 					<Stack
 						direction='row'
-						paddingTop='5px'
+						padding='5px 30px 0 0'
 						justifyContent='flex-end'
 						columnGap={1.5}
 						width='150px'
 					>
-						<Box display={w1024 ? "none" : "unset"}>
-							<SearchIcon sx={{ fontSize: "35px" }} />
-						</Box>
+						<SearchIcon
+							sx={{ fontSize: "35px", display: w1024 ? "none" : "" }}
+						/>
 					</Stack>
 				</Stack>
 			</Container>
@@ -186,7 +195,7 @@ export const Header: FC = () => {
 						{/* Menu left */}
 						<Stack
 							direction='row'
-							paddingTop='5px'
+							padding={w1220 ? "5px 0 0 0" : "5px 0 0 20px "}
 							columnGap={1.5}
 							width='150px'
 							display={w1024 ? "flex" : "none"}
@@ -263,7 +272,7 @@ export const Header: FC = () => {
 						{/* Menu right */}
 						<Stack
 							direction='row'
-							paddingTop='5px'
+							padding={w1220 ? "5px 0 0 0" : "5px 20px 0 0"}
 							columnGap={1.5}
 							justifyContent='flex-end'
 							width='150px'

@@ -1,6 +1,13 @@
 import * as React from "react";
 import DoneIcon from "@mui/icons-material/Done";
-import { Box, Grid, Pagination, Stack, Typography } from "@mui/material";
+import {
+	Box,
+	Grid,
+	Pagination,
+	Stack,
+	Typography,
+	useMediaQuery,
+} from "@mui/material";
 import Link from "next/link";
 
 import { makeStyles } from "tss-react/mui";
@@ -38,6 +45,8 @@ export interface ArticlePageProps {}
 
 export function ArticlePage(props: ArticlePageProps) {
 	const { classes, cx } = useStyles({ color: "red" });
+	const w1220 = useMediaQuery("(min-width:1220px)");
+	const w640 = useMediaQuery("(min-width:640px)");
 
 	return (
 		<article>
@@ -52,14 +61,14 @@ export function ArticlePage(props: ArticlePageProps) {
 				<Typography>최신순 | 인기도순</Typography>
 			</Stack>
 			{/* List */}
-			{Array.from(Array(5)).map((_, index) => (
-				<Link href='/News' key={index} style={{ textDecoration: "none" }}>
-					<Box className={classes.boderTop} padding='20px 0'>
-						<Grid container>
+			<Box marginLeft={w1220 ? "" : "10px"}>
+				{Array.from(Array(5)).map((_, index) => (
+					<Link href='/News' key={index} style={{ textDecoration: "none" }}>
+						<Grid container className={classes.boderTop} padding='20px 0'>
 							<Grid item xs={2}>
 								<Stack alignItems='center' className={classes.box1}>
 									<img
-										height='75px'
+										height={w640 ? "75px" : "50px"}
 										src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
 										alt=''
 									/>
@@ -73,7 +82,10 @@ export function ArticlePage(props: ArticlePageProps) {
 									<Typography className={classes.itemTime}>
 										김정우 기자 | 2023-04-05
 									</Typography>
-									<Typography className={classes.itemContent}>
+									<Typography
+										className={classes.itemContent}
+										display={w640 ? "" : "none"}
+									>
 										델리오는 토큰 증권(ST)을 보관·관리할 수 있는 지갑 서비스를
 										제공한다고 5일 밝혔다. 델리오는 현재 운영하고 있는 금고형
 										가상자산 전문 지갑 ‘볼트(Vault)’를 활용해 기관·개인에게 토큰
@@ -85,9 +97,9 @@ export function ArticlePage(props: ArticlePageProps) {
 								</Box>
 							</Grid>
 						</Grid>
-					</Box>
-				</Link>
-			))}
+					</Link>
+				))}
+			</Box>
 			<Stack alignItems='center' marginBottom='20px'>
 				<Pagination size='small' count={10} showFirstButton showLastButton />
 			</Stack>

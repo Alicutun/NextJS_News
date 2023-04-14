@@ -13,7 +13,9 @@ import { AsidePage, ArticlePage } from "@/components";
 export interface Menu01Props {}
 
 export default function Menu(props: Menu01Props) {
+	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
+
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -21,7 +23,7 @@ export default function Menu(props: Menu01Props) {
 				<Grid
 					container
 					fontSize='16px'
-					margin='20px 0 50px 0'
+					margin={w1220 ? "20px 0 50px 0" : "20px 0 50px 20px"}
 					justifyContent={w1024 ? "flex-start" : "center"}
 					display={w1024 ? "flex" : "none"}
 				>
