@@ -1,6 +1,14 @@
 import * as React from "react";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { ArticleNews, AsidePage } from "@/components";
-import { Container, Grid, useMediaQuery } from "@mui/material";
+import {
+	Box,
+	Container,
+	Grid,
+	Stack,
+	Typography,
+	useMediaQuery,
+} from "@mui/material";
 
 export interface NewsProps {}
 
@@ -9,7 +17,46 @@ export default function News(props: NewsProps) {
 
 	return (
 		<Container disableGutters>
-			<Grid container spacing={5} mt={"30px"}>
+			{/* header_topstory */}
+			<Container disableGutters>
+				<Grid
+					container
+					fontSize='16px'
+					margin='20px 0 50px 0'
+					justifyContent={w1024 ? "flex-start" : "center"}
+					display={w1024 ? "flex" : "none"}
+				>
+					<Typography color='#448aff' fontWeight='bold'>
+						TOP STORIES
+					</Typography>
+					<Typography marginLeft='10px'>
+						업비트, 37분 만에 원화마켓 거래 재개
+					</Typography>
+
+					<Box color='#999' margin='3px 2px 0 10px'>
+						<AccessTimeIcon sx={{ fontSize: "15px" }} />
+					</Box>
+
+					<Typography color='#999' fontSize='12px' pt='2px'>
+						24분전
+					</Typography>
+				</Grid>
+			</Container>
+			{/* ad */}
+			<Stack
+				direction='row'
+				justifyContent='center'
+				sx={{ background: "#004a90" }}
+				display={w1024 ? "none" : "flex"}
+			>
+				<img
+					width='350px'
+					src='https://branchimg.sedaily.com/Decenter/Banner/decenter_plus_mobile_9.jpg'
+					alt=''
+				/>
+			</Stack>
+			{/* Content */}
+			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
 					<ArticleNews />
 				</Grid>

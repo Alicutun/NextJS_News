@@ -57,15 +57,13 @@ export function ArticlePage(props: ArticlePageProps) {
 					<Box className={classes.boderTop} padding='20px 0'>
 						<Grid container>
 							<Grid item xs={2}>
-								<Box className={classes.box1}>
-									<Stack alignItems='center'>
-										<img
-											width={"85%"}
-											src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
-											alt=''
-										/>
-									</Stack>
-								</Box>
+								<Stack alignItems='center' className={classes.box1}>
+									<img
+										height='75px'
+										src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
+										alt=''
+									/>
+								</Stack>
 							</Grid>
 							<Grid item xs={10}>
 								<Box marginLeft='10px'>
@@ -90,7 +88,7 @@ export function ArticlePage(props: ArticlePageProps) {
 					</Box>
 				</Link>
 			))}
-			<Stack alignItems='center'>
+			<Stack alignItems='center' marginBottom='20px'>
 				<Pagination size='small' count={10} showFirstButton showLastButton />
 			</Stack>
 		</article>

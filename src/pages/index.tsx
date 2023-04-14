@@ -6,10 +6,8 @@ import Image from "next/image";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Container, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { ArrowDropDown, Height } from "@mui/icons-material";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -110,13 +108,8 @@ export default function Index() {
 						업비트, 37분 만에 원화마켓 거래 재개
 					</Typography>
 
-					<Box
-						color='#999'
-						mt='-2px'
-						className={classes.iconTopStory}
-						marginLeft='10px'
-					>
-						<AccessTimeIcon />
+					<Box color='#999' margin='3px 2px 0 10px'>
+						<AccessTimeIcon sx={{ fontSize: "15px" }} />
 					</Box>
 
 					<Typography color='#999' fontSize='12px' pt='2px'>

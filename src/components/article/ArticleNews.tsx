@@ -1,4 +1,11 @@
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	Grid,
+	Stack,
+	Typography,
+	useMediaQuery,
+} from "@mui/material";
 import * as React from "react";
 import PrintIcon from "@mui/icons-material/Print";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -16,6 +23,13 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		"&:hover": {
 			backgroundColor: theme.palette.primary.main,
 		},
+	},
+	articleNews: {
+		position: "relative",
+		marginBottom: "30px",
+	},
+	articleNewsRes: {
+		margin: "0 20px 30px",
 	},
 	topNews: {
 		paddingBottom: "20px",
@@ -46,9 +60,10 @@ export function ArticleNews(props: ArticleNewsProps) {
 			setCount(length);
 		}
 	};
+	const w1024 = useMediaQuery("(min-width:1024px)");
 
 	return (
-		<article style={{ position: "relative" }}>
+		<article className={w1024 ? classes.articleNews : classes.articleNewsRes}>
 			<Box position='absolute' left='-180px'>
 				<img
 					src='https://tpc.googlesyndication.com/simgad/6913498388766754588'

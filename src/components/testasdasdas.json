@@ -1,0 +1,35 @@
+/// api header
+// [
+// 	{
+// 		"id": 382,
+// 		"nameField": "BTC",
+// 		"money": "100000",
+// 		"rate": "-0.82"
+// 	},
+//     ...
+// ]
+[
+	{
+		"id": 382,
+		"image": "xxxx",
+		"title": "xxxxxxxxxx",
+		"author": "xxxxxxxx",
+		"dateCreate": "XXXX-XX-XX",
+		"timeCreate": "XX:XX:XX",
+        "publishAt": "2023-04-13T11:18:25.695Z",
+		"content": "Text Editor",
+
+		"status": "PUBLIC",
+		"jobId": "article-publish-job-Thu Apr 13 2023 18:24:56 GMT+0700 (Indochina Time)",
+		"userId": 8,
+		"details": [
+			{
+				"locale": "vi_VN",
+				"content": "<div>content<img src='/image/example.svg' /></div>",
+				"summary": "it's summary",
+				"summaryImage": "/image/example.svg"
+			}
+		]
+	},
+    ...
+]

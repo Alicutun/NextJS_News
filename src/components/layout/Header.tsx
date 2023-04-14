@@ -276,19 +276,6 @@ export const Header: FC = () => {
 					</Stack>
 				</Container>
 			</Box>
-			{/* ad */}
-			<Stack
-				direction='row'
-				justifyContent='center'
-				className={classes.backgroundAD}
-				display={w1024 ? "none" : "flex"}
-			>
-				<img
-					width='350px'
-					src='https://branchimg.sedaily.com/Decenter/Banner/decenter_plus_mobile_9.jpg'
-					alt=''
-				/>
-			</Stack>
 		</header>
 	);
 };
