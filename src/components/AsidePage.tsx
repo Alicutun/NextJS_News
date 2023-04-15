@@ -154,13 +154,22 @@ export function AsidePage(props: AsidePageProps) {
 			))}
 			{/* Box live */}
 			<Box className={w1024 ? classes.boxLive : classes.boxLiveRes}>
-				<Typography
-					fontSize='16px'
+				<Stack
+					columnGap={1}
+					alignItems='center'
+					direction='row'
 					className={w1024 ? classes.nameBox : classes.nameBoxRes}
 				>
-					베스트 클릭
-				</Typography>
-				<Grid container height={w1024 ? "300px" : "auto"} overflow='auto'>
+					<img
+						height='55%'
+						src='https://img.sedaily.com/Html/Special/politics/politics_13.png'
+						alt=''
+					/>
+					<Typography fontSize='16px' fontWeight='bold'>
+						베스트 클릭
+					</Typography>
+				</Stack>
+				<Grid container height={w1024 ? "285px" : "auto"} overflow='auto'>
 					{Array.from(Array(w1024 ? 5 : w480 ? 5 : 5)).map((_, index) => (
 						<Grid item xs={12} key={index}>
 							<Stack
@@ -186,14 +195,25 @@ export function AsidePage(props: AsidePageProps) {
 								</Stack>
 
 								{/* content */}
-								<Grid container justifyContent='flex-start'>
-									<Typography padding='15px 20px 5px' fontSize='13px'>
+								<Grid container direction='column' justifyContent='flex-start'>
+									<Typography
+										padding={w1024 ? "15px 20px 5px" : "5px 0 0 20px"}
+										fontSize='13px'
+									>
 										코빗도 적자…매출 43억, 영업손실 358억
+									</Typography>
+									<Typography
+										display={w1024 ? "none" : ""}
+										padding={w1024 ? "15px 20px 5px" : "5px 0 0 20px"}
+										fontSize='13px'
+										color='#999'
+									>
+										김지현 기자 2023-04-14 블록체인
 									</Typography>
 								</Grid>
 								{/* Image */}
 								<img
-									style={{ padding: "0 20px" }}
+									style={{ padding: w1024 ? "0 20px" : "0 10px" }}
 									height={w1024 ? "80px" : "70px"}
 									width='165px'
 									src='https://newsimg.sedaily.com/2023/04/14/29OAUBRQ91_1_s.jpg'

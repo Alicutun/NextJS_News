@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -31,9 +31,31 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		fontSize: "30px",
 		color: "blue",
 	},
+	boxSearch: {
+		// height: "60px",
+	},
+	boxSearchFixed: {
+		background: "white",
+		position: "fixed",
+		top: "0",
+		right: "0",
+		left: "0",
+		zIndex: "10",
+	},
 	boxMenu: {
 		borderTop: "1px solid #e6e6e6",
 		borderBottom: "1px solid #888",
+		background: "white",
+	},
+	boxMenuFixed: {
+		borderTop: "1px solid #e6e6e6",
+		borderBottom: "1px solid #888",
+		background: "white",
+		position: "fixed",
+		top: "0",
+		right: "0",
+		left: "0",
+		zIndex: "10",
 	},
 	boxMenuBackground: {
 		background: "#28417a",
@@ -49,11 +71,16 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	backgroundAD: {
 		background: "#004a90",
 	},
+	imgLogo: {
+		cursor: "pointer",
+	},
 }));
 
 export const Header: FC = () => {
 	const { classes, cx } = useStyles({ color: "red" });
-	const [navbar, setNavbar] = useState(false);
+	const [fixedMenu, setFixedMenu] = useState(false);
+	const [fixedSearch, setFixedSearch] = useState(false);
+
 	const router = useRouter();
 	function routePage() {
 		router.push("/");
@@ -65,7 +92,25 @@ export const Header: FC = () => {
 		console.log(window.scrollY);
 	};
 
-	// console.log(window.scrollY);
+	useEffect(() => {
+		console.log("h1");
+		const handleScroll = () => {
+			if (window.scrollY >= 50) {
+				setFixedSearch(true);
+			} else if (window.scrollY >= 140) {
+				setFixedMenu(true);
+			} else {
+				setFixedSearch(false);
+				setFixedMenu(false);
+			}
+		};
+
+		document.addEventListener("scroll", handleScroll);
+
+		return () => {
+			document.removeEventListener("scroll", handleScroll);
+		};
+	});
 
 	return (
 		<header>
@@ -129,7 +174,12 @@ export const Header: FC = () => {
 				</Container>
 			</Box>
 			{/* Search */}
-			<Container disableGutters>
+			<Container
+				disableGutters
+				className={
+					w1024 ? "" : fixedSearch ? classes.boxSearchFixed : classes.boxSearch
+				}
+			>
 				<Stack
 					direction='row'
 					justifyContent='space-between'
@@ -158,13 +208,16 @@ export const Header: FC = () => {
 					</Stack>
 
 					{/* Search mid */}
-					<Box>
-						<img
-							src='https://branchimg.sedaily.com/Decenter/logo2.png'
-							alt='Decenter'
-							onClick={routePage}
-						/>
-					</Box>
+					<img
+						className={classes.imgLogo}
+						src={
+							w1024
+								? "https://branchimg.sedaily.com/Decenter/logo2.png"
+								: "https://branchimg.sedaily.com/Decenter/decenter_m_logo.svg"
+						}
+						alt='Decenter'
+						onClick={routePage}
+					/>
 
 					{/* Search right */}
 					<Stack
@@ -184,7 +237,13 @@ export const Header: FC = () => {
 			{/* Menu */}
 			<Box
 				padding='10px 0'
-				className={w1024 ? classes.boxMenu : classes.boxMenuBackground}
+				className={
+					w1024
+						? fixedMenu
+							? classes.boxMenuFixed
+							: classes.boxMenu
+						: classes.boxMenuBackground
+				}
 			>
 				<Container disableGutters>
 					<Stack
@@ -216,7 +275,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								블록체인
 							</Typography>
@@ -224,7 +286,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								IT산업
 							</Typography>
@@ -232,7 +297,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								정책
 							</Typography>
@@ -240,7 +308,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								동영상
 							</Typography>
@@ -248,7 +319,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								피플·라이프
 							</Typography>
@@ -256,7 +330,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								오피니언
 							</Typography>
@@ -264,7 +341,10 @@ export const Header: FC = () => {
 								noWrap
 								component='a'
 								href='/menu'
-								sx={{ textDecoration: "none", color: w1024 ? "#000" : "#fff" }}
+								sx={{
+									textDecoration: "none",
+									color: w1024 ? "#000" : "#fff",
+								}}
 							>
 								이슈
 							</Typography>
