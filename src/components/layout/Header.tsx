@@ -185,6 +185,7 @@ export const Header: FC = () => {
 					justifyContent='space-between'
 					alignItems='center'
 					spacing={2}
+					height={w1024 ? "" : "60px"}
 				>
 					{/* Search left */}
 					<Stack direction='row' paddingTop='5px' columnGap={1.5} width='150px'>
@@ -210,6 +211,7 @@ export const Header: FC = () => {
 					{/* Search mid */}
 					<img
 						className={classes.imgLogo}
+						height={w1024 ? "" : "27px"}
 						src={
 							w1024
 								? "https://branchimg.sedaily.com/Decenter/logo2.png"
