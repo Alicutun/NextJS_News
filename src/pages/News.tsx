@@ -23,7 +23,7 @@ export default function News(props: NewsProps) {
 				<Grid
 					container
 					fontSize='16px'
-					margin={w1220 ? "20px 0 50px 0" : "20px 0 50px 20px"}
+					padding={w1220 ? "20px 0 50px 0" : "20px 0 50px 20px"}
 					justifyContent={w1024 ? "flex-start" : "center"}
 					display={w1024 ? "flex" : "none"}
 				>

@@ -85,7 +85,7 @@ export function Footer(props: FooterProps) {
 					direction='row'
 					alignItems='center'
 					spacing={2}
-					mt={"20px "}
+					mt={"20px"}
 					className={w1024 ? classes.navFooter : classes.navFooterRes}
 				>
 					<Grid container gap='20px'>

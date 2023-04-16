@@ -7,12 +7,27 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
+
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+	Autocomplete,
+	Box,
+	Button,
+	Container,
+	Grid,
+	Input,
+	Modal,
+	Stack,
+	TextField,
+	Tooltip,
+	Typography,
+} from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, FC, useEffect } from "react";
+import { Close } from "@mui/icons-material";
+import ModalSearch from "../subComponents/ModalSearch";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -92,15 +107,17 @@ export const Header: FC = () => {
 		console.log(window.scrollY);
 	};
 
+	// handle Scroll
 	useEffect(() => {
-		console.log("h1");
 		const handleScroll = () => {
 			if (window.scrollY >= 50) {
 				setFixedSearch(true);
-			} else if (window.scrollY >= 140) {
-				setFixedMenu(true);
 			} else {
 				setFixedSearch(false);
+			}
+			if (window.scrollY >= 140) {
+				setFixedMenu(true);
+			} else {
 				setFixedMenu(false);
 			}
 		};
@@ -111,9 +128,13 @@ export const Header: FC = () => {
 			document.removeEventListener("scroll", handleScroll);
 		};
 	});
+	const [openModal, setOpenModal] = useState<boolean>(false);
 
 	return (
 		<header>
+			{openModal && (
+				<ModalSearch openModal={openModal} setOpenModal={setOpenModal} />
+			)}
 			{/* Coin bar */}
 			<Box className={classes.backgroundf2f2f2}>
 				<Container disableGutters>
@@ -173,6 +194,7 @@ export const Header: FC = () => {
 					</Grid>
 				</Container>
 			</Box>
+
 			{/* Search */}
 			<Container
 				disableGutters
@@ -361,8 +383,10 @@ export const Header: FC = () => {
 							display={w1024 ? "flex" : "none"}
 						>
 							<EmailIcon sx={{ fontSize: "25px" }} />
-
-							<SearchIcon sx={{ fontSize: "25px" }} />
+							<SearchIcon
+								onClick={() => setOpenModal(!openModal)}
+								sx={{ fontSize: "25px" }}
+							/>
 						</Stack>
 					</Stack>
 				</Container>

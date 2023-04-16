@@ -98,7 +98,7 @@ export default function Index() {
 				<Grid
 					container
 					fontSize='16px'
-					margin={w1220 ? "20px 0 40px 0" : "20px 0 40px 20px"}
+					padding={w1220 ? "20px 0 40px 0" : "20px 0 40px 20px"}
 					justifyContent={w1024 ? "flex-start" : "center"}
 				>
 					<Typography color='#448aff' fontWeight='bold'>
