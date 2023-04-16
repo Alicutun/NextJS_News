@@ -29,7 +29,7 @@ const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
 			>
 				<Typography variant='h4'>SEARCH</Typography>
 				<Stack direction='row'>
-					<Input sx={{ width: "500px" }}></Input>
+					<Input sx={{ width: "500px", border: "1px solid gray" }}></Input>
 					<Grid
 						container
 						alignContent='center'

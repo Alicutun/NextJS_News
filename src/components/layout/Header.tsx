@@ -122,10 +122,10 @@ export const Header: FC = () => {
 			}
 		};
 
-		document.addEventListener("scroll", handleScroll);
+		window.addEventListener("scroll", handleScroll);
 
 		return () => {
-			document.removeEventListener("scroll", handleScroll);
+			window.removeEventListener("scroll", handleScroll);
 		};
 	});
 	const [openModal, setOpenModal] = useState<boolean>(false);

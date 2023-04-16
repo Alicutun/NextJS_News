@@ -16,6 +16,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import TextField from "@mui/material/TextField";
 
 import { makeStyles } from "tss-react/mui";
+import BackToTopButton from "../subComponents/BackToTopButton";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
