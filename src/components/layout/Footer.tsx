@@ -54,9 +54,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 }));
 
-export interface FooterProps {}
-
-export function Footer(props: FooterProps) {
+export function Footer() {
 	const { classes, cx } = useStyles({ color: "red" });
 
 	const options = ["Option 1", "Option 2", "Option 1asd", "Option 2asda"];

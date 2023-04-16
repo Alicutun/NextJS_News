@@ -1,8 +1,8 @@
 import { Modal, Stack, Typography, Input, Grid } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import SearchIcon from "@mui/icons-material/Search";
 
 import React, { useState } from "react";
+import SearchInput from "./SearchInput";
 
 const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
 	openModal,
@@ -28,17 +28,7 @@ const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
 				}}
 			>
 				<Typography variant='h4'>SEARCH</Typography>
-				<Stack direction='row'>
-					<Input sx={{ width: "500px", border: "1px solid gray" }}></Input>
-					<Grid
-						container
-						alignContent='center'
-						justifyContent='center'
-						sx={{ width: "55px", height: "55px", background: "#444" }}
-					>
-						<SearchIcon sx={{ color: "white" }} />
-					</Grid>
-				</Stack>
+				<SearchInput />
 				<CloseIcon
 					onClick={() => setOpenModal(false)}
 					fontSize='large'
