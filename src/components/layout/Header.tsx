@@ -292,7 +292,8 @@ export const Header: FC = () => {
 						{/* Menu mid */}
 						<Stack
 							direction='row'
-							columnGap='25px'
+							spacing={1}
+							// columnGap='25px'
 							fontSize={w1024 ? "20px" : "18px"}
 						>
 							<Typography

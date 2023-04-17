@@ -1,22 +1,23 @@
-import {
-	Box,
-	Button,
-	Grid,
-	Stack,
-	Typography,
-	useMediaQuery,
-} from "@mui/material";
+import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import PrintIcon from "@mui/icons-material/Print";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import TwitterIcon from "@mui/icons-material/Twitter";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import SubjectIcon from "@mui/icons-material/Subject";
 import LinkIcon from "@mui/icons-material/Link";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TextField from "@mui/material/TextField";
-
+import { useReactToPrint } from "react-to-print";
 import { makeStyles } from "tss-react/mui";
+import {
+	FacebookShareButton,
+	FacebookIcon,
+	TwitterShareButton,
+	TwitterIcon,
+	EmailShareButton,
+	EmailIcon,
+} from "react-share";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -52,7 +53,6 @@ const LIMIT_LENGTH = 500;
 
 export function ArticleNews(props: ArticleNewsProps) {
 	const { classes, cx } = useStyles({ color: "red" });
-
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
 
@@ -65,7 +65,10 @@ export function ArticleNews(props: ArticleNewsProps) {
 	};
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w1220 = useMediaQuery("(min-width:1220px)");
-
+	const componentPDF = React.useRef(null);
+	const generatePDF = useReactToPrint({
+		content: () => componentPDF.current,
+	});
 	return (
 		<article
 			className={
@@ -74,7 +77,6 @@ export function ArticleNews(props: ArticleNewsProps) {
 					: w1024
 					? classes.articleNewsRes1220
 					: classes.articleNewsRes1024
-				// w1220 ? classes.articleNews : w1024 ? C : classes.articleNewsRes1024
 			}
 		>
 			<Box position='absolute' left='-180px'>
@@ -109,18 +111,29 @@ export function ArticleNews(props: ArticleNewsProps) {
 					alignItems='center'
 				>
 					<Grid item xs={6} container gap='10px'>
-						<FacebookIcon />
-						<TwitterIcon />
-						<ForwardToInboxIcon />
-						<LinkIcon />
+						<FacebookShareButton
+							url={"https://www.decenter.kr/NewsView/29OATPNBV1/GZ03"}
+						>
+							<FacebookIcon size={40} round={true} />
+						</FacebookShareButton>
+						<TwitterShareButton
+							url={"https://www.decenter.kr/NewsView/29OATPNBV1/GZ03"}
+						>
+							<TwitterIcon size={40} round={true} />
+						</TwitterShareButton>
+						<EmailShareButton
+							url={"https://www.decenter.kr/NewsView/29OATPNBV1/GZ03"}
+						>
+							<EmailIcon size={40} round={true} />
+						</EmailShareButton>
 					</Grid>
 					<Grid item xs={6} container justifyContent='flex-end' gap='10px'>
 						<SubjectIcon />
-						<PrintIcon />
+						<PrintIcon onClick={generatePDF} />
 					</Grid>
 				</Grid>
 			</Grid>
-			<h1>Call api text editor</h1>
+			<h1 ref={componentPDF}>Call api text editor</h1>
 			<Grid container direction='column' spacing={2} paddingTop='100px'>
 				<Grid
 					item
@@ -130,10 +143,21 @@ export function ArticleNews(props: ArticleNewsProps) {
 					alignItems='center'
 				>
 					<Grid item xs={6} container gap='10px'>
-						<FacebookIcon />
-						<TwitterIcon />
-						<ForwardToInboxIcon />
-						<LinkIcon />
+						<FacebookShareButton
+							url={"https://www.decenter.kr/NewsView/29OATPNBV1/GZ03"}
+						>
+							<FacebookIcon size={40} round={true} />
+						</FacebookShareButton>
+						<TwitterShareButton
+							url={"https://www.decenter.kr/NewsView/29OATPNBV1/GZ03"}
+						>
+							<TwitterIcon size={40} round={true} />
+						</TwitterShareButton>
+						<EmailShareButton
+							url={"https://www.decenter.kr/NewsView/29OATPNBV1/GZ03"}
+						>
+							<EmailIcon size={40} round={true} />
+						</EmailShareButton>
 					</Grid>
 
 					<Grid item xs={6} container justifyContent='flex-end'>
