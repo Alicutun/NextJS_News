@@ -47,14 +47,14 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		color: "gray.500",
 	},
 }));
-export interface ArticleNewsProps {}
 
 const LIMIT_LENGTH = 500;
 
-export function ArticleNews(props: ArticleNewsProps) {
+export function ArticleNews({ dataNews }: any) {
 	const { classes, cx } = useStyles({ color: "red" });
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
+	// console.log("data: ", dataNews);
 
 	const handleChange = (e: any) => {
 		const length = e.target.value.toString().length;
@@ -93,13 +93,13 @@ export function ArticleNews(props: ArticleNewsProps) {
 						fontSize='32px'
 						fontWeight='bold'
 					>
-						델리오 “토큰증권 지갑 서비스 제공”
+						{dataNews.details[0].summary}
 					</Typography>
 				</Grid>
 
 				<Grid item container marginBottom='15px' fontSize='12px' gap='32px'>
-					<Box>입력 2023-04-05 11:16:37</Box>
-					<Box>수정 2023.04.05 11:16:37</Box>
+					<Box>입력 {dataNews.createDate}</Box>
+					<Box>수정 {dataNews.editDate}</Box>
 					<Box>김정우 기자</Box>
 				</Grid>
 
@@ -129,11 +129,16 @@ export function ArticleNews(props: ArticleNewsProps) {
 					</Grid>
 					<Grid item xs={6} container justifyContent='flex-end' gap='10px'>
 						<SubjectIcon />
-						<PrintIcon onClick={generatePDF} />
+						<PrintIcon sx={{ cursor: "pointer" }} onClick={generatePDF} />
 					</Grid>
 				</Grid>
 			</Grid>
-			<h1 ref={componentPDF}>Call api text editor</h1>
+			{/* print */}
+			<Box
+				ref={componentPDF}
+				dangerouslySetInnerHTML={{ __html: dataNews.details[0].content }}
+			/>
+
 			<Grid container direction='column' spacing={2} paddingTop='100px'>
 				<Grid
 					item

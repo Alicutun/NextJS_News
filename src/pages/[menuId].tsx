@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Box,
 	Container,
@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { AsidePage, ArticlePage } from "@/components";
+import axios from "axios";
 
 export interface Menu01Props {}
 
-export default function Menu(props: Menu01Props) {
+export default function Menu({ data }: any) {
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
+	// console.log("dataCha: ", data);
+	const listArticle = data;
 
 	return (
 		<Container disableGutters>
@@ -59,7 +62,7 @@ export default function Menu(props: Menu01Props) {
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
-					<ArticlePage />
+					<ArticlePage listArticle={listArticle} />
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
@@ -67,4 +70,17 @@ export default function Menu(props: Menu01Props) {
 			</Grid>
 		</Container>
 	);
+}
+
+export async function getServerSideProps(context: any) {
+	const { params } = context;
+	console.log(params);
+	const { data } = await axios.get(
+		`http://192.168.0.72:3000/topics/${params.menuId}/articles`
+	);
+	return {
+		props: {
+			data,
+		},
+	};
 }

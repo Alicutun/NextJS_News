@@ -9,12 +9,14 @@ import {
 	Typography,
 	useMediaQuery,
 } from "@mui/material";
+import axios from "axios";
 
 export interface NewsProps {}
 
-export default function News(props: NewsProps) {
+export default function News({ data }: any) {
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
+	// console.log("datanews: ", data);
 
 	return (
 		<Container disableGutters>
@@ -59,7 +61,7 @@ export default function News(props: NewsProps) {
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
-					<ArticleNews />
+					<ArticleNews dataNews={data} />
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
@@ -67,4 +69,16 @@ export default function News(props: NewsProps) {
 			</Grid>
 		</Container>
 	);
+}
+export async function getServerSideProps(context: any) {
+	const { params } = context;
+	console.log(params);
+	const { data } = await axios.get(
+		`http://192.168.0.72:3000/articles/${params.newsId}`
+	);
+	return {
+		props: {
+			data,
+		},
+	};
 }

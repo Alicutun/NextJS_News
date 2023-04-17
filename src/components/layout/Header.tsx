@@ -7,27 +7,14 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-	Autocomplete,
-	Box,
-	Button,
-	Container,
-	Grid,
-	Input,
-	Modal,
-	Stack,
-	TextField,
-	Tooltip,
-	Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, FC, useEffect } from "react";
-import { Close } from "@mui/icons-material";
 import ModalSearch from "../subComponents/ModalSearch";
+import axios from "axios";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -96,16 +83,12 @@ export const Header: FC = () => {
 	const [fixedMenu, setFixedMenu] = useState(false);
 	const [fixedSearch, setFixedSearch] = useState(false);
 
-	const router = useRouter();
 	function routePage() {
 		router.push("/");
 	}
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
-	const fixedNavBar = () => {
-		console.log(window.scrollY);
-	};
 
 	// handle Scroll
 	useEffect(() => {
@@ -128,8 +111,20 @@ export const Header: FC = () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	});
-	const [openModal, setOpenModal] = useState<boolean>(false);
 
+	const [openModal, setOpenModal] = useState<boolean>(false);
+	const [listTopics, setListTopics] = useState<any[]>([]);
+	useEffect(() => {
+		const fetchArticels = async () => {
+			const { data } = await axios.get(`http://192.168.0.72:3000/topics`);
+			setListTopics(data);
+		};
+
+		fetchArticels();
+	}, []);
+	// console.log("Topics:", listTopics);
+	const router = useRouter();
+	// console.log("param", router.query.menuId);
 	return (
 		<header>
 			{openModal && (
@@ -290,90 +285,42 @@ export const Header: FC = () => {
 						</Stack>
 
 						{/* Menu mid */}
-						<Stack
+						<Grid
+							container
+							justifyContent='center'
+							columnGap={2}
 							direction='row'
-							spacing={1}
-							// columnGap='25px'
 							fontSize={w1024 ? "20px" : "18px"}
 						>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								블록체인
-							</Typography>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								IT산업
-							</Typography>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								정책
-							</Typography>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								동영상
-							</Typography>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								피플·라이프
-							</Typography>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								오피니언
-							</Typography>
-							<Typography
-								noWrap
-								component='a'
-								href='/menu'
-								sx={{
-									textDecoration: "none",
-									color: w1024 ? "#000" : "#fff",
-								}}
-							>
-								이슈
-							</Typography>
-						</Stack>
+							{listTopics?.map((item) => (
+								<Button
+									disabled={
+										Number(router.query.menuId) === Number(item.id)
+											? true
+											: false
+									}
+									// disabled
+									key={item.id}
+									onClick={() => {
+										router.push({
+											pathname: "/[name]",
+											query: { name: item.id },
+										});
+									}}
+								>
+									<Typography
+										noWrap
+										component='a'
+										sx={{
+											textDecoration: "none",
+											color: w1024 ? "#000" : "#fff",
+										}}
+									>
+										블록체인
+									</Typography>
+								</Button>
+							))}
+						</Grid>
 						{/* Menu right */}
 						<Stack
 							direction='row'
@@ -386,7 +333,7 @@ export const Header: FC = () => {
 							<EmailIcon sx={{ fontSize: "25px" }} />
 							<SearchIcon
 								onClick={() => setOpenModal(!openModal)}
-								sx={{ fontSize: "25px" }}
+								sx={{ fontSize: "25px", cursor: "pointer" }}
 							/>
 						</Stack>
 					</Stack>

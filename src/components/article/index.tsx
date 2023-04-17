@@ -1,2 +1,2 @@
-export * from './ArticleNews';
-export * from './ArticlePage';
+export * from "./ArticleNews";
+export * from "./ArticlePage";
