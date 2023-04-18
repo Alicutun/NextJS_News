@@ -18,6 +18,7 @@ import {
 	EmailShareButton,
 	EmailIcon,
 } from "react-share";
+// import {useFormatter} from 'next-intl';
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -55,7 +56,7 @@ export function ArticleNews({ dataNews }: any) {
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
 	// console.log("data: ", dataNews);
-
+	// count word in comment
 	const handleChange = (e: any) => {
 		const length = e.target.value.toString().length;
 		if (length <= LIMIT_LENGTH) {
@@ -134,6 +135,7 @@ export function ArticleNews({ dataNews }: any) {
 				</Grid>
 			</Grid>
 			{/* print */}
+
 			<Box
 				ref={componentPDF}
 				dangerouslySetInnerHTML={{ __html: dataNews.details[0].content }}

@@ -13,6 +13,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { AsidePage, ArticlePage } from "@/components";
 import SearchInput from "@/components/subComponents/SearchInput";
 import { makeStyles } from "tss-react/mui";
+import { useRouter } from "next/router";
+import { Marker } from "react-mark.js";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -30,6 +32,11 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 			padding: "0.5px 4px 7.5px 6px !important",
 		},
 	},
+	marker: {
+		fontWeight: "bold",
+		background: "none",
+		color: "#247acd",
+	},
 }));
 const Search = () => {
 	const { classes, cx } = useStyles({ color: "red" });
@@ -37,7 +44,8 @@ const Search = () => {
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const options = ["1 week ago", "1 mounth ago", "6 mounth ago", "1 year ago"];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
-
+	const router = useRouter();
+	console.log(router.query.searchId);
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -92,7 +100,7 @@ const Search = () => {
 							alignItems='center'
 							sx={{ borderBottom: "solid 1px #ced2d7" }}
 						>
-							<SearchInput />
+							<SearchInput search={router.query.searchId} />
 						</Grid>
 						<Grid
 							container
@@ -161,7 +169,13 @@ const Search = () => {
 							<Typography fontSize='18px' paddingBottom='10px'>
 								TOTAL (200)
 							</Typography>
-							<ArticlePage />
+							{/* use Marker to highlight-text */}
+							<Marker
+								mark={router.query.searchId}
+								options={{ className: classes.marker }}
+							>
+								<ArticlePage />
+							</Marker>
 						</Grid>
 					</Grid>
 				</Grid>

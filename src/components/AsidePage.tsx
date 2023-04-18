@@ -2,7 +2,6 @@ import * as React from "react";
 import { Box, Grid, Stack, Typography, useMediaQuery } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { makeStyles } from "tss-react/mui";
-import { orange } from "@mui/material/colors";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -95,6 +94,7 @@ export function AsidePage(props: AsidePageProps) {
 				/>
 			</Box>
 			{/* list Box */}
+
 			{Array.from(Array(2)).map((_, index) => (
 				<Box className={w1024 ? classes.box : classes.boxRes} key={index}>
 					<Typography
@@ -118,7 +118,7 @@ export function AsidePage(props: AsidePageProps) {
 									<Box sx={{ background: "orange", borderRadius: "50%" }}>
 										<Typography
 											fontSize='11px'
-											padding='1px 0px 0 7px'
+											padding='1px 0px 0 6px'
 											width='18px'
 										>
 											1
@@ -152,6 +152,7 @@ export function AsidePage(props: AsidePageProps) {
 					</Grid>
 				</Box>
 			))}
+
 			{/* Box live */}
 			<Box className={w1024 ? classes.boxLive : classes.boxLiveRes}>
 				<Stack

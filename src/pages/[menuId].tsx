@@ -76,8 +76,9 @@ export async function getServerSideProps(context: any) {
 	const { params } = context;
 	console.log(params);
 	const { data } = await axios.get(
-		`http://192.168.0.72:3000/topics/${params.menuId}/articles`
+		`https://353d-2405-4803-c830-3ff0-c81e-1f08-20dc-d8f1.ngrok-free.app/topics/${params.menuId}/articles`
 	);
+
 	return {
 		props: {
 			data,

@@ -70,11 +70,12 @@ export default function News({ data }: any) {
 		</Container>
 	);
 }
+
 export async function getServerSideProps(context: any) {
 	const { params } = context;
 	console.log(params);
 	const { data } = await axios.get(
-		`http://192.168.0.72:3000/articles/${params.newsId}`
+		`https://353d-2405-4803-c830-3ff0-c81e-1f08-20dc-d8f1.ngrok-free.app/articles/${params.newsId}`
 	);
 	return {
 		props: {
