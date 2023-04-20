@@ -9,12 +9,29 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	Container,
+	Grid,
+	Skeleton,
+	Stack,
+	Typography,
+} from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, FC, useEffect } from "react";
 import ModalSearch from "../subComponents/ModalSearch";
 import axios from "axios";
+import { BASE_URL } from "@/constant";
+import { socket } from "@/helpers";
+import { formatPrice } from "@/utilities";
+
+interface IDataSocket {
+	symbol: string;
+	price: string;
+	percent: string;
+}
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
@@ -116,62 +133,108 @@ export const Header: FC = () => {
 	const [listTopics, setListTopics] = useState<any[]>([]);
 	useEffect(() => {
 		const fetchArticels = async () => {
-			const { data } = await axios.get(
-				`https://353d-2405-4803-c830-3ff0-c81e-1f08-20dc-d8f1.ngrok-free.app/topics`
-			);
+			const { data } = await axios.get(`${BASE_URL}/topics`);
 			setListTopics(data);
 		};
 
 		fetchArticels();
 	}, []);
-	// console.log("Topics:", listTopics);
 	const router = useRouter();
-	// console.log("param", router.query.menuId);
+
+	const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
+	useEffect(() => {
+		socket.on("connect", () => {
+			console.log("SOCKET CONNECTED");
+			socket.emit("authenticate");
+		});
+		socket.on("authenticated", () => {
+			socket.emit("join", {
+				rooms: ["market-price"],
+			});
+		});
+		socket.on("market-price", (args) => {
+			setDataSocket(args);
+		});
+		return () => {};
+	}, []);
+
+	console.log("datasocket: ", dataSocket);
+
 	return (
 		<header>
+			{/* show modal search */}
 			{openModal && (
 				<ModalSearch openModal={openModal} setOpenModal={setOpenModal} />
 			)}
 			{/* Coin bar */}
 			<Box className={classes.backgroundf2f2f2}>
 				<Container disableGutters>
-					<Grid container>
+					<Grid container spacing={2}>
 						<Grid item xs={w1024 ? 11 : w500 ? 10 : 10} container>
-							{Array.from(Array(w1024 ? 4 : w500 ? 3 : 1)).map((_, index) => (
-								<Grid
-									item
-									container
-									xs={w1024 ? 3 : w500 ? 4 : 12}
-									padding='10px 0'
-									className={classes.itemCoibar}
-									justifyContent='space-between'
-									alignItems='center'
-									key={index}
-								>
-									<Grid item xs={3}>
-										<Typography fontSize='16px' paddingLeft='20px'>
-											BTC
-										</Typography>
-									</Grid>
+							{/* {dataSocket.length === 0 ? (
+								<Skeleton sx={{ width: "100%", height: "50px" }} />
+							) : ( */}
+
+							{dataSocket
+								?.slice(0, w1024 ? 4 : w500 ? 3 : 1)
+								.map((item, index) => (
 									<Grid
 										item
-										xs={9}
 										container
+										xs={w1024 ? 3 : w500 ? 4 : 12}
+										padding='10px 0'
+										className={classes.itemCoibar}
+										justifyContent='space-between'
 										alignItems='center'
-										justifyContent='flex-end'
+										key={index}
 									>
-										<Typography fontSize='13px' paddingRight='7px'>
-											37,643,000 원
-										</Typography>
-										<Stack direction='row' alignItems='center'>
-											<Typography fontSize='13px'>(+0.52%)</Typography>
-											<ArrowDropDownIcon
-												sx={{ top: "-5px", fontSize: "30px", color: "blue" }}
-											/>
-										</Stack>
+										<Grid item xs={3}>
+											<Typography fontSize='16px' paddingLeft='20px'>
+												{item.symbol}
+											</Typography>
+										</Grid>
+										<Grid
+											item
+											xs={9}
+											container
+											alignItems='center'
+											justifyContent='flex-end'
+										>
+											<Typography
+												fontSize='13px'
+												paddingRight='7px'
+												color={Number(item.percent) > 0 ? "red" : "blue"}
+											>
+												{formatPrice(item.price)} 원
+											</Typography>
+											<Stack direction='row' alignItems='center'>
+												<Typography
+													color={Number(item.percent) > 0 ? "red" : "blue"}
+													fontSize='13px'
+												>
+													({item.percent})%
+												</Typography>
+												{Number(item.percent) > 0 ? (
+													<ArrowDropUpIcon
+														sx={{
+															top: "-5px",
+															fontSize: "30px",
+															color: "red",
+														}}
+													/>
+												) : (
+													<ArrowDropDownIcon
+														sx={{
+															top: "-5px",
+															fontSize: "30px",
+															color: "blue",
+														}}
+													/>
+												)}
+											</Stack>
+										</Grid>
 									</Grid>
-								</Grid>
-							))}
+								))}
 						</Grid>
 						<Grid
 							item

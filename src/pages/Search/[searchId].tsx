@@ -10,10 +10,12 @@ import {
 	useMediaQuery,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { AsidePage, ArticlePage } from "@/components";
+import { AsidePage, ArticleTopic } from "@/components";
 import SearchInput from "@/components/subComponents/SearchInput";
 import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { BASE_URL } from "@/constant";
 import { Marker } from "react-mark.js";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
@@ -38,14 +40,16 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		color: "#247acd",
 	},
 }));
-const Search = () => {
+
+export default function Search({ data }: any) {
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const options = ["1 week ago", "1 mounth ago", "6 mounth ago", "1 year ago"];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
 	const router = useRouter();
-	console.log(router.query.searchId);
+	const listArticle = data;
+
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -162,6 +166,7 @@ const Search = () => {
 						</Grid>
 						<Grid
 							item
+							direction='column'
 							xs={w1220 ? 10 : 12}
 							container
 							marginLeft={w1220 ? "0" : w1024 ? "20px" : "0"}
@@ -169,12 +174,13 @@ const Search = () => {
 							<Typography fontSize='18px' paddingBottom='10px'>
 								TOTAL (200)
 							</Typography>
+
 							{/* use Marker to highlight-text */}
 							<Marker
 								mark={router.query.searchId}
 								options={{ className: classes.marker }}
 							>
-								<ArticlePage />
+								<ArticleTopic listArticle={listArticle} />
 							</Marker>
 						</Grid>
 					</Grid>
@@ -186,6 +192,13 @@ const Search = () => {
 			</Grid>
 		</Container>
 	);
-};
+}
 
-export default Search;
+export async function getServerSideProps(context: any) {
+	const { data } = await axios.get(`${BASE_URL}/topics/54/articles`);
+	return {
+		props: {
+			data,
+		},
+	};
+}

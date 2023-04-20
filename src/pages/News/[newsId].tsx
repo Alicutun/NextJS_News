@@ -1,6 +1,6 @@
 import * as React from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { ArticleNews, AsidePage } from "@/components";
+import { Article, AsidePage } from "@/components";
 import {
 	Box,
 	Container,
@@ -10,13 +10,14 @@ import {
 	useMediaQuery,
 } from "@mui/material";
 import axios from "axios";
+import { BASE_URL } from "@/constant";
 
 export interface NewsProps {}
 
 export default function News({ data }: any) {
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	// console.log("datanews: ", data);
+	console.log("datanews: ", data);
 
 	return (
 		<Container disableGutters>
@@ -61,7 +62,7 @@ export default function News({ data }: any) {
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
-					<ArticleNews dataNews={data} />
+					<Article dataNews={data} />
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
@@ -73,10 +74,21 @@ export default function News({ data }: any) {
 
 export async function getServerSideProps(context: any) {
 	const { params } = context;
-	console.log(params);
-	const { data } = await axios.get(
-		`https://353d-2405-4803-c830-3ff0-c81e-1f08-20dc-d8f1.ngrok-free.app/articles/${params.newsId}`
-	);
+	const filter = {
+		filter: {
+			include: [
+				{
+					relation: "user",
+					scope: {
+						include: [{ relation: "profile" }],
+					},
+				},
+			],
+		},
+	};
+	const { data } = await axios.get(`${BASE_URL}/articles/${params.newsId}`, {
+		params: filter,
+	});
 	return {
 		props: {
 			data,

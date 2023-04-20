@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 const SearchInput: React.FC<{ search?: any }> = ({ search }) => {
 	const [searchArticle, setSearchArticle] = useState<any>(search);
-	console.log("props input: ", search);
 	useEffect(() => {
 		setSearchArticle(search);
 	}, [search]);

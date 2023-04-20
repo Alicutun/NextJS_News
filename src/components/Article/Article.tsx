@@ -1,11 +1,7 @@
 import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
 import * as React from "react";
 import PrintIcon from "@mui/icons-material/Print";
-// import FacebookIcon from "@mui/icons-material/Facebook";
-// import TwitterIcon from "@mui/icons-material/Twitter";
-import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import SubjectIcon from "@mui/icons-material/Subject";
-import LinkIcon from "@mui/icons-material/Link";
 import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import TextField from "@mui/material/TextField";
 import { useReactToPrint } from "react-to-print";
@@ -18,8 +14,7 @@ import {
 	EmailShareButton,
 	EmailIcon,
 } from "react-share";
-// import {useFormatter} from 'next-intl';
-
+import { formatTimeArticle } from "@/utilities";
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	root: {
 		"&:hover": {
@@ -51,11 +46,11 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 const LIMIT_LENGTH = 500;
 
-export function ArticleNews({ dataNews }: any) {
+export function Article({ dataNews }: any) {
 	const { classes, cx } = useStyles({ color: "red" });
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
-	// console.log("data: ", dataNews);
+
 	// count word in comment
 	const handleChange = (e: any) => {
 		const length = e.target.value.toString().length;
@@ -70,6 +65,7 @@ export function ArticleNews({ dataNews }: any) {
 	const generatePDF = useReactToPrint({
 		content: () => componentPDF.current,
 	});
+
 	return (
 		<article
 			className={
@@ -99,8 +95,8 @@ export function ArticleNews({ dataNews }: any) {
 				</Grid>
 
 				<Grid item container marginBottom='15px' fontSize='12px' gap='32px'>
-					<Box>입력 {dataNews.createDate}</Box>
-					<Box>수정 {dataNews.editDate}</Box>
+					<Box>입력 {formatTimeArticle(dataNews.createDate)}</Box>
+					<Box>수정 {formatTimeArticle(dataNews.editDate)}</Box>
 					<Box>김정우 기자</Box>
 				</Grid>
 
@@ -135,7 +131,6 @@ export function ArticleNews({ dataNews }: any) {
 				</Grid>
 			</Grid>
 			{/* print */}
-
 			<Box
 				ref={componentPDF}
 				dangerouslySetInnerHTML={{ __html: dataNews.details[0].content }}

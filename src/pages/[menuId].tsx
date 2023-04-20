@@ -8,15 +8,17 @@ import {
 	useMediaQuery,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { AsidePage, ArticlePage } from "@/components";
+import { AsidePage, ArticleTopic } from "@/components";
 import axios from "axios";
+import { BASE_URL } from "@/constant";
+import { stringify } from "querystring";
 
 export interface Menu01Props {}
 
 export default function Menu({ data }: any) {
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	// console.log("dataCha: ", data);
+	console.log("data: ", data);
 	const listArticle = data;
 
 	return (
@@ -62,7 +64,7 @@ export default function Menu({ data }: any) {
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
-					<ArticlePage listArticle={listArticle} />
+					<ArticleTopic listArticle={listArticle} />
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
@@ -74,14 +76,36 @@ export default function Menu({ data }: any) {
 
 export async function getServerSideProps(context: any) {
 	const { params } = context;
-	console.log(params);
+	const filter = {
+		filter: {
+			include: [
+				{
+					relation: "user",
+					scope: {
+						include: [{ relation: "profile" }],
+					},
+				},
+			],
+		},
+	};
+
+	console.log(filter);
 	const { data } = await axios.get(
-		`https://353d-2405-4803-c830-3ff0-c81e-1f08-20dc-d8f1.ngrok-free.app/topics/${params.menuId}/articles`
+		`${BASE_URL}/topics/${params.menuId}/articles?filter=${encodeURIComponent(
+			JSON.stringify(filter.filter)
+		)}`
+		// {
+		// 	params: filter,
+		// 	paramsSerializer: {
+		// 		serialize: (params) => {
+		// 			const serialized = stringify(params);
+		// 			return serialized;
+		// 		},
+		// 	},
+		// }
 	);
 
 	return {
-		props: {
-			data,
-		},
+		props: { data },
 	};
 }

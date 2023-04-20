@@ -17,7 +17,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 	boxRes: {
 		borderTop: "9px solid #ced2d7",
-		height: "223px",
+		height: "268px",
 		overflow: "hidden",
 	},
 	boxLive: {
@@ -39,7 +39,6 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		height: "40px",
 		paddingLeft: "20px",
 		fontWeight: "bold",
-		borderBottom: "1px solid #ced2d7",
 	},
 	itemBox: {
 		borderBottom: "1px solid #ced2d7",
@@ -94,7 +93,6 @@ export function AsidePage(props: AsidePageProps) {
 				/>
 			</Box>
 			{/* list Box */}
-
 			{Array.from(Array(2)).map((_, index) => (
 				<Box className={w1024 ? classes.box : classes.boxRes} key={index}>
 					<Typography
