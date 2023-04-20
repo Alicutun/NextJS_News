@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Grid, useMediaQuery } from "@mui/material";
-import { AsidePage, ArticleTopic, TopStory, Advertise } from "@/components";
+import { AsidePage, TopStory, Advertise, ArticleTopic } from "@/components";
 import axios from "axios";
 import { BASE_URL } from "@/constant";
 
@@ -8,7 +8,7 @@ export interface Menu01Props {}
 
 export default function Menu({ data }: any) {
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	console.log("data: ", data);
+	// console.log("data: ", data);
 	const listArticle = data;
 
 	return (

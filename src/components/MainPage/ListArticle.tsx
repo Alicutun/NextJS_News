@@ -42,7 +42,7 @@ export function ArticleTopic({ listArticle }: any) {
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w640 = useMediaQuery("(min-width:640px)");
 	const router = useRouter();
-	console.log("listArticle: ", listArticle);
+	// console.log("listArticle: ", listArticle);
 	return (
 		<article>
 			{/* Category */}

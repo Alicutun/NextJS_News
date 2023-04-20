@@ -26,6 +26,7 @@ import axios from "axios";
 import { BASE_URL } from "@/constant";
 import { socket } from "@/helpers";
 import { formatPrice } from "@/utilities";
+import SkeletonCoibar from "./SkeletonCoibar";
 
 interface IDataSocket {
 	symbol: string;
@@ -162,94 +163,96 @@ export const Header: FC = () => {
 				<ModalSearch openModal={openModal} setOpenModal={setOpenModal} />
 			)}
 			{/* Coin bar */}
-			<Box className={classes.backgroundf2f2f2}>
-				<Container disableGutters>
-					<Grid container spacing={2}>
-						<Grid item xs={w1024 ? 11 : w500 ? 10 : 10} container>
-							{/* {dataSocket.length === 0 ? (
+			{/* {dataSocket.length === 0 ? (
 								<Skeleton sx={{ width: "100%", height: "50px" }} />
 							) : ( */}
-
-							{dataSocket
-								?.slice(0, w1024 ? 4 : w500 ? 3 : 1)
-								.map((item, index) => (
-									<Grid
-										item
-										container
-										xs={w1024 ? 3 : w500 ? 4 : 12}
-										padding='10px 0'
-										className={classes.itemCoibar}
-										justifyContent='space-between'
-										alignItems='center'
-										key={index}
-									>
-										<Grid item xs={3}>
-											<Typography fontSize='16px' paddingLeft='20px'>
-												{item.symbol}
-											</Typography>
-										</Grid>
+			{dataSocket.length === 0 ? (
+				<SkeletonCoibar />
+			) : (
+				<Box className={classes.backgroundf2f2f2}>
+					<Container disableGutters>
+						<Grid container spacing={2}>
+							<Grid item xs={w1024 ? 11 : w500 ? 10 : 10} container>
+								{dataSocket
+									?.slice(0, w1024 ? 4 : w500 ? 3 : 1)
+									.map((item, index) => (
 										<Grid
 											item
-											xs={9}
 											container
+											xs={w1024 ? 3 : w500 ? 4 : 12}
+											padding='10px 0'
+											className={classes.itemCoibar}
+											justifyContent='space-between'
 											alignItems='center'
-											justifyContent='flex-end'
+											key={index}
 										>
-											<Typography
-												fontSize='13px'
-												paddingRight='7px'
-												color={Number(item.percent) > 0 ? "red" : "blue"}
-											>
-												{formatPrice(item.price)} 원
-											</Typography>
-											<Stack direction='row' alignItems='center'>
-												<Typography
-													color={Number(item.percent) > 0 ? "red" : "blue"}
-													fontSize='13px'
-												>
-													({item.percent})%
+											<Grid item xs={3}>
+												<Typography fontSize='16px' paddingLeft='20px'>
+													{item.symbol}
 												</Typography>
-												{Number(item.percent) > 0 ? (
-													<ArrowDropUpIcon
-														sx={{
-															top: "-5px",
-															fontSize: "30px",
-															color: "red",
-														}}
-													/>
-												) : (
-													<ArrowDropDownIcon
-														sx={{
-															top: "-5px",
-															fontSize: "30px",
-															color: "blue",
-														}}
-													/>
-												)}
-											</Stack>
+											</Grid>
+											<Grid
+												item
+												xs={9}
+												container
+												alignItems='center'
+												justifyContent='flex-end'
+											>
+												<Typography
+													fontSize='13px'
+													paddingRight='7px'
+													color={Number(item.percent) > 0 ? "red" : "blue"}
+												>
+													{formatPrice(item.price)} 원
+												</Typography>
+												<Stack direction='row' alignItems='center'>
+													<Typography
+														color={Number(item.percent) > 0 ? "red" : "blue"}
+														fontSize='13px'
+													>
+														({item.percent})%
+													</Typography>
+													{Number(item.percent) > 0 ? (
+														<ArrowDropUpIcon
+															sx={{
+																top: "-5px",
+																fontSize: "30px",
+																color: "red",
+															}}
+														/>
+													) : (
+														<ArrowDropDownIcon
+															sx={{
+																top: "-5px",
+																fontSize: "30px",
+																color: "blue",
+															}}
+														/>
+													)}
+												</Stack>
+											</Grid>
 										</Grid>
-									</Grid>
-								))}
+									))}
+							</Grid>
+							<Grid
+								item
+								xs={w1024 ? 1 : w500 ? 2 : 2}
+								className={classes.itemCoibar}
+								justifyContent='center'
+								alignItems='center'
+								container
+							>
+								<Link href='https://www.bithumb.com'>
+									<img
+										src='https://branchimg.sedaily.com/Decenter/bittumb_pc.png'
+										alt=''
+									/>
+								</Link>
+							</Grid>
 						</Grid>
-						<Grid
-							item
-							xs={w1024 ? 1 : w500 ? 2 : 2}
-							className={classes.itemCoibar}
-							justifyContent='center'
-							alignItems='center'
-							container
-						>
-							<Link href='https://www.bithumb.com'>
-								<img
-									src='https://branchimg.sedaily.com/Decenter/bittumb_pc.png'
-									alt=''
-								/>
-							</Link>
-						</Grid>
-					</Grid>
-				</Container>
-			</Box>
-
+					</Container>
+				</Box>
+			)}
 			{/* Search */}
 			<Container
 				disableGutters

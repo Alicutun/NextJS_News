@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
 	Autocomplete,
 	Box,
@@ -21,6 +21,8 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { BASE_URL } from "@/constant";
 import { Marker } from "react-mark.js";
+import SearchIcon from "@mui/icons-material/Search";
+import { Input } from "@mui/icons-material";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	selection: {
@@ -41,13 +43,31 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 }));
 
 export default function Search({ data }: any) {
+	console.log(data);
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const options = ["1 week ago", "1 mounth ago", "6 mounth ago", "1 year ago"];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
 	const router = useRouter();
-	const listArticle = data;
+	const [infoSearch, setInfoSearch] = useState<any[]>([]);
+	const [listArticle, setListArticle] = useState<any[]>([]);
+
+	const allTopics = infoSearch.find((info: any) => info.topic === "All topics");
+	console.log("topic", allTopics);
+	const notAllTopics = infoSearch.filter(
+		(info: any) => info.topic !== "All topics"
+	);
+
+	useEffect(() => {
+		setInfoSearch(data);
+		setListArticle(data[3].articles);
+
+		return () => {};
+	}, []);
+
+	console.log("nfo", infoSearch);
+	console.log("listArtile", listArticle);
 
 	return (
 		<Container disableGutters>
@@ -68,9 +88,8 @@ export default function Search({ data }: any) {
 							height='100px'
 							alignItems='center'
 							sx={{ borderBottom: "solid 1px #ced2d7" }}
-						>
-							<SearchInput search={router.query.searchId} />
-						</Grid>
+						></Grid>
+
 						<Grid
 							container
 							alignItems='center'
@@ -113,6 +132,7 @@ export default function Search({ data }: any) {
 							</Typography>
 						</Grid>
 					</Box>
+
 					<Grid container direction='row' columnSpacing={5}>
 						<Grid item xs={2} display={w1220 ? "" : "none"}>
 							<Typography
@@ -124,10 +144,15 @@ export default function Search({ data }: any) {
 							>
 								Category별
 							</Typography>
-							<Typography fontSize='13px'>All topics</Typography>
-							<Typography fontSize='13px'>IT(50)</Typography>
-							<Typography fontSize='13px'>IT(50)</Typography>
-							<Typography fontSize='13px'>IT(50)</Typography>
+
+							<Typography fontSize='13px'>
+								{allTopics?.topic} ({allTopics?.total})
+							</Typography>
+							{notAllTopics?.map((item, index) => (
+								<Typography key={index} fontSize='13px'>
+									{item.topic} ({item.total})
+								</Typography>
+							))}
 						</Grid>
 						<Grid
 							item
@@ -160,7 +185,14 @@ export default function Search({ data }: any) {
 }
 
 export async function getServerSideProps(context: any) {
-	const { data } = await axios.get(`${BASE_URL}/topics/54/articles`);
+	const { params } = context;
+	console.log("params: { text: params.searchId }: ", {
+		text: params.searchId,
+		locale: "vi_VN",
+	});
+	const { data } = await axios.get(`${BASE_URL}/articles/search`, {
+		params: { text: params.searchId, locale: "vi_VN" },
+	});
 	return {
 		props: {
 			data,
