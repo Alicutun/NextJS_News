@@ -1,3 +1,5 @@
 export * from "./BackToTopButton";
-export * from "./ModalSearch";
+export * from "../Modal/ModalSearch";
 export * from "./SearchInput";
+export * from "./TopStory";
+export * from "./Advertise";

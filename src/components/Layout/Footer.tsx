@@ -1,6 +1,5 @@
 import {
 	Autocomplete,
-	Box,
 	Container,
 	Grid,
 	Stack,
@@ -8,22 +7,14 @@ import {
 	useMediaQuery,
 } from "@mui/material";
 import * as React from "react";
-import PrintIcon from "@mui/icons-material/Print";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import LinkIcon from "@mui/icons-material/Link";
 import TextField from "@mui/material/TextField";
-
 import { makeStyles } from "tss-react/mui";
-import BackToTopButton from "../subComponents/BackToTopButton";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	root: {
-		"&:hover": {
-			backgroundColor: theme.palette.primary.main,
-		},
-	},
 	navFooter: {
 		color: "#666666",
 		background: "#f8f8f8",

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/router";
 
-const SearchInput: React.FC<{ search?: any }> = ({ search }) => {
+export const SearchInput: React.FC<{ search?: any }> = ({ search }) => {
 	const [searchArticle, setSearchArticle] = useState<any>(search);
 	useEffect(() => {
 		setSearchArticle(search);
@@ -38,5 +38,3 @@ const SearchInput: React.FC<{ search?: any }> = ({ search }) => {
 		</Stack>
 	);
 };
-
-export default SearchInput;

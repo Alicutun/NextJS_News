@@ -13,11 +13,6 @@ import { useRouter } from "next/router";
 import { formatTimeListArticle } from "@/utilities";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	root: {
-		"&:hover": {
-			backgroundColor: theme.palette.primary.main,
-		},
-	},
 	boder: {
 		border: "1px solid #e6e8eb",
 	},

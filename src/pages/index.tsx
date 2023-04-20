@@ -1,20 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Link from "next/link";
 import Image from "next/image";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { Container, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { TopStory } from "@/components";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	root: {
-		"&:hover": {
-			backgroundColor: theme.palette.primary.main,
-		},
-	},
 	broder: {
 		border: "1px solid #d9d9d9",
 	},
@@ -89,29 +84,7 @@ export default function Index() {
 	return (
 		<section>
 			{/* header_topstory */}
-			<Container disableGutters>
-				<Grid
-					container
-					fontSize='16px'
-					padding={w1220 ? "20px 0 40px 0" : "20px 0 40px 20px"}
-					justifyContent={w1024 ? "flex-start" : "center"}
-				>
-					<Typography color='#448aff' fontWeight='bold'>
-						TOP STORIES
-					</Typography>
-					<Typography marginLeft='10px'>
-						업비트, 37분 만에 원화마켓 거래 재개
-					</Typography>
-
-					<Box color='#999' margin='3px 2px 0 10px'>
-						<AccessTimeIcon sx={{ fontSize: "15px" }} />
-					</Box>
-
-					<Typography color='#999' fontSize='12px' pt='2px'>
-						24분전
-					</Typography>
-				</Grid>
-			</Container>
+			<TopStory display={true} />
 			{/* Container TopIndex */}
 			<Container
 				className={w1024 ? classes.containerTopIndex : classes.displayNone}

@@ -9,9 +9,13 @@ import {
 	Typography,
 	useMediaQuery,
 } from "@mui/material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { AsidePage, ArticleTopic } from "@/components";
-import SearchInput from "@/components/subComponents/SearchInput";
+import {
+	AsidePage,
+	ArticleTopic,
+	TopStory,
+	Advertise,
+	SearchInput,
+} from "@/components";
 import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -19,11 +23,6 @@ import { BASE_URL } from "@/constant";
 import { Marker } from "react-mark.js";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	root: {
-		"&:hover": {
-			backgroundColor: theme.palette.primary.main,
-		},
-	},
 	selection: {
 		background: "#fff",
 		width: 200,
@@ -53,43 +52,9 @@ export default function Search({ data }: any) {
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
-			<Container disableGutters>
-				<Grid
-					container
-					fontSize='16px'
-					padding={w1220 ? "20px 0 50px 0" : "20px 0 50px 20px"}
-					justifyContent={w1024 ? "flex-start" : "center"}
-					display={w1024 ? "flex" : "none"}
-				>
-					<Typography color='#448aff' fontWeight='bold'>
-						TOP STORIES
-					</Typography>
-					<Typography marginLeft='10px'>
-						업비트, 37분 만에 원화마켓 거래 재개
-					</Typography>
-
-					<Box color='#999' margin='3px 2px 0 10px'>
-						<AccessTimeIcon sx={{ fontSize: "15px" }} />
-					</Box>
-
-					<Typography color='#999' fontSize='12px' pt='2px'>
-						24분전
-					</Typography>
-				</Grid>
-			</Container>
+			<TopStory />
 			{/* ad */}
-			<Stack
-				direction='row'
-				justifyContent='center'
-				sx={{ background: "#004a90" }}
-				display={w1024 ? "none" : "flex"}
-			>
-				<img
-					width='350px'
-					src='https://branchimg.sedaily.com/Decenter/Banner/decenter_plus_mobile_9.jpg'
-					alt=''
-				/>
-			</Stack>
+			<Advertise />
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12} margin={w1024 ? "" : "0 20px 0 20px"}>

@@ -21,7 +21,7 @@ import {
 import { makeStyles } from "tss-react/mui";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, FC, useEffect } from "react";
-import ModalSearch from "../subComponents/ModalSearch";
+import ModalSearch from "../Modal/ModalSearch";
 import axios from "axios";
 import { BASE_URL } from "@/constant";
 import { socket } from "@/helpers";
@@ -34,11 +34,6 @@ interface IDataSocket {
 }
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	root: {
-		"&:hover": {
-			backgroundColor: theme.palette.primary.main,
-		},
-	},
 	backgroundf2f2f2: {
 		background: "#f2f2f2",
 	},
@@ -378,7 +373,11 @@ export const Header: FC = () => {
 										component='a'
 										sx={{
 											textDecoration: "none",
-											color: w1024 ? "#000" : "#fff",
+											color: w1024
+												? Number(router.query.menuId) === Number(item.id)
+													? "blue"
+													: "#000"
+												: "#fff",
 										}}
 									>
 										블록체인
