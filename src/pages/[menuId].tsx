@@ -33,22 +33,20 @@ export default function Menu({ data }: any) {
 export async function getServerSideProps(context: any) {
 	const { params } = context;
 	const filter = {
-		filter: {
-			include: [
-				{
-					relation: "user",
-					scope: {
-						include: [{ relation: "profile" }],
-					},
+		include: [
+			{
+				relation: "user",
+				scope: {
+					include: [{ relation: "profile" }],
 				},
-			],
-		},
+			},
+		],
 	};
 
 	console.log(filter);
 	const { data } = await axios.get(
 		`${BASE_URL}/topics/${params.menuId}/articles?filter=${encodeURIComponent(
-			JSON.stringify(filter.filter)
+			JSON.stringify(filter)
 		)}`
 		// {
 		// 	params: filter,

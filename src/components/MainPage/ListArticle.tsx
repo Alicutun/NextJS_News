@@ -13,10 +13,10 @@ import { useRouter } from "next/router";
 import { formatTimeListArticle } from "@/utilities";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	boder: {
+	border: {
 		border: "1px solid #e6e8eb",
 	},
-	boderTop: {
+	borderTop: {
 		borderTop: "1px solid #e6e8eb",
 	},
 	box1: {
@@ -39,6 +39,12 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 export function ArticleTopic({ listArticle }: any) {
 	const { classes, cx } = useStyles({ color: "red" });
+
+	// fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
+
+	const [listArticles, setDataContent] = React.useState<any[]>([]);
+	React.useEffect(() => setDataContent(listArticle), []);
+
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w640 = useMediaQuery("(min-width:640px)");
 	const router = useRouter();
@@ -59,13 +65,13 @@ export function ArticleTopic({ listArticle }: any) {
 			{/* List article */}
 			<Box>
 				<Box marginLeft={w1220 ? "" : "10px"}>
-					{listArticle?.map((item: any) => (
+					{listArticles?.map((item: any) => (
 						<Grid
 							sx={{
 								cursor: "pointer",
 							}}
 							container
-							className={classes.boderTop}
+							className={classes.borderTop}
 							padding='20px 0'
 							key={item.id}
 							onClick={() => {
@@ -92,18 +98,14 @@ export function ArticleTopic({ listArticle }: any) {
 									<Typography className={classes.itemTime}>
 										김정우 기자 | {formatTimeListArticle(item.editDate)}
 									</Typography>
-									<Typography
+
+									<Box
 										className={classes.itemContent}
 										display={w640 ? "" : "none"}
-									>
-										델리오는 토큰 증권(ST)을 보관·관리할 수 있는 지갑 서비스를
-										제공한다고 5일 밝혔다. 델리오는 현재 운영하고 있는 금고형
-										가상자산 전문 지갑 ‘볼트(Vault)’를 활용해 기관·개인에게 토큰
-										증권 지갑 서비스를 제공할 예정이다. 볼트는 비트코인(BTC),
-										이더리움(ETH) 등 가상자산과 대체불가토큰(NFT) 등
-										디지털자산을 보관관리할 수 있는 디지털자산 지갑이다.
-										△멀티시그(Multi-signature) △소유자자격증명 △탈중앙 출금
-									</Typography>
+										dangerouslySetInnerHTML={{
+											__html: item.details[0].content,
+										}}
+									></Box>
 								</Box>
 							</Grid>
 						</Grid>

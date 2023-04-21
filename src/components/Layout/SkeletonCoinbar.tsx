@@ -63,7 +63,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		cursor: "pointer",
 	},
 }));
-const SkeletonCoibar = () => {
+const SkeletonCoinbar = () => {
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
@@ -72,10 +72,11 @@ const SkeletonCoibar = () => {
 			<Container disableGutters>
 				<Grid container spacing={2}>
 					<Grid item xs={w1024 ? 11 : w500 ? 10 : 10} container>
-						{Array.from(Array(4)).map((_, index) => (
+						{Array.from(Array(w1024 ? 4 : w500 ? 3 : 1)).map((_, index) => (
 							<Grid
 								item
 								container
+								direction='row'
 								xs={w1024 ? 3 : w500 ? 4 : 12}
 								padding='10px 0'
 								className={classes.itemCoibar}
@@ -123,4 +124,4 @@ const SkeletonCoibar = () => {
 	);
 };
 
-export default SkeletonCoibar;
+export default SkeletonCoinbar;

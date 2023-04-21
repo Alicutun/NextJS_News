@@ -9,15 +9,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-	Box,
-	Button,
-	Container,
-	Grid,
-	Skeleton,
-	Stack,
-	Typography,
-} from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, FC, useEffect } from "react";
@@ -26,7 +18,7 @@ import axios from "axios";
 import { BASE_URL } from "@/constant";
 import { socket } from "@/helpers";
 import { formatPrice } from "@/utilities";
-import SkeletonCoibar from "./SkeletonCoibar";
+import SkeletonCoinbar from "./SkeletonCoinbar";
 
 interface IDataSocket {
 	symbol: string;
@@ -38,7 +30,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	backgroundf2f2f2: {
 		background: "#f2f2f2",
 	},
-	itemCoibar: {
+	itemCoinbar: {
 		borderLeft: "1px solid #ddd",
 	},
 	iconDown: {
@@ -128,12 +120,12 @@ export const Header: FC = () => {
 	const [openModal, setOpenModal] = useState<boolean>(false);
 	const [listTopics, setListTopics] = useState<any[]>([]);
 	useEffect(() => {
-		const fetchArticels = async () => {
+		const fetchArticle = async () => {
 			const { data } = await axios.get(`${BASE_URL}/topics`);
 			setListTopics(data);
 		};
 
-		fetchArticels();
+		fetchArticle();
 	}, []);
 	const router = useRouter();
 
@@ -167,7 +159,7 @@ export const Header: FC = () => {
 								<Skeleton sx={{ width: "100%", height: "50px" }} />
 							) : ( */}
 			{dataSocket.length === 0 ? (
-				<SkeletonCoibar />
+				<SkeletonCoinbar />
 			) : (
 				<Box className={classes.backgroundf2f2f2}>
 					<Container disableGutters>
@@ -181,7 +173,7 @@ export const Header: FC = () => {
 											container
 											xs={w1024 ? 3 : w500 ? 4 : 12}
 											padding='10px 0'
-											className={classes.itemCoibar}
+											className={classes.itemCoinbar}
 											justifyContent='space-between'
 											alignItems='center'
 											key={index}
@@ -237,7 +229,7 @@ export const Header: FC = () => {
 							<Grid
 								item
 								xs={w1024 ? 1 : w500 ? 2 : 2}
-								className={classes.itemCoibar}
+								className={classes.itemCoinbar}
 								justifyContent='center'
 								alignItems='center'
 								container

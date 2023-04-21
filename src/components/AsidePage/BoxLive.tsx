@@ -3,9 +3,11 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { makeStyles } from "tss-react/mui";
+import axios from "axios";
+import { BASE_URL } from "@/constant";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	boxLive: {
@@ -58,10 +60,11 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		borderRight: "1px solid #e6e8eb",
 	},
 }));
-const BoxLive = () => {
+export const BoxLive = () => {
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w480 = useMediaQuery("(min-width:480px)");
+
 	return (
 		<Box className={w1024 ? classes.boxLive : classes.boxLiveRes}>
 			<Stack
@@ -136,5 +139,3 @@ const BoxLive = () => {
 		</Box>
 	);
 };
-
-export default BoxLive;

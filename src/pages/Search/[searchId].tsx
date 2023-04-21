@@ -47,14 +47,20 @@ export default function Search({ data }: any) {
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	const options = ["1 week ago", "1 mounth ago", "6 mounth ago", "1 year ago"];
+	const options = [
+		"last 1 week ",
+		"last 1 mounth ",
+		"last 6 mounths ",
+		"last 1 years ",
+	];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
 	const router = useRouter();
 	const [infoSearch, setInfoSearch] = useState<any[]>([]);
 	const [listArticle, setListArticle] = useState<any[]>([]);
 
 	const allTopics = infoSearch.find((info: any) => info.topic === "All topics");
-	console.log("topic", allTopics);
+
+	// console.log("topic", allTopics);
 	const notAllTopics = infoSearch.filter(
 		(info: any) => info.topic !== "All topics"
 	);
@@ -66,8 +72,14 @@ export default function Search({ data }: any) {
 		return () => {};
 	}, []);
 
-	console.log("nfo", infoSearch);
+	console.log("info", infoSearch);
 	console.log("listArtile", listArticle);
+
+	const handleTopic = (name: string) => {
+		const topic = infoSearch.find((info: any) => info.topic === name);
+		// console.log("topic click: ", topic);
+		setListArticle(topic?.articles);
+	};
 
 	return (
 		<Container disableGutters>
@@ -137,7 +149,6 @@ export default function Search({ data }: any) {
 						<Grid item xs={2} display={w1220 ? "" : "none"}>
 							<Typography
 								fontSize='16px'
-								color='blue'
 								paddingBottom='10px'
 								marginBottom='20px'
 								sx={{ borderBottom: "solid 1px #ced2d7" }}
@@ -145,11 +156,22 @@ export default function Search({ data }: any) {
 								Category별
 							</Typography>
 
-							<Typography fontSize='13px'>
+							<Typography
+								fontSize='13px'
+								color='blue'
+								fontWeight='bold'
+								sx={{ cursor: "pointer" }}
+								onClick={() => handleTopic(allTopics?.topic)}
+							>
 								{allTopics?.topic} ({allTopics?.total})
 							</Typography>
 							{notAllTopics?.map((item, index) => (
-								<Typography key={index} fontSize='13px'>
+								<Typography
+									key={index}
+									onClick={() => handleTopic(item.topic)}
+									sx={{ cursor: "pointer" }}
+									fontSize='13px'
+								>
 									{item.topic} ({item.total})
 								</Typography>
 							))}
@@ -162,7 +184,7 @@ export default function Search({ data }: any) {
 							marginLeft={w1220 ? "0" : w1024 ? "20px" : "0"}
 						>
 							<Typography fontSize='18px' paddingBottom='10px'>
-								TOTAL (200)
+								TOTAL ()
 							</Typography>
 
 							{/* use Marker to highlight-text */}

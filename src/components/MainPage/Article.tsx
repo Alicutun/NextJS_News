@@ -16,11 +16,6 @@ import {
 } from "react-share";
 import { formatTimeArticle } from "@/utilities";
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
-	root: {
-		"&:hover": {
-			backgroundColor: theme.palette.primary.main,
-		},
-	},
 	articleNews: {
 		position: "relative",
 		marginBottom: "30px",
@@ -51,7 +46,11 @@ export function Article({ dataNews }: any) {
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
 
-	// count word in comment
+	// fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
+	const [dataContent, setDataContent] = React.useState("");
+	React.useEffect(() => setDataContent(dataNews.details[0].content), []);
+
+	// func count word in comment
 	const handleChange = (e: any) => {
 		const length = e.target.value.toString().length;
 		if (length <= LIMIT_LENGTH) {
@@ -59,13 +58,16 @@ export function Article({ dataNews }: any) {
 			setCount(length);
 		}
 	};
-	const w1024 = useMediaQuery("(min-width:1024px)");
-	const w1220 = useMediaQuery("(min-width:1220px)");
+
+	// func print pdf
 	const componentPDF = React.useRef(null);
 	const generatePDF = useReactToPrint({
 		content: () => componentPDF.current,
 	});
 
+	// responsive
+	const w1024 = useMediaQuery("(min-width:1024px)");
+	const w1220 = useMediaQuery("(min-width:1220px)");
 	return (
 		<article
 			className={
@@ -133,7 +135,7 @@ export function Article({ dataNews }: any) {
 			{/* print */}
 			<Box
 				ref={componentPDF}
-				dangerouslySetInnerHTML={{ __html: dataNews.details[0].content }}
+				dangerouslySetInnerHTML={{ __html: dataContent }}
 			/>
 
 			<Grid container direction='column' spacing={2} paddingTop='100px'>
