@@ -1,2 +1,2 @@
-export * from "./Date";
-export * from "./Number";
+export * from "./date";
+export * from "./number";

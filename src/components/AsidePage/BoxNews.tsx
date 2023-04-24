@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import axios from "axios";
-import { BASE_URL } from "@/constant";
+import { BASE_URL } from "@/common";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	box: {
@@ -64,13 +64,7 @@ const BoxNews: React.FC<{}> = () => {
 		fetchListTop10Article();
 	}, []);
 
-	// fetch data top 10 Article
-	console.log(
-		"url: ",
-		`${BASE_URL}/articles?filter=${encodeURIComponent(JSON.stringify(params))}`
-	);
-
-	console.log("data top 10: ", listData);
+	// console.log("data top 10: ", listData);
 	return (
 		<Box className={w1024 ? classes.box : classes.boxRes}>
 			<Typography

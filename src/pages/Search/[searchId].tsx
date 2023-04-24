@@ -4,6 +4,7 @@ import {
 	Box,
 	Container,
 	Grid,
+	Pagination,
 	Stack,
 	TextField,
 	Typography,
@@ -11,7 +12,7 @@ import {
 } from "@mui/material";
 import {
 	AsidePage,
-	ArticleTopic,
+	ListArticle,
 	TopStory,
 	Advertise,
 	SearchInput,
@@ -19,7 +20,7 @@ import {
 import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { BASE_URL } from "@/constant";
+import { BASE_URL, LIMIT } from "@/common";
 import { Marker } from "react-mark.js";
 import SearchIcon from "@mui/icons-material/Search";
 import { Input } from "@mui/icons-material";
@@ -41,46 +42,68 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		color: "#247acd",
 	},
 }));
+export default function Search({ searchData, searchTotal }: any) {
+	const allTopic = searchTotal.find((s: any) => s.topic === "All topics");
+	const [listArticle, setListArticle] = useState<any[]>(searchData.articles);
+	const [total, setTotal] = useState<number>(allTopic.total);
+	const [nameTopic, setNameTopic] = useState(allTopic.topic);
+	const [loading, setLoading] = useState(false);
+	console.log("nameTopic: ", nameTopic);
+	const [page, setPage] = React.useState(1);
+	console.log("page:", page);
 
-export default function Search({ data }: any) {
-	console.log(data);
 	const { classes, cx } = useStyles({ color: "red" });
+	// click select topic
+	const handleTopic = async (topicName: string, total: number) => {
+		const { data } = await axios.get(`${BASE_URL}/articles/search`, {
+			params: {
+				text: router.query.searchId,
+				locale: "vi_VN",
+				topicName,
+				limit: LIMIT,
+			},
+		});
+		setListArticle(data.articles);
+		setNameTopic(topicName);
+		setTotal(total);
+		setPage(1);
+	};
+	const fetchList = async () => {
+		setLoading(true);
+		try {
+			const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
+				params: {
+					text: router.query.searchId,
+					locale: "vi_VN",
+					topicName: nameTopic,
+					limit: LIMIT,
+					page,
+				},
+			});
+			setLoading(false);
+			// if(!data) return
+			setListArticle(data?.articles);
+		} catch (error) {
+			console.log("err");
+		}
+	};
+	useEffect(() => {
+		fetchList();
+	}, [page]);
+	console.log("list: ", listArticle);
+
+	// responsive
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const options = [
 		"last 1 week ",
-		"last 1 mounth ",
-		"last 6 mounths ",
+		"last 1 month ",
+		"last 6 months ",
 		"last 1 years ",
 	];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
+
 	const router = useRouter();
-	const [infoSearch, setInfoSearch] = useState<any[]>([]);
-	const [listArticle, setListArticle] = useState<any[]>([]);
-
-	const allTopics = infoSearch.find((info: any) => info.topic === "All topics");
-
-	// console.log("topic", allTopics);
-	const notAllTopics = infoSearch.filter(
-		(info: any) => info.topic !== "All topics"
-	);
-
-	useEffect(() => {
-		setInfoSearch(data);
-		setListArticle(data[3].articles);
-
-		return () => {};
-	}, []);
-
-	console.log("info", infoSearch);
-	console.log("listArtile", listArticle);
-
-	const handleTopic = (name: string) => {
-		const topic = infoSearch.find((info: any) => info.topic === name);
-		// console.log("topic click: ", topic);
-		setListArticle(topic?.articles);
-	};
-
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -161,14 +184,14 @@ export default function Search({ data }: any) {
 								color='blue'
 								fontWeight='bold'
 								sx={{ cursor: "pointer" }}
-								onClick={() => handleTopic(allTopics?.topic)}
+								// onClick={() => handleTopic(allTopics?.topic)}
 							>
-								{allTopics?.topic} ({allTopics?.total})
+								{/* {allTopics?.topic} ({allTopics?.total}) */}
 							</Typography>
-							{notAllTopics?.map((item, index) => (
+							{searchTotal?.map((item: any, index: number) => (
 								<Typography
 									key={index}
-									onClick={() => handleTopic(item.topic)}
+									onClick={() => handleTopic(item.topic, item.total)}
 									sx={{ cursor: "pointer" }}
 									fontSize='13px'
 								>
@@ -184,7 +207,7 @@ export default function Search({ data }: any) {
 							marginLeft={w1220 ? "0" : w1024 ? "20px" : "0"}
 						>
 							<Typography fontSize='18px' paddingBottom='10px'>
-								TOTAL ()
+								TOTAL ({total})
 							</Typography>
 
 							{/* use Marker to highlight-text */}
@@ -192,8 +215,21 @@ export default function Search({ data }: any) {
 								mark={router.query.searchId}
 								options={{ className: classes.marker }}
 							>
-								<ArticleTopic listArticle={listArticle} />
+								<ListArticle listArticle={listArticle} />
 							</Marker>
+							{/* Pagination */}
+							{listArticle?.length !== 0 && (
+								<Stack alignItems='center' marginBottom='20px'>
+									<Pagination
+										size='small'
+										count={Math.ceil(total / LIMIT)}
+										page={page}
+										onChange={(e, value) => setPage(value)}
+										showFirstButton
+										showLastButton
+									/>
+								</Stack>
+							)}
 						</Grid>
 					</Grid>
 				</Grid>
@@ -212,12 +248,19 @@ export async function getServerSideProps(context: any) {
 		text: params.searchId,
 		locale: "vi_VN",
 	});
-	const { data } = await axios.get(`${BASE_URL}/articles/search`, {
+	const dataSearchAllTopic = await axios.get(`${BASE_URL}/articles/search`, {
+		params: { text: params.searchId, locale: "vi_VN", limit: LIMIT, page: 1 },
+	});
+	const searchData = dataSearchAllTopic.data;
+	const dataSearchTotal = await axios.get(`${BASE_URL}/articles/search-total`, {
 		params: { text: params.searchId, locale: "vi_VN" },
 	});
+	const searchTotal = dataSearchTotal.data;
+
 	return {
 		props: {
-			data,
+			searchData,
+			searchTotal,
 		},
 	};
 }

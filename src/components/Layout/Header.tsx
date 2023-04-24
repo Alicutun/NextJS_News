@@ -15,10 +15,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useState, FC, useEffect } from "react";
 import ModalSearch from "../Modal/ModalSearch";
 import axios from "axios";
-import { BASE_URL } from "@/constant";
+import { BASE_URL } from "@/common";
 import { socket } from "@/helpers";
 import { formatPrice } from "@/utilities";
-import SkeletonCoinbar from "./SkeletonCoinbar";
+import SkeletonCoinbar from "../Skeleton/SkeletonCoinbar";
 
 interface IDataSocket {
 	symbol: string;
@@ -146,7 +146,7 @@ export const Header: FC = () => {
 		return () => {};
 	}, []);
 
-	console.log("datasocket: ", dataSocket);
+	// console.log("datasocket: ", dataSocket);
 
 	return (
 		<header>

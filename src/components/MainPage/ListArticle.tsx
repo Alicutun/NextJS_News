@@ -11,6 +11,7 @@ import {
 import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import { formatTimeListArticle } from "@/utilities";
+import SkeletonListMovie from "../Skeleton/SkeletonListMovie";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	border: {
@@ -37,13 +38,12 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 }));
 
-export function ArticleTopic({ listArticle }: any) {
+export function ListArticle({ listArticle }: any) {
 	const { classes, cx } = useStyles({ color: "red" });
-
 	// fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
 
 	const [listArticles, setDataContent] = React.useState<any[]>([]);
-	React.useEffect(() => setDataContent(listArticle), []);
+	React.useEffect(() => setDataContent(listArticle), [listArticle]);
 
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w640 = useMediaQuery("(min-width:640px)");
@@ -63,67 +63,59 @@ export function ArticleTopic({ listArticle }: any) {
 			</Stack>
 
 			{/* List article */}
-			<Box>
-				<Box marginLeft={w1220 ? "" : "10px"}>
-					{listArticles?.map((item: any) => (
-						<Grid
-							sx={{
-								cursor: "pointer",
-							}}
-							container
-							className={classes.borderTop}
-							padding='20px 0'
-							key={item.id}
-							onClick={() => {
-								router.push({
-									pathname: "/News/[name]",
-									query: { name: item.id },
-								});
-							}}
-						>
-							<Grid item xs={2}>
-								<Stack alignItems='center' className={classes.box1}>
-									<img
-										height={w640 ? "75px" : "50px"}
-										src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
-										alt=''
-									/>
-								</Stack>
-							</Grid>
-							<Grid item xs={10}>
-								<Box marginLeft='10px'>
-									<Typography fontSize='20px' color='#000' lineHeight='24px'>
-										{item.details[0].summary}
-									</Typography>
-									<Typography className={classes.itemTime}>
-										김정우 기자 | {formatTimeListArticle(item.editDate)}
-									</Typography>
+			{listArticles?.length !== 0 ? (
+				<Box>
+					<Box marginLeft={w1220 ? "" : "10px"}>
+						{listArticles?.map((item: any) => (
+							<Grid
+								sx={{
+									cursor: "pointer",
+								}}
+								container
+								className={classes.borderTop}
+								padding='20px 0'
+								key={item.id}
+								onClick={() => {
+									router.push({
+										pathname: "/News/[name]",
+										query: { name: item.id },
+									});
+								}}
+							>
+								<Grid item xs={2}>
+									<Stack alignItems='center' className={classes.box1}>
+										<img
+											height={w640 ? "75px" : "50px"}
+											src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
+											alt=''
+										/>
+									</Stack>
+								</Grid>
+								<Grid item xs={10}>
+									<Box marginLeft='10px'>
+										<Typography fontSize='20px' color='#000' lineHeight='24px'>
+											{item.details[0].summary}
+										</Typography>
+										<Typography className={classes.itemTime}>
+											김정우 기자 | {formatTimeListArticle(item.editDate)}
+										</Typography>
 
-									<Box
-										className={classes.itemContent}
-										display={w640 ? "" : "none"}
-										dangerouslySetInnerHTML={{
-											__html: item.details[0].content,
-										}}
-									></Box>
-								</Box>
+										<Box
+											className={classes.itemContent}
+											display={w640 ? "" : "none"}
+											dangerouslySetInnerHTML={{
+												__html: item.details[0].content,
+											}}
+										></Box>
+									</Box>
+								</Grid>
 							</Grid>
-						</Grid>
-					))}
+						))}
+					</Box>
 				</Box>
-
-				{/* Pagination */}
-				{listArticle.length > 0 && (
-					<Stack alignItems='center' marginBottom='20px'>
-						<Pagination
-							size='small'
-							count={10}
-							showFirstButton
-							showLastButton
-						/>
-					</Stack>
-				)}
-			</Box>
+			) : (
+				<SkeletonListMovie />
+			)}
 		</article>
 	);
 }

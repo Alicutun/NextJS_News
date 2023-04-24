@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { makeStyles } from "tss-react/mui";
 import axios from "axios";
-import { BASE_URL } from "@/constant";
+import { BASE_URL } from "@/common";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	boxLive: {

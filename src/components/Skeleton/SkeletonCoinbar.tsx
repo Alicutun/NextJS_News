@@ -1,7 +1,5 @@
-import { formatPrice } from "@/utilities";
 import { Box, Container, Link, Skeleton } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
@@ -11,7 +9,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	backgroundf2f2f2: {
 		background: "#f2f2f2",
 	},
-	itemCoibar: {
+	itemCoinbar: {
 		borderLeft: "1px solid #ddd",
 	},
 	iconDown: {
@@ -79,7 +77,7 @@ const SkeletonCoinbar = () => {
 								direction='row'
 								xs={w1024 ? 3 : w500 ? 4 : 12}
 								padding='10px 0'
-								className={classes.itemCoibar}
+								className={classes.itemCoinbar}
 								justifyContent='space-between'
 								alignItems='center'
 								key={index}
@@ -106,7 +104,7 @@ const SkeletonCoinbar = () => {
 					<Grid
 						item
 						xs={w1024 ? 1 : w500 ? 2 : 2}
-						className={classes.itemCoibar}
+						className={classes.itemCoinbar}
 						justifyContent='center'
 						alignItems='center'
 						container

@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Grid, useMediaQuery } from "@mui/material";
-import { AsidePage, TopStory, Advertise, ArticleTopic } from "@/components";
+import { AsidePage, TopStory, Advertise, ListArticle } from "@/components";
 import axios from "axios";
-import { BASE_URL } from "@/constant";
+import { BASE_URL } from "@/common";
 
 export interface Menu01Props {}
 
@@ -20,7 +20,7 @@ export default function Menu({ data }: any) {
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
-					<ArticleTopic listArticle={listArticle} />
+					<ListArticle listArticle={listArticle} />
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />

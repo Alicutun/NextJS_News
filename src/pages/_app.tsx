@@ -4,7 +4,7 @@ import "@/styles/globals.css";
 import { Header, Footer } from "@/components";
 import type { AppProps } from "next/app";
 import { createEmotionSsrAdvancedApproach } from "tss-react/next/pagesDir";
-import BackToTopButton from "@/components/subComponents/BackToTopButton";
+import BackToTopButton from "@/components/SubComponents/BackToTopButton";
 
 function App({ Component, pageProps }: AppProps) {
 	return (
