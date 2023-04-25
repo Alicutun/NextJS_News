@@ -16,8 +16,7 @@ export const AsidePage = () => {
 				/>
 			</Box>
 
-			{/* list Box */}
-			<BoxNews />
+			{/* Box */}
 			<BoxNews />
 
 			{/* Box live */}

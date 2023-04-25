@@ -42,6 +42,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 
 	boxImg: {
+		background: "#f7f7f7",
 		border: "1px solid #ced2d7",
 	},
 }));
@@ -122,16 +123,13 @@ const BoxNews: React.FC<{}> = () => {
 							</Typography>
 							{/* image */}
 							<Stack
-								display={w1024 ? "unset" : "none"}
+								width='100px'
+								display={w1024 ? "" : "none"}
 								height='35px'
 								className={classes.boxImg}
-								justifyContent='flex-end'
+								alignItems='center'
 							>
-								<img
-									height='100%'
-									src='https://newsimg.sedaily.com/2023/04/11/29O9GMLL2X_1_s.jpg'
-									alt=''
-								/>
+								<img height='100%' src={item.details[0].summaryImage} alt='' />
 							</Stack>
 						</Stack>
 					</Grid>

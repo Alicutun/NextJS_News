@@ -103,7 +103,7 @@ export const ListArticle: React.FC<{
 										<Stack alignItems='center' className={classes.box1}>
 											<img
 												height={w640 ? "75px" : "50px"}
-												src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
+												src={item.details[0].summaryImage}
 												alt=''
 											/>
 										</Stack>

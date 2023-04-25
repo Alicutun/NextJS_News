@@ -61,7 +61,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		cursor: "pointer",
 	},
 }));
-const SkeletonCoinbar = () => {
+export const SkeletonCoinbar = () => {
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
@@ -121,5 +121,3 @@ const SkeletonCoinbar = () => {
 		</Box>
 	);
 };
-
-export default SkeletonCoinbar;
