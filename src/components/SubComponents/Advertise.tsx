@@ -3,7 +3,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 
 export const Advertise = () => {
+	//
 	const w1024 = useMediaQuery("(min-width:1024px)");
+
 	return (
 		<Stack
 			direction='row'

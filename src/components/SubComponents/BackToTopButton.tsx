@@ -4,7 +4,11 @@ import Grid from "@mui/material/Grid";
 import { useMediaQuery } from "@mui/material";
 
 const BackToTopButton = () => {
+	//
+	const w1024 = useMediaQuery("(min-width:1024px)");
+	//
 	const [backToTop, setBackToTop] = useState(false);
+
 	useEffect(() => {
 		window.addEventListener("scroll", () => {
 			if (window.scrollY > 100) {
@@ -14,7 +18,6 @@ const BackToTopButton = () => {
 			}
 		});
 	}, []);
-	const w1024 = useMediaQuery("(min-width:1024px)");
 
 	return (
 		<div>

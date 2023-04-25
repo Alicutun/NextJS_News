@@ -12,7 +12,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	box: {
 		marginTop: "10px",
 		border: "1px solid #ced2d7",
-		height: "342px",
+		height: "336px",
 		overflow: "hidden",
 	},
 	boxRes: {
@@ -46,26 +46,32 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		border: "1px solid #ced2d7",
 	},
 }));
+
 const BoxNews: React.FC<{}> = () => {
+	//
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w480 = useMediaQuery("(min-width:480px)");
+
 	const [listData, setListData] = useState<any[]>([]);
-	const params = { order: "clickCount DESC", limit: 10 };
+
+	// call get top10 news
 	const fetchListTop10Article = async () => {
 		const { data } = await axios.get(
 			`${BASE_URL}/articles?filter=${encodeURIComponent(
-				JSON.stringify(params)
+				JSON.stringify({
+					order: "clickCount DESC",
+					limit: 10,
+				})
 			)}`
 		);
-		setListData(data);
+		setListData(data.data);
 	};
 
 	useEffect(() => {
 		fetchListTop10Article();
 	}, []);
 
-	// console.log("data top 10: ", listData);
 	return (
 		<Box className={w1024 ? classes.box : classes.boxRes}>
 			<Typography
@@ -75,7 +81,6 @@ const BoxNews: React.FC<{}> = () => {
 				베스트 클릭
 			</Typography>
 			<Grid container>
-				{/* {Array.from(Array(w1024 ? 5 : w480 ? 10 : 5)).map((_, index) => ( */}
 				{listData?.slice(0, w1024 ? 5 : w480 ? 10 : 5).map((item, index) => (
 					<Grid item xs={w1024 ? 12 : w480 ? 6 : 12} key={index}>
 						<Stack
@@ -85,7 +90,13 @@ const BoxNews: React.FC<{}> = () => {
 							columnGap={1}
 							padding={w1024 ? "10px 0" : "10px 0 10px 10px"}
 							margin='0 10px'
-							className={w1024 ? classes.itemBox : classes.itemBoxRes}
+							className={
+								w1024
+									? Number(index) === 4
+										? ""
+										: classes.itemBox
+									: classes.itemBoxRes
+							}
 						>
 							{/* css number */}
 							{w1024 ? (
@@ -112,8 +123,9 @@ const BoxNews: React.FC<{}> = () => {
 							)}
 							{/* content item */}
 							<Typography
-								height={w1024 ? "39px" : "auto"}
+								maxHeight={w1024 ? "39px" : "auto"}
 								width='100%'
+								alignContent='center'
 								justifyContent='flex-start'
 								fontSize={w1024 ? "13px" : "15px"}
 								noWrap={w1024 ? false : true}

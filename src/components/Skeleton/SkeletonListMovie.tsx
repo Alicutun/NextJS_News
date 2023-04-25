@@ -2,7 +2,6 @@ import { Skeleton, useMediaQuery } from "@mui/material";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
 
@@ -18,10 +17,13 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		background: "#f7f7f7",
 	},
 }));
+
 const SkeletonListMovie = () => {
+	//
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w640 = useMediaQuery("(min-width:640px)");
+
 	return (
 		<Box marginLeft={w1220 ? "" : "10px"}>
 			{Array.from(Array(3)).map((_, index) => (

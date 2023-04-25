@@ -31,26 +31,32 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		color: "blue",
 	},
 }));
+
 const Coinbar = () => {
+	//
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
-
+	//
 	const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
+
 	useEffect(() => {
 		socket.on("connect", () => {
 			console.log("SOCKET CONNECTED");
 			socket.emit("authenticate");
 		});
+
 		socket.on("authenticated", () => {
 			socket.emit("join", {
 				rooms: ["market-price"],
 			});
 		});
+
 		socket.on("market-price", (args) => {
 			setDataSocket(args);
 		});
+
 		return () => {};
 	}, []);
 

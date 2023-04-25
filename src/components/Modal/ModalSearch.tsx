@@ -1,10 +1,9 @@
 import { Modal, Stack, Typography, Input, Grid } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-
-import React, { useState } from "react";
+import React from "react";
 import { SearchInput } from "../SubComponents";
 
-const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
+export const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
 	openModal,
 	setOpenModal,
 }) => {
@@ -38,5 +37,3 @@ const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
 		</Modal>
 	);
 };
-
-export default ModalSearch;

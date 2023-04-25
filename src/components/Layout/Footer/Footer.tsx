@@ -46,13 +46,15 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 }));
 
 export function Footer() {
+	//
 	const { classes, cx } = useStyles({ color: "red" });
-
+	const w1024 = useMediaQuery("(min-width:1024px)");
+	//
 	const options = ["Option 1", "Option 2", "Option 1asd", "Option 2asda"];
-
+	//
 	const [value, setValue] = React.useState<string | null>(options[0]);
 	const [inputValue, setInputValue] = React.useState("");
-	const w1024 = useMediaQuery("(min-width:1024px)");
+
 	return (
 		<footer>
 			<Container disableGutters>

@@ -4,7 +4,9 @@ import { BoxLive } from "./BoxLive";
 import React from "react";
 
 export const AsidePage = () => {
+	//
 	const w1024 = useMediaQuery("(min-width:1024px)");
+
 	return (
 		<aside>
 			{/* Image */}

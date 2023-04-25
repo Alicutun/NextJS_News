@@ -1,16 +1,14 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Autocomplete,
 	Box,
 	Button,
 	Container,
 	Grid,
-	Pagination,
 	Stack,
 	TextField,
 	Typography,
 	useMediaQuery,
-	Input,
 } from "@mui/material";
 import { AsidePage, ListArticle, TopStory, Advertise } from "@/components";
 import { makeStyles } from "tss-react/mui";
@@ -31,15 +29,23 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		},
 	},
 }));
-export default function Search({ searchData, searchTotal }: any) {
+export default function Search({
+	dataSearchModalAllTopic,
+	dataSearchModalTotalTopic,
+}: any) {
 	const router = useRouter();
-	const allTopic = searchTotal.find((s: any) => s.topic === "All topics");
-	const [listArticle, setListArticle] = useState<any[]>(searchData.articles);
+	const allTopic = dataSearchModalTotalTopic.find(
+		(s: any) => s.topic === "All topics"
+	);
+	const [listArticle, setListArticle] = useState<any[]>(
+		dataSearchModalAllTopic.articles
+	);
 	const [total, setTotal] = useState<number>(allTopic.total);
 	const [nameTopic, setNameTopic] = useState(allTopic.topic);
 	const [loading, setLoading] = useState(false);
-	const [valueSearh, setValueSearch] = useState<any>(router.query.searchId);
+	const [valueSearch, setValueSearch] = useState<any>(router.query.searchId);
 	const [searchArticle, setSearchArticle] = useState<any>();
+	const [searchSS, setSearchSS] = useState<boolean>(true);
 	const [page, setPage] = React.useState(1);
 
 	const { classes, cx } = useStyles({ color: "red" });
@@ -78,10 +84,26 @@ export default function Search({ searchData, searchTotal }: any) {
 			console.log("err");
 		}
 	};
+	// search in page Search
+	const handleSearch = async () => {
+		setSearchSS(false);
+		const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
+			params: {
+				text: searchArticle,
+				locale: LOCALE,
+				limit: LIMIT,
+				page,
+			},
+		});
+		setValueSearch(searchArticle);
+		setListArticle(data?.articles);
+	};
+
 	useEffect(() => {
-		fetchList();
+		console.log("search SS");
+		if (searchSS) fetchList();
+		else handleSearch();
 	}, [page]);
-	console.log("list: ", listArticle);
 
 	// responsive
 	const w1220 = useMediaQuery("(min-width:1220px)");
@@ -94,20 +116,6 @@ export default function Search({ searchData, searchTotal }: any) {
 	];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
 
-	const handleSearch = async () => {
-		const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
-			params: {
-				text: searchArticle,
-				locale: LOCALE,
-				limit: LIMIT,
-				page,
-			},
-		});
-		setValueSearch(searchArticle);
-		setListArticle(data?.articles);
-	};
-	console.log("text: ", searchArticle);
-	console.log("list: ", listArticle);
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -130,8 +138,8 @@ export default function Search({ searchData, searchTotal }: any) {
 							sx={{ borderBottom: "solid 1px #ced2d7" }}
 							onKeyUp={(e) => console.log("aa", e)}
 						>
-							<Input
-								sx={{ height: "55px", width: "50%", border: "1px solid gray" }}
+							<TextField
+								sx={{ height: "55px", width: "50%" }}
 								onChange={(e) => setSearchArticle(e.target.value)}
 							/>
 
@@ -208,7 +216,7 @@ export default function Search({ searchData, searchTotal }: any) {
 								Category별
 							</Typography>
 
-							{searchTotal?.map((item: any, index: number) => (
+							{dataSearchModalTotalTopic?.map((item: any, index: number) => (
 								<Typography
 									key={index}
 									onClick={() => handleTopic(item.topic, item.total)}
@@ -235,7 +243,7 @@ export default function Search({ searchData, searchTotal }: any) {
 								page={page}
 								setPage={setPage}
 								total={total}
-								valueSearh={valueSearh}
+								valueSearch={valueSearch}
 							/>
 						</Grid>
 					</Grid>
@@ -255,19 +263,19 @@ export async function getServerSideProps(context: any) {
 		text: params.searchId,
 		locale: LOCALE,
 	});
-	const dataSearchAllTopic = await axios.get(`${BASE_URL}/articles/search`, {
+	const data1 = await axios.get(`${BASE_URL}/articles/search`, {
 		params: { text: params.searchId, locale: LOCALE, limit: LIMIT, page: 1 },
 	});
-	const searchData = dataSearchAllTopic.data;
-	const dataSearchTotal = await axios.get(`${BASE_URL}/articles/search-total`, {
+	const dataSearchModalAllTopic = data1.data;
+	const data2 = await axios.get(`${BASE_URL}/articles/search-total`, {
 		params: { text: params.searchId, locale: LOCALE },
 	});
-	const searchTotal = dataSearchTotal.data;
+	const dataSearchModalTotalTopic = data2.data;
 
 	return {
 		props: {
-			searchData,
-			searchTotal,
+			dataSearchModalAllTopic,
+			dataSearchModalTotalTopic,
 		},
 	};
 }

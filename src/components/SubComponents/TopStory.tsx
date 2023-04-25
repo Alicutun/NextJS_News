@@ -7,6 +7,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React, { useState } from "react";
 
 export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
+	//
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 
@@ -18,19 +19,22 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
 		{ id: 4, value: "con con meo" },
 		{ id: 5, value: "con ha ma" },
 	];
+
 	const [wordData, setWordData] = useState<any>(words[0]);
 	const [i, setI] = useState<number>(0);
-	// const[text,setText]=useState("")
+
 	React.useEffect(() => {
 		const timer = setTimeout(() => {
 			if (i === 0) {
 				setWordData(words[0]);
 				setI((i) => i + 1);
 			}
+
 			if (i < words.length && i !== 0) {
 				setWordData(words[i]);
 				setI((i) => i + 1);
 			}
+
 			if (i === words.length) {
 				setWordData(words[0]);
 				setI(1);
@@ -40,7 +44,7 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
 			clearTimeout(timer);
 		};
 	}, [i]);
-	// console.log(wordData);
+
 	return (
 		<Container disableGutters>
 			<Grid

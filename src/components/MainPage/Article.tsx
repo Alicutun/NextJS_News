@@ -15,6 +15,8 @@ import {
 	EmailIcon,
 } from "react-share";
 import { formatTimeArticle } from "@/utilities";
+import { LIMIT_COMMENT } from "@/common";
+
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	articleNews: {
 		position: "relative",
@@ -39,10 +41,12 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 }));
 
-const LIMIT_LENGTH = 500;
-
 export function Article({ dataNews }: any) {
+	//
 	const { classes, cx } = useStyles({ color: "red" });
+	const w1024 = useMediaQuery("(min-width:1024px)");
+	const w1220 = useMediaQuery("(min-width:1220px)");
+	//
 	const [text, setText] = React.useState("");
 	const [count, setCount] = React.useState(0);
 
@@ -53,21 +57,18 @@ export function Article({ dataNews }: any) {
 	// func count word in comment
 	const handleChange = (e: any) => {
 		const length = e.target.value.toString().length;
-		if (length <= LIMIT_LENGTH) {
+		if (length <= LIMIT_COMMENT) {
 			setText(e.target.value);
 			setCount(length);
 		}
 	};
 
-	// func print pdf
+	// func print PDF
 	const componentPDF = React.useRef(null);
 	const generatePDF = useReactToPrint({
 		content: () => componentPDF.current,
 	});
 
-	// responsive
-	const w1024 = useMediaQuery("(min-width:1024px)");
-	const w1220 = useMediaQuery("(min-width:1220px)");
 	return (
 		<article
 			className={
@@ -85,16 +86,14 @@ export function Article({ dataNews }: any) {
 				/>
 			</Box>
 			<Grid container direction='column' className={classes.topNews}>
-				<Grid item xs>
-					<Typography
-						marginBottom='10px'
-						variant='h2'
-						fontSize='32px'
-						fontWeight='bold'
-					>
-						{dataNews.details[0].summary}
-					</Typography>
-				</Grid>
+				<Typography
+					marginBottom='10px'
+					variant='h2'
+					fontSize='32px'
+					fontWeight='bold'
+				>
+					{dataNews.details[0].summary}
+				</Typography>
 
 				<Grid item container marginBottom='15px' fontSize='12px' gap='32px'>
 					<Box>입력 {formatTimeArticle(dataNews.createDate)}</Box>
@@ -126,6 +125,7 @@ export function Article({ dataNews }: any) {
 							<EmailIcon size={40} round={true} />
 						</EmailShareButton>
 					</Grid>
+
 					<Grid item xs={6} container justifyContent='flex-end' gap='10px'>
 						<SubjectIcon />
 						<PrintIcon sx={{ cursor: "pointer" }} onClick={generatePDF} />
@@ -191,7 +191,7 @@ export function Article({ dataNews }: any) {
 							multiline
 							fullWidth
 							placeholder='댓글 이용 시 클린한 댓글을 입력해 주세요'
-							inputProps={{ maxLength: LIMIT_LENGTH }}
+							inputProps={{ maxLength: LIMIT_COMMENT }}
 							value={text}
 							onChange={handleChange}
 						/>
@@ -207,7 +207,7 @@ export function Article({ dataNews }: any) {
 					>
 						<Grid item xs={6}>
 							<Typography variant='body2' color='grey.500'>
-								{count}/{LIMIT_LENGTH}
+								{count}/{LIMIT_COMMENT}
 							</Typography>
 						</Grid>
 
@@ -218,9 +218,11 @@ export function Article({ dataNews }: any) {
 						</Grid>
 					</Grid>
 				</Grid>
+
 				<Typography sx={{ textAlign: "center" }}>
 					등록된 댓글이 없습니다.
 				</Typography>
+
 				<Grid item container>
 					<Grid item container xs={6} justifyContent={"center"}>
 						<Box
@@ -231,6 +233,7 @@ export function Article({ dataNews }: any) {
 							}}
 						></Box>
 					</Grid>
+
 					<Grid item container xs={6} justifyContent={"center"}>
 						<Box
 							sx={{ width: "300px", height: "300px", background: "gray" }}

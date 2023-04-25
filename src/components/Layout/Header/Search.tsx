@@ -24,6 +24,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		cursor: "pointer",
 	},
 }));
+
 const Search = () => {
 	const router = useRouter();
 
@@ -32,9 +33,11 @@ const Search = () => {
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
+	// img -> home
 	function routePage() {
 		router.push("/");
 	}
+
 	return (
 		<Container
 			disableGutters

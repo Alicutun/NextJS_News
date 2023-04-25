@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Container, Grid, useMediaQuery } from "@mui/material";
 import { AsidePage, TopStory, Advertise, ListArticle } from "@/components";
 import axios from "axios";
-import { BASE_URL, LIMIT, LOCALE } from "@/common";
+import { BASE_URL, LIMIT } from "@/common";
 import { useRouter } from "next/router";
 
 export default function Menu({ data }: any) {
 	const router = useRouter();
 
-	const [listArticle, setListArticle] = useState<any[]>(data);
+	const [listArticle, setListArticle] = useState<any[]>(data.data);
 	const [page, setPage] = React.useState(0);
 
 	const w1024 = useMediaQuery("(min-width:1024px)");
@@ -36,7 +36,7 @@ export default function Menu({ data }: any) {
 			}/articles?filter=${encodeURIComponent(JSON.stringify(filter))}`
 		);
 
-		await setListArticle(data);
+		await setListArticle(data.data);
 		console.log("page", page);
 		console.log("offset", (page - 1) * 5);
 	};
@@ -45,6 +45,7 @@ export default function Menu({ data }: any) {
 		if (page > 0) fetchList();
 	}, [page]);
 
+	// console.log("listarticle: ", listArticle);
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -58,7 +59,7 @@ export default function Menu({ data }: any) {
 						listArticle={listArticle}
 						page={page}
 						setPage={setPage}
-						total={20}
+						total={data.total}
 					/>
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>

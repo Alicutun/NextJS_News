@@ -1,17 +1,18 @@
-import { Stack, Input, Grid, Button } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { Stack, Button, TextField, Container } from "@mui/material";
+import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/router";
 
 export const SearchInput: React.FC<{}> = () => {
-	const [searchArticle, setSearchArticle] = useState<any>();
+	//
 	const router = useRouter();
+
+	const [searchArticle, setSearchArticle] = useState<any>();
 
 	return (
 		<Stack direction='row' width='100%' justifyContent={"center"}>
-			<Input
-				autoFocus
-				sx={{ width: "50%", border: "1px solid gray" }}
+			<TextField
+				sx={{ height: "55px", width: "50%" }}
 				onChange={(e) => setSearchArticle(e.target.value)}
 			/>
 			<Button

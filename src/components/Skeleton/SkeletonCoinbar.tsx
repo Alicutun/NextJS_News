@@ -61,10 +61,13 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		cursor: "pointer",
 	},
 }));
+
 export const SkeletonCoinbar = () => {
+	//
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
+
 	return (
 		<Box className={classes.backgroundf2f2f2}>
 			<Container disableGutters>
