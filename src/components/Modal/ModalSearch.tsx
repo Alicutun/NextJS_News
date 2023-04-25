@@ -32,7 +32,7 @@ const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
 				<CloseIcon
 					onClick={() => setOpenModal(false)}
 					fontSize='large'
-					sx={{ color: "gray" }}
+					sx={{ color: "gray", cursor: "pointer" }}
 				/>
 			</Stack>
 		</Modal>

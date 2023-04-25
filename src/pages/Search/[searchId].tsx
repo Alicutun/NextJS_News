@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
 	Autocomplete,
 	Box,
+	Button,
 	Container,
 	Grid,
 	Pagination,
@@ -9,21 +10,14 @@ import {
 	TextField,
 	Typography,
 	useMediaQuery,
+	Input,
 } from "@mui/material";
-import {
-	AsidePage,
-	ListArticle,
-	TopStory,
-	Advertise,
-	SearchInput,
-} from "@/components";
+import { AsidePage, ListArticle, TopStory, Advertise } from "@/components";
 import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { BASE_URL, LIMIT } from "@/common";
-import { Marker } from "react-mark.js";
+import { BASE_URL, LIMIT, LOCALE } from "@/common";
 import SearchIcon from "@mui/icons-material/Search";
-import { Input } from "@mui/icons-material";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	selection: {
@@ -36,21 +30,17 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 			padding: "0.5px 4px 7.5px 6px !important",
 		},
 	},
-	marker: {
-		fontWeight: "bold",
-		background: "none",
-		color: "#247acd",
-	},
 }));
 export default function Search({ searchData, searchTotal }: any) {
+	const router = useRouter();
 	const allTopic = searchTotal.find((s: any) => s.topic === "All topics");
 	const [listArticle, setListArticle] = useState<any[]>(searchData.articles);
 	const [total, setTotal] = useState<number>(allTopic.total);
 	const [nameTopic, setNameTopic] = useState(allTopic.topic);
 	const [loading, setLoading] = useState(false);
-	console.log("nameTopic: ", nameTopic);
+	const [valueSearh, setValueSearch] = useState<any>(router.query.searchId);
+	const [searchArticle, setSearchArticle] = useState<any>();
 	const [page, setPage] = React.useState(1);
-	console.log("page:", page);
 
 	const { classes, cx } = useStyles({ color: "red" });
 	// click select topic
@@ -58,7 +48,7 @@ export default function Search({ searchData, searchTotal }: any) {
 		const { data } = await axios.get(`${BASE_URL}/articles/search`, {
 			params: {
 				text: router.query.searchId,
-				locale: "vi_VN",
+				locale: LOCALE,
 				topicName,
 				limit: LIMIT,
 			},
@@ -68,13 +58,14 @@ export default function Search({ searchData, searchTotal }: any) {
 		setTotal(total);
 		setPage(1);
 	};
+	// fetch data when click page
 	const fetchList = async () => {
 		setLoading(true);
 		try {
 			const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
 				params: {
 					text: router.query.searchId,
-					locale: "vi_VN",
+					locale: LOCALE,
 					topicName: nameTopic,
 					limit: LIMIT,
 					page,
@@ -103,7 +94,20 @@ export default function Search({ searchData, searchTotal }: any) {
 	];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
 
-	const router = useRouter();
+	const handleSearch = async () => {
+		const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
+			params: {
+				text: searchArticle,
+				locale: LOCALE,
+				limit: LIMIT,
+				page,
+			},
+		});
+		setValueSearch(searchArticle);
+		setListArticle(data?.articles);
+	};
+	console.log("text: ", searchArticle);
+	console.log("list: ", listArticle);
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -122,8 +126,33 @@ export default function Search({ searchData, searchTotal }: any) {
 							container
 							height='100px'
 							alignItems='center'
+							justifyContent='center'
 							sx={{ borderBottom: "solid 1px #ced2d7" }}
-						></Grid>
+							onKeyUp={(e) => console.log("aa", e)}
+						>
+							<Input
+								sx={{ height: "55px", width: "50%", border: "1px solid gray" }}
+								onChange={(e) => setSearchArticle(e.target.value)}
+							/>
+
+							<Button
+								disabled={!searchArticle ? true : false}
+								sx={{
+									width: "55px",
+									height: "55px",
+									background: "#444",
+									cursor: "pointer",
+									borderRadius: "0px !important ",
+									"&:hover": {
+										backgroundColor: "#444 !important",
+									},
+								}}
+								onKeyUp={handleSearch}
+								onClick={handleSearch}
+							>
+								<SearchIcon sx={{ color: "white" }} />
+							</Button>
+						</Grid>
 
 						<Grid
 							container
@@ -169,7 +198,7 @@ export default function Search({ searchData, searchTotal }: any) {
 					</Box>
 
 					<Grid container direction='row' columnSpacing={5}>
-						<Grid item xs={2} display={w1220 ? "" : "none"}>
+						<Grid item xs={w1220 ? 2 : 12} display={w1220 ? "" : "none"}>
 							<Typography
 								fontSize='16px'
 								paddingBottom='10px'
@@ -179,15 +208,6 @@ export default function Search({ searchData, searchTotal }: any) {
 								Category별
 							</Typography>
 
-							<Typography
-								fontSize='13px'
-								color='blue'
-								fontWeight='bold'
-								sx={{ cursor: "pointer" }}
-								// onClick={() => handleTopic(allTopics?.topic)}
-							>
-								{/* {allTopics?.topic} ({allTopics?.total}) */}
-							</Typography>
 							{searchTotal?.map((item: any, index: number) => (
 								<Typography
 									key={index}
@@ -206,30 +226,17 @@ export default function Search({ searchData, searchTotal }: any) {
 							container
 							marginLeft={w1220 ? "0" : w1024 ? "20px" : "0"}
 						>
+							{/* Total list */}
 							<Typography fontSize='18px' paddingBottom='10px'>
 								TOTAL ({total})
 							</Typography>
-
-							{/* use Marker to highlight-text */}
-							<Marker
-								mark={router.query.searchId}
-								options={{ className: classes.marker }}
-							>
-								<ListArticle listArticle={listArticle} />
-							</Marker>
-							{/* Pagination */}
-							{listArticle?.length !== 0 && (
-								<Stack alignItems='center' marginBottom='20px'>
-									<Pagination
-										size='small'
-										count={Math.ceil(total / LIMIT)}
-										page={page}
-										onChange={(e, value) => setPage(value)}
-										showFirstButton
-										showLastButton
-									/>
-								</Stack>
-							)}
+							<ListArticle
+								listArticle={listArticle}
+								page={page}
+								setPage={setPage}
+								total={total}
+								valueSearh={valueSearh}
+							/>
 						</Grid>
 					</Grid>
 				</Grid>
@@ -246,14 +253,14 @@ export async function getServerSideProps(context: any) {
 	const { params } = context;
 	console.log("params: { text: params.searchId }: ", {
 		text: params.searchId,
-		locale: "vi_VN",
+		locale: LOCALE,
 	});
 	const dataSearchAllTopic = await axios.get(`${BASE_URL}/articles/search`, {
-		params: { text: params.searchId, locale: "vi_VN", limit: LIMIT, page: 1 },
+		params: { text: params.searchId, locale: LOCALE, limit: LIMIT, page: 1 },
 	});
 	const searchData = dataSearchAllTopic.data;
 	const dataSearchTotal = await axios.get(`${BASE_URL}/articles/search-total`, {
-		params: { text: params.searchId, locale: "vi_VN" },
+		params: { text: params.searchId, locale: LOCALE },
 	});
 	const searchTotal = dataSearchTotal.data;
 

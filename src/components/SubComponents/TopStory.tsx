@@ -11,12 +11,12 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
 	const w1024 = useMediaQuery("(min-width:1024px)");
 
 	const words = [
-		{ id: 0, value: "con chim canh cuc" },
+		{ id: 0, value: "con chim canh cut" },
 		{ id: 1, value: "con dieu hau" },
 		{ id: 2, value: "con chuon chuon" },
-		// { id: 3, value: "con soc" },
-		// { id: 4, value: "con con meo" },
-		// { id: 5, value: "con ha ma" },
+		{ id: 3, value: "con soc" },
+		{ id: 4, value: "con con meo" },
+		{ id: 5, value: "con ha ma" },
 	];
 	const [wordData, setWordData] = useState<any>(words[0]);
 	const [i, setI] = useState<number>(0);

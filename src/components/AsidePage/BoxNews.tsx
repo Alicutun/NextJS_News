@@ -12,7 +12,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	box: {
 		marginTop: "10px",
 		border: "1px solid #ced2d7",
-		height: "322px",
+		height: "342px",
 		overflow: "hidden",
 	},
 	boxRes: {
@@ -111,6 +111,7 @@ const BoxNews: React.FC<{}> = () => {
 							)}
 							{/* content item */}
 							<Typography
+								height={w1024 ? "39px" : "auto"}
 								width='100%'
 								justifyContent='flex-start'
 								fontSize={w1024 ? "13px" : "15px"}

@@ -12,6 +12,8 @@ import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import { formatTimeListArticle } from "@/utilities";
 import SkeletonListMovie from "../Skeleton/SkeletonListMovie";
+import { LIMIT } from "@/common";
+import { Marker } from "react-mark.js";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	border: {
@@ -36,9 +38,20 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		overflow: "hidden",
 		maxHeight: "35px ",
 	},
+	marker: {
+		fontWeight: "bold",
+		background: "none",
+		color: "#247acd",
+	},
 }));
 
-export function ListArticle({ listArticle }: any) {
+export const ListArticle: React.FC<{
+	listArticle: any[];
+	page: number;
+	setPage: any;
+	total: number;
+	valueSearh?: any;
+}> = ({ listArticle, page, setPage, total, valueSearh }) => {
 	const { classes, cx } = useStyles({ color: "red" });
 	// fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
 
@@ -63,59 +76,80 @@ export function ListArticle({ listArticle }: any) {
 			</Stack>
 
 			{/* List article */}
-			{listArticles?.length !== 0 ? (
-				<Box>
+			{listArticles ? (
+				listArticle?.length === 0 ? (
+					<Typography>No Data</Typography>
+				) : (
 					<Box marginLeft={w1220 ? "" : "10px"}>
-						{listArticles?.map((item: any) => (
-							<Grid
-								sx={{
-									cursor: "pointer",
-								}}
-								container
-								className={classes.borderTop}
-								padding='20px 0'
-								key={item.id}
-								onClick={() => {
-									router.push({
-										pathname: "/News/[name]",
-										query: { name: item.id },
-									});
-								}}
-							>
-								<Grid item xs={2}>
-									<Stack alignItems='center' className={classes.box1}>
-										<img
-											height={w640 ? "75px" : "50px"}
-											src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
-											alt=''
-										/>
-									</Stack>
-								</Grid>
-								<Grid item xs={10}>
-									<Box marginLeft='10px'>
-										<Typography fontSize='20px' color='#000' lineHeight='24px'>
-											{item.details[0].summary}
-										</Typography>
-										<Typography className={classes.itemTime}>
-											김정우 기자 | {formatTimeListArticle(item.editDate)}
-										</Typography>
+						{/* use Marker to highlight-text */}
+						<Marker mark={valueSearh} options={{ className: classes.marker }}>
+							{listArticles?.map((item: any) => (
+								<Grid
+									sx={{
+										cursor: "pointer",
+									}}
+									container
+									className={classes.borderTop}
+									padding='20px 0'
+									key={item.id}
+									onClick={() => {
+										router.push({
+											pathname: "/News/[name]",
+											query: { name: item.id },
+										});
+									}}
+								>
+									<Grid item xs={2}>
+										<Stack alignItems='center' className={classes.box1}>
+											<img
+												height={w640 ? "75px" : "50px"}
+												src='https://newsimg.sedaily.com/2023/04/05/29O6OUJHMV_1_s.png'
+												alt=''
+											/>
+										</Stack>
+									</Grid>
+									<Grid item xs={10}>
+										<Box marginLeft='10px'>
+											<Typography
+												noWrap
+												fontSize='20px'
+												color='#000'
+												lineHeight='24px'
+											>
+												{item.details[0].summary}
+											</Typography>
+											<Typography className={classes.itemTime}>
+												김정우 기자 | {formatTimeListArticle(item.editDate)}
+											</Typography>
 
-										<Box
-											className={classes.itemContent}
-											display={w640 ? "" : "none"}
-											dangerouslySetInnerHTML={{
-												__html: item.details[0].content,
-											}}
-										></Box>
-									</Box>
+											<Box
+												className={classes.itemContent}
+												display={w640 ? "" : "none"}
+												dangerouslySetInnerHTML={{
+													__html: item.details[0].content,
+												}}
+											></Box>
+										</Box>
+									</Grid>
 								</Grid>
-							</Grid>
-						))}
+							))}
+						</Marker>
+
+						<Stack alignItems='center' marginBottom='20px'>
+							<Pagination
+								size='small'
+								count={Math.ceil(total / LIMIT)}
+								page={page}
+								onChange={(e, value) => setPage(value)}
+								showFirstButton
+								showLastButton
+							/>
+						</Stack>
 					</Box>
-				</Box>
+				)
 			) : (
 				<SkeletonListMovie />
 			)}
 		</article>
 	);
-}
+};

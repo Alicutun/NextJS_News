@@ -1,15 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Grid, useMediaQuery } from "@mui/material";
 import { AsidePage, TopStory, Advertise, ListArticle } from "@/components";
 import axios from "axios";
-import { BASE_URL } from "@/common";
-
-export interface Menu01Props {}
+import { BASE_URL, LIMIT, LOCALE } from "@/common";
+import { useRouter } from "next/router";
 
 export default function Menu({ data }: any) {
+	const router = useRouter();
+
+	const [listArticle, setListArticle] = useState<any[]>(data);
+	const [page, setPage] = React.useState(0);
+
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	// console.log("data: ", data);
-	const listArticle = data;
+
+	// fetch data when click page
+	const fetchList = async () => {
+		console.log("co vao ko");
+
+		const filter = {
+			include: [
+				{
+					relation: "user",
+					scope: {
+						include: [{ relation: "profile" }],
+					},
+				},
+			],
+			limit: LIMIT,
+			offset: (page - 1) * LIMIT,
+		};
+
+		const { data } = await axios.get(
+			`${BASE_URL}/topics/${
+				router.query.menuId
+			}/articles?filter=${encodeURIComponent(JSON.stringify(filter))}`
+		);
+
+		await setListArticle(data);
+		console.log("page", page);
+		console.log("offset", (page - 1) * 5);
+	};
+
+	useEffect(() => {
+		if (page > 0) fetchList();
+	}, [page]);
 
 	return (
 		<Container disableGutters>
@@ -20,7 +54,12 @@ export default function Menu({ data }: any) {
 			{/* Content */}
 			<Grid container columnSpacing={5} mt={w1024 ? "30px" : "20px"}>
 				<Grid item xs={w1024 ? 9 : 12}>
-					<ListArticle listArticle={listArticle} />
+					<ListArticle
+						listArticle={listArticle}
+						page={page}
+						setPage={setPage}
+						total={20}
+					/>
 				</Grid>
 				<Grid item xs={w1024 ? 3 : 12}>
 					<AsidePage />
@@ -41,6 +80,8 @@ export async function getServerSideProps(context: any) {
 				},
 			},
 		],
+		limit: LIMIT,
+		offset: 0,
 	};
 
 	console.log(filter);
@@ -48,15 +89,6 @@ export async function getServerSideProps(context: any) {
 		`${BASE_URL}/topics/${params.menuId}/articles?filter=${encodeURIComponent(
 			JSON.stringify(filter)
 		)}`
-		// {
-		// 	params: filter,
-		// 	paramsSerializer: {
-		// 		serialize: (params) => {
-		// 			const serialized = stringify(params);
-		// 			return serialized;
-		// 		},
-		// 	},
-		// }
 	);
 
 	return {

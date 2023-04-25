@@ -127,6 +127,7 @@ export const Header: FC = () => {
 
 		fetchArticle();
 	}, []);
+
 	const router = useRouter();
 
 	const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
@@ -375,7 +376,7 @@ export const Header: FC = () => {
 												: "#fff",
 										}}
 									>
-										블록체인
+										{item.name}
 									</Typography>
 								</Button>
 							))}
