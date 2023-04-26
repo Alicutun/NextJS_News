@@ -8,7 +8,7 @@ export enum RestPaths {
 }
 
 // Pagination list article
-export const LIMIT = 5;
+export const LIMIT_PAGE = 5;
 
 // locate call api
 export const LOCALE = "en_US";

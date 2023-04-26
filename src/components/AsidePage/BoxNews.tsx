@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "tss-react/mui";
 import axios from "axios";
 import { BASE_URL } from "@/common";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles()(() => ({
 	box: {
@@ -48,12 +49,14 @@ const useStyles = makeStyles()(() => ({
 }));
 
 const BoxNews: React.FC<{}> = () => {
+	const router = useRouter();
 	//
 	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w480 = useMediaQuery("(min-width:480px)");
 
 	const [listData, setListData] = useState<any[]>([]);
+	console.log("listData:", listData);
 
 	// call get top10 news
 	const fetchListTop10Article = async () => {
@@ -83,7 +86,20 @@ const BoxNews: React.FC<{}> = () => {
 			</Typography>
 			<Grid container>
 				{listData?.slice(0, w1024 ? 5 : w480 ? 10 : 5).map((item, index) => (
-					<Grid item xs={w1024 ? 12 : w480 ? 6 : 12} key={index}>
+					<Grid
+						sx={{
+							cursor: "pointer",
+						}}
+						item
+						xs={w1024 ? 12 : w480 ? 6 : 12}
+						key={index}
+						onClick={() => {
+							router.push({
+								pathname: "/news/[name]",
+								query: { name: item.id },
+							});
+						}}
+					>
 						<Stack
 							alignItems='center'
 							justifyContent={w1024 ? "space-between" : ""}

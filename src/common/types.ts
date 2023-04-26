@@ -55,3 +55,21 @@ export interface IDataTopic {
 	data: IDataArticle[];
 	total: number;
 }
+
+export enum IPeriod {
+	ONE_WEEK = "last 1 week",
+	ONE_MONTH = "last 1 month",
+	THREE_MONTH = "last 3 months",
+	SIX_MONTH = "last 6 months",
+	ONE_YEAR = "last 12 months",
+}
+
+export enum ITarget {
+	TITLE_BODY = "Title + Body",
+	TITLE = "Title",
+	MAIN_TEXT = "Main text",
+	NAME_REPORTER = "Reporter's name",
+	KEY_WORD = "Key word",
+	PHOTO = "Photo",
+	EVENT_NAME = "Event name",
+}

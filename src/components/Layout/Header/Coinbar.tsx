@@ -38,7 +38,6 @@ const Coinbar = () => {
 
 	useEffect(() => {
 		socket.on("connect", () => {
-			console.log("SOCKET CONNECTED");
 			socket.emit("authenticate");
 		});
 

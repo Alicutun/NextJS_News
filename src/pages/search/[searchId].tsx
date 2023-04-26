@@ -19,7 +19,9 @@ import {
 	IDataArticle,
 	IDataSearchAllTopic,
 	IDataSearchTotalTopic,
-	LIMIT,
+	IPeriod,
+	ITarget,
+	LIMIT_PAGE,
 	LOCALE,
 } from "@/common";
 
@@ -52,42 +54,53 @@ const useStyles = makeStyles()(() => ({
 	},
 }));
 
-// {
-// 	dataSearchModalAllTopic: IDataSearchAllTopic;
-// 	dataSearchModalTotalTopic: IDataSearchTotal[];
-// }
-
 export default function Search({
-	dataSearchModalAllTopic,
-	dataSearchModalTotalTopic,
+	dataSearchAllTopic,
+	dataSearchTotalTopic,
 }: {
-	dataSearchModalAllTopic: IDataSearchAllTopic;
-	dataSearchModalTotalTopic: IDataSearchTotalTopic[];
+	dataSearchAllTopic: IDataSearchAllTopic;
+	dataSearchTotalTopic: IDataSearchTotalTopic[];
 }) {
-	// console.log("dataSearchModalAllTopic:", dataSearchModalAllTopic);
-	// console.log("dataSearchModalTotalTopic:", dataSearchModalTotalTopic);
 	//
 	const { classes } = useStyles();
 
 	const router = useRouter();
-	//
+
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	const options = [
-		"last 1 week ",
-		"last 1 month ",
-		"last 6 months ",
-		"last 1 years ",
+	const { ONE_WEEK, ONE_MONTH, THREE_MONTH, SIX_MONTH, ONE_YEAR } = IPeriod;
+	const iPeriodOptions = [
+		ONE_WEEK,
+		ONE_MONTH,
+		THREE_MONTH,
+		SIX_MONTH,
+		ONE_YEAR,
 	];
-	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
+	const {
+		TITLE_BODY,
+		TITLE,
+		MAIN_TEXT,
+		NAME_REPORTER,
+		KEY_WORD,
+		PHOTO,
+		EVENT_NAME,
+	} = ITarget;
+	const targetOptions = [
+		TITLE_BODY,
+		TITLE,
+		MAIN_TEXT,
+		NAME_REPORTER,
+		KEY_WORD,
+		PHOTO,
+		EVENT_NAME,
+	];
 
-	const allTopic = dataSearchModalTotalTopic.find(
+	const allTopic = dataSearchTotalTopic.find(
 		(s: IDataSearchTotalTopic) => s.topic === "All topics"
 	);
 
-	console.log("allTopic:", allTopic);
 	const [listArticle, setListArticle] = useState<IDataArticle[]>(
-		dataSearchModalAllTopic.articles
+		dataSearchAllTopic.articles
 	);
 
 	const [total, setTotal] = useState<number>(0);
@@ -113,7 +126,7 @@ export default function Search({
 				text: router.query.searchId,
 				locale: LOCALE,
 				topicName,
-				limit: LIMIT,
+				limit: LIMIT_PAGE,
 			},
 		});
 		setListArticle(data.articles);
@@ -130,14 +143,12 @@ export default function Search({
 					text: router.query.searchId,
 					locale: LOCALE,
 					topicName: nameTopic,
-					limit: LIMIT,
+					limit: LIMIT_PAGE,
 					page,
 				},
 			});
 			setListArticle(data?.articles);
-		} catch (error) {
-			console.log("err");
-		}
+		} catch (error) {}
 	};
 
 	// Search in page
@@ -212,19 +223,19 @@ export default function Search({
 								columnGap={2}
 								height='40px'
 							>
-								<Typography>Time</Typography>
+								<Typography>Search period</Typography>
 								<Autocomplete
 									sx={{ width: "200px" }}
 									id='controllable-states-demo'
-									options={options}
+									options={iPeriodOptions}
 									className={classes.selection}
 									renderInput={(params) => <TextField {...params} />}
 								/>
-								<Typography>Title + Content</Typography>
+								<Typography>Search target</Typography>
 								<Autocomplete
 									sx={{ width: "200px" }}
 									id='controllable-states-demo'
-									options={options2}
+									options={targetOptions}
 									className={classes.selection}
 									renderInput={(params) => <TextField {...params} />}
 								/>
@@ -252,7 +263,7 @@ export default function Search({
 								Category별
 							</Typography>
 
-							{dataSearchModalTotalTopic?.map((item: any) => (
+							{dataSearchTotalTopic?.map((item: any) => (
 								<Typography
 									marginBottom='5px'
 									color={item.topic === nameTopic ? "blue" : ""}
@@ -303,23 +314,25 @@ export default function Search({
 
 export async function getServerSideProps(context: any) {
 	const { params } = context;
-	console.log("params: { text: params.searchId }: ", {
-		text: params.searchId,
-		locale: LOCALE,
+
+	const searchData = await axios.get(`${BASE_URL}/articles/search`, {
+		params: {
+			text: params.searchId,
+			locale: LOCALE,
+			limit: LIMIT_PAGE,
+			page: 1,
+		},
 	});
-	const data1 = await axios.get(`${BASE_URL}/articles/search`, {
-		params: { text: params.searchId, locale: LOCALE, limit: LIMIT, page: 1 },
-	});
-	const dataSearchModalAllTopic = data1.data;
-	const data2 = await axios.get(`${BASE_URL}/articles/search-total`, {
+	const dataSearchAllTopic = searchData.data;
+	const searchTotalData = await axios.get(`${BASE_URL}/articles/search-total`, {
 		params: { text: params.searchId, locale: LOCALE },
 	});
-	const dataSearchModalTotalTopic = data2.data;
+	const dataSearchTotalTopic = searchTotalData.data;
 
 	return {
 		props: {
-			dataSearchModalAllTopic,
-			dataSearchModalTotalTopic,
+			dataSearchAllTopic,
+			dataSearchTotalTopic,
 		},
 	};
 }

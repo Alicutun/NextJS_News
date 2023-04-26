@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Container, Grid, useMediaQuery } from "@mui/material";
 import { AsidePage, TopStory, Advertise, ListArticle } from "@/components";
 import axios from "axios";
-import { BASE_URL, IDataArticle, IDataTopic, LIMIT } from "@/common";
+import { BASE_URL, IDataArticle, IDataTopic, LIMIT_PAGE } from "@/common";
 import { useRouter } from "next/router";
 
 export default function Menu({ data }: { data: IDataTopic }) {
 	const router = useRouter();
-	console.log("data", data);
+
 	const [listArticle, setListArticle] = useState<IDataArticle[]>(data.data);
 	const [page, setPage] = React.useState<number>(0);
 
@@ -24,8 +24,8 @@ export default function Menu({ data }: { data: IDataTopic }) {
 					},
 				},
 			],
-			limit: LIMIT,
-			offset: (page - 1) * LIMIT,
+			limit: LIMIT_PAGE,
+			offset: (page - 1) * LIMIT_PAGE,
 		};
 
 		const { data } = await axios.get(
@@ -41,7 +41,6 @@ export default function Menu({ data }: { data: IDataTopic }) {
 		if (page > 0) fetchList();
 	}, [page]);
 
-	// console.log("listarticle: ", listArticle);
 	return (
 		<Container disableGutters>
 			{/* header_topstory */}
@@ -77,11 +76,10 @@ export async function getServerSideProps(context: any) {
 				},
 			},
 		],
-		limit: LIMIT,
+		limit: LIMIT_PAGE,
 		offset: 0,
 	};
 
-	console.log(filter);
 	const { data } = await axios.get(
 		`${BASE_URL}/topics/${params.menuId}/articles?filter=${encodeURIComponent(
 			JSON.stringify(filter)

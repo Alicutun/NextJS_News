@@ -1,5 +1,5 @@
 import { IItemArticle } from "@/common";
-import { formatTimeListArticle } from "@/utilities";
+import { formatTimeToYMD } from "@/utilities";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -82,7 +82,7 @@ export const ItemArticle: React.FC<IItemArticle> = ({
 					{title}
 				</Typography>
 				<Typography className={classes.itemTime}>
-					김정우 기자 | {formatTimeListArticle(editDate)}
+					김정우 기자 | {formatTimeToYMD(editDate)}
 				</Typography>
 				{/* use Marker to highlight-text */}
 				<Marker mark={valueSearch} options={{ className: classes.marker }}>

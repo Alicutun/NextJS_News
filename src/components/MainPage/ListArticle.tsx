@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
 import SkeletonListMovie from "../Skeleton/SkeletonListMovie";
-import { IDataArticle, IListArticle, LIMIT } from "@/common";
+import { IDataArticle, IListArticle, LIMIT_PAGE } from "@/common";
 import { ItemArticle } from "./ItemArticle";
 
 const useStyles = makeStyles()(() => ({
@@ -89,7 +89,7 @@ export const ListArticle: React.FC<IListArticle> = ({
 						<Stack alignItems='center' marginBottom='20px'>
 							<Pagination
 								size='small'
-								count={Math.ceil(total / LIMIT)}
+								count={Math.ceil(total / LIMIT_PAGE)}
 								page={page}
 								onChange={(e, value) => setPage(value)}
 								showFirstButton

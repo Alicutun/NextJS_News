@@ -14,8 +14,8 @@ import {
 	EmailShareButton,
 	EmailIcon,
 } from "react-share";
-import { formatTimeArticle } from "@/utilities";
 import { IDataArticle, LIMIT_COMMENT } from "@/common";
+import { formatTimeToYMD_HMS } from "@/utilities";
 
 const useStyles = makeStyles()(() => ({
 	articleNews: {
@@ -99,8 +99,8 @@ export function Article({ dataNews }: { dataNews: IDataArticle }) {
 				</Typography>
 
 				<Grid item container marginBottom='15px' fontSize='12px' gap='32px'>
-					<Box>입력 {formatTimeArticle(dataNews.createDate)}</Box>
-					<Box>수정 {formatTimeArticle(dataNews.editDate)}</Box>
+					<Box>입력 {formatTimeToYMD_HMS(dataNews.createDate)}</Box>
+					<Box>수정 {formatTimeToYMD_HMS(dataNews.editDate)}</Box>
 					<Box>김정우 기자</Box>
 				</Grid>
 
