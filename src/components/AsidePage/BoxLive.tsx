@@ -79,7 +79,7 @@ export const BoxLive = () => {
 					alt=''
 				/>
 				<Typography fontSize='16px' fontWeight='bold'>
-					베스트 클릭
+					Wire
 				</Typography>
 			</Stack>
 			<Grid container height={w1024 ? "285px" : "auto"} overflow='auto'>

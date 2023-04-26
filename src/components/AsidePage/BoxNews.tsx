@@ -79,7 +79,7 @@ const BoxNews: React.FC<{}> = () => {
 				fontSize='16px'
 				className={w1024 ? classes.nameBox : classes.nameBoxRes}
 			>
-				베스트 클릭
+				Best click
 			</Typography>
 			<Grid container>
 				{listData?.slice(0, w1024 ? 5 : w480 ? 10 : 5).map((item, index) => (

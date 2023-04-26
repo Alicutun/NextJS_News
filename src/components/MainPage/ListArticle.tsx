@@ -62,10 +62,10 @@ export const ListArticle: React.FC<IListArticle> = ({
 				direction='row'
 				className={classes.box1}
 				padding='10px 0px 10px 10px'
-				columnGap={2}
+				columnGap={1}
 			>
 				<DoneIcon style={{ color: "orange" }} />
-				<Typography>최신순 | 인기도순</Typography>
+				<Typography>By most recent | By accuracy</Typography>
 			</Stack>
 
 			{/* List article */}

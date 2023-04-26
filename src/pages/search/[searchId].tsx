@@ -18,7 +18,7 @@ import {
 	BASE_URL,
 	IDataArticle,
 	IDataSearchAllTopic,
-	IDataSearchTotal,
+	IDataSearchTotalTopic,
 	LIMIT,
 	LOCALE,
 } from "@/common";
@@ -60,7 +60,12 @@ const useStyles = makeStyles()(() => ({
 export default function Search({
 	dataSearchModalAllTopic,
 	dataSearchModalTotalTopic,
-}: any) {
+}: {
+	dataSearchModalAllTopic: IDataSearchAllTopic;
+	dataSearchModalTotalTopic: IDataSearchTotalTopic[];
+}) {
+	// console.log("dataSearchModalAllTopic:", dataSearchModalAllTopic);
+	// console.log("dataSearchModalTotalTopic:", dataSearchModalTotalTopic);
 	//
 	const { classes } = useStyles();
 
@@ -77,21 +82,27 @@ export default function Search({
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
 
 	const allTopic = dataSearchModalTotalTopic.find(
-		(s: IDataSearchTotal) => s.topic === "All topics"
+		(s: IDataSearchTotalTopic) => s.topic === "All topics"
 	);
 
+	console.log("allTopic:", allTopic);
 	const [listArticle, setListArticle] = useState<IDataArticle[]>(
 		dataSearchModalAllTopic.articles
 	);
 
-	const [total, setTotal] = useState<number>(allTopic.total);
-	const [nameTopic, setNameTopic] = useState<string>(allTopic.topic);
-	const [searchArticle, setSearchArticle] = useState<any>();
+	const [total, setTotal] = useState<number>(0);
+	const [nameTopic, setNameTopic] = useState<string>("");
+	const [searchArticle, setSearchArticle] = useState<string>();
 	const [page, setPage] = React.useState(1);
 
 	useEffect(() => {
+		if (!allTopic) {
+			return;
+		}
+
 		setTotal(allTopic.total);
 		setNameTopic(allTopic.topic);
+
 		return () => {};
 	}, [allTopic]);
 
@@ -243,6 +254,7 @@ export default function Search({
 
 							{dataSearchModalTotalTopic?.map((item: any) => (
 								<Typography
+									marginBottom='5px'
 									color={item.topic === nameTopic ? "blue" : ""}
 									key={item.topic}
 									onClick={() => handleTopic(item.topic, item.total)}

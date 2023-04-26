@@ -1,11 +1,7 @@
 export interface IDataArticle {
 	clickCount: number;
 	createDate: string;
-	details: [
-		{
-			locale: string;
-		}
-	];
+	details: any;
 	editDate: string;
 	id: number;
 	jobId: string;
@@ -20,9 +16,10 @@ export interface IDataSearchAllTopic {
 	articles: IDataArticle[];
 	topic: string;
 }
-export interface IDataSearchTotal {
-	total: number;
+
+export interface IDataSearchTotalTopic {
 	topic: string;
+	total: number;
 }
 
 export interface IDaTaTopic {
@@ -52,4 +49,9 @@ export interface IListArticle {
 	setPage: any;
 	total: number;
 	valueSearch?: any;
+}
+
+export interface IDataTopic {
+	data: IDataArticle[];
+	total: number;
 }

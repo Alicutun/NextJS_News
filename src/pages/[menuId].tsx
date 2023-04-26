@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Container, Grid, useMediaQuery } from "@mui/material";
 import { AsidePage, TopStory, Advertise, ListArticle } from "@/components";
 import axios from "axios";
-import { BASE_URL, LIMIT } from "@/common";
+import { BASE_URL, IDataArticle, IDataTopic, LIMIT } from "@/common";
 import { useRouter } from "next/router";
 
-export default function Menu({ data }: any) {
+export default function Menu({ data }: { data: IDataTopic }) {
 	const router = useRouter();
-
-	const [listArticle, setListArticle] = useState<any[]>(data.data);
-	const [page, setPage] = React.useState(0);
+	console.log("data", data);
+	const [listArticle, setListArticle] = useState<IDataArticle[]>(data.data);
+	const [page, setPage] = React.useState<number>(0);
 
 	const w1024 = useMediaQuery("(min-width:1024px)");
 
