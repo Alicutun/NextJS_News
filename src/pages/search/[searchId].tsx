@@ -15,7 +15,6 @@ import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { BASE_URL, LIMIT, LOCALE } from "@/common";
-import SearchIcon from "@mui/icons-material/Search";
 
 const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	selection: {
@@ -29,11 +28,23 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 		},
 	},
 }));
+
 export default function Search({
 	dataSearchModalAllTopic,
 	dataSearchModalTotalTopic,
 }: any) {
 	const router = useRouter();
+	//
+	const w1220 = useMediaQuery("(min-width:1220px)");
+	const w1024 = useMediaQuery("(min-width:1024px)");
+	const options = [
+		"last 1 week ",
+		"last 1 month ",
+		"last 6 months ",
+		"last 1 years ",
+	];
+	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
+	//
 	const allTopic = dataSearchModalTotalTopic.find(
 		(s: any) => s.topic === "All topics"
 	);
@@ -42,13 +53,11 @@ export default function Search({
 	);
 	const [total, setTotal] = useState<number>(allTopic.total);
 	const [nameTopic, setNameTopic] = useState(allTopic.topic);
-	const [loading, setLoading] = useState(false);
-	const [valueSearch, setValueSearch] = useState<any>(router.query.searchId);
 	const [searchArticle, setSearchArticle] = useState<any>();
-	const [searchSS, setSearchSS] = useState<boolean>(true);
 	const [page, setPage] = React.useState(1);
-
+	//
 	const { classes, cx } = useStyles({ color: "red" });
+
 	// click select topic
 	const handleTopic = async (topicName: string, total: number) => {
 		const { data } = await axios.get(`${BASE_URL}/articles/search`, {
@@ -64,9 +73,9 @@ export default function Search({
 		setTotal(total);
 		setPage(1);
 	};
-	// fetch data when click page
+
+	// fetch data when click pagination
 	const fetchList = async () => {
-		setLoading(true);
 		try {
 			const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
 				params: {
@@ -77,44 +86,29 @@ export default function Search({
 					page,
 				},
 			});
-			setLoading(false);
-			// if(!data) return
 			setListArticle(data?.articles);
 		} catch (error) {
 			console.log("err");
 		}
 	};
-	// search in page Search
-	const handleSearch = async () => {
-		setSearchSS(false);
-		const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
-			params: {
-				text: searchArticle,
-				locale: LOCALE,
-				limit: LIMIT,
-				page,
-			},
+
+	// Search in page
+	const handleSearch = () => {
+		router.push({
+			pathname: `/search/${searchArticle}`,
 		});
-		setValueSearch(searchArticle);
-		setListArticle(data?.articles);
+		setPage(1);
+	};
+	// press enter search
+	const handleSearchEnter = async (event: any) => {
+		if (event.key === "Enter") {
+			handleSearch();
+		}
 	};
 
 	useEffect(() => {
-		console.log("search SS");
-		if (searchSS) fetchList();
-		else handleSearch();
-	}, [page]);
-
-	// responsive
-	const w1220 = useMediaQuery("(min-width:1220px)");
-	const w1024 = useMediaQuery("(min-width:1024px)");
-	const options = [
-		"last 1 week ",
-		"last 1 month ",
-		"last 6 months ",
-		"last 1 years ",
-	];
-	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
+		fetchList();
+	}, [page, router.query.searchId]);
 
 	return (
 		<Container disableGutters>
@@ -136,18 +130,23 @@ export default function Search({
 							alignItems='center'
 							justifyContent='center'
 							sx={{ borderBottom: "solid 1px #ced2d7" }}
-							onKeyUp={(e) => console.log("aa", e)}
 						>
 							<TextField
-								sx={{ height: "55px", width: "50%" }}
+								sx={{
+									height: "56px",
+									width: "50%",
+									".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
+										borderRadius: "0px",
+									},
+								}}
+								onKeyUp={(e) => handleSearchEnter(e)}
 								onChange={(e) => setSearchArticle(e.target.value)}
 							/>
 
 							<Button
 								disabled={!searchArticle ? true : false}
 								sx={{
-									width: "55px",
-									height: "55px",
+									height: "56px",
 									background: "#444",
 									cursor: "pointer",
 									borderRadius: "0px !important ",
@@ -155,10 +154,11 @@ export default function Search({
 										backgroundColor: "#444 !important",
 									},
 								}}
-								onKeyUp={handleSearch}
 								onClick={handleSearch}
 							>
-								<SearchIcon sx={{ color: "white" }} />
+								<Typography m='0 10px' color='white'>
+									Search
+								</Typography>
 							</Button>
 						</Grid>
 
@@ -227,6 +227,7 @@ export default function Search({
 								</Typography>
 							))}
 						</Grid>
+
 						<Grid
 							item
 							direction='column'
@@ -235,16 +236,21 @@ export default function Search({
 							marginLeft={w1220 ? "0" : w1024 ? "20px" : "0"}
 						>
 							{/* Total list */}
-							<Typography fontSize='18px' paddingBottom='10px'>
-								TOTAL ({total})
-							</Typography>
-							<ListArticle
-								listArticle={listArticle}
-								page={page}
-								setPage={setPage}
-								total={total}
-								valueSearch={valueSearch}
-							/>
+							<Grid item sx={{ width: "100%" }}>
+								<Typography fontSize='18px' paddingBottom='10px'>
+									TOTAL ({total})
+								</Typography>
+							</Grid>
+
+							<Grid item sx={{ width: "100%" }}>
+								<ListArticle
+									listArticle={listArticle}
+									page={page}
+									setPage={setPage}
+									total={total}
+									valueSearch={router.query.searchId}
+								/>
+							</Grid>
 						</Grid>
 					</Grid>
 				</Grid>

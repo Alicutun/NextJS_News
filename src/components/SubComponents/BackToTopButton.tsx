@@ -24,6 +24,7 @@ const BackToTopButton = () => {
 			{w1024
 				? backToTop && (
 						<Grid
+							onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
 							container
 							alignContent='center'
 							justifyContent='center'
@@ -39,9 +40,7 @@ const BackToTopButton = () => {
 								cursor: "pointer",
 							}}
 						>
-							<NorthIcon
-								onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-							/>
+							<NorthIcon />
 						</Grid>
 				  )
 				: null}

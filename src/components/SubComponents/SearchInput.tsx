@@ -12,14 +12,20 @@ export const SearchInput: React.FC<{}> = () => {
 	return (
 		<Stack direction='row' width='100%' justifyContent={"center"}>
 			<TextField
-				sx={{ height: "55px", width: "50%" }}
+				sx={{
+					height: "56px",
+					width: "50%",
+					".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
+						borderRadius: "0px",
+					},
+				}}
 				onChange={(e) => setSearchArticle(e.target.value)}
 			/>
 			<Button
 				disabled={!searchArticle ? true : false}
 				sx={{
 					width: "55px",
-					height: "55px",
+					height: "56px",
 					background: "#444",
 					cursor: "pointer",
 					borderRadius: "0px !important ",
@@ -29,7 +35,7 @@ export const SearchInput: React.FC<{}> = () => {
 				}}
 				onClick={() => {
 					router.push({
-						pathname: "/Search/[name]",
+						pathname: "/search/[name]",
 						query: { name: searchArticle },
 					});
 				}}

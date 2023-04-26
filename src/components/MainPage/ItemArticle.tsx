@@ -1,7 +1,6 @@
 import { formatTimeListArticle } from "@/utilities";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useRouter } from "next/router";
@@ -47,11 +46,12 @@ export const ItemArticle: React.FC<{
 	valueSearch?: string;
 }> = ({ key, id, img, title, editDate, content, valueSearch }) => {
 	//
+	const router = useRouter();
+	//
 	const { classes, cx } = useStyles({ color: "red" });
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w640 = useMediaQuery("(min-width:640px)");
-	const router = useRouter();
-	console.log("key: ", key);
+
 	return (
 		<Grid
 			sx={{
@@ -63,20 +63,23 @@ export const ItemArticle: React.FC<{
 			key={key}
 			onClick={() => {
 				router.push({
-					pathname: "/News/[name]",
+					pathname: "/news/[name]",
 					query: { name: id },
 				});
 			}}
 		>
-			<Grid item xs={2}>
-				<Stack
-					alignItems='center'
-					className={Number(key) === 0 ? "" : classes.box1}
-				>
-					<img height={w640 ? "75px" : "50px"} src={img} alt='' />
-				</Stack>
+			<Grid
+				item
+				xs={2}
+				container
+				justifyContent='center'
+				alignItems='center'
+				className={Number(key) === 0 ? "" : classes.box1}
+				height={w640 ? "77px" : "55px"}
+			>
+				<img height='100%' src={img} alt='' />
 			</Grid>
-			<Grid item xs={10}>
+			<Grid item xs={10} paddingLeft='15px'>
 				<Typography noWrap fontSize='20px' color='#000' lineHeight='24px'>
 					{title}
 				</Typography>
