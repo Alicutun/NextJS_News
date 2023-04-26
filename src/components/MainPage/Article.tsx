@@ -15,9 +15,9 @@ import {
 	EmailIcon,
 } from "react-share";
 import { formatTimeArticle } from "@/utilities";
-import { LIMIT_COMMENT } from "@/common";
+import { IDataArticle, LIMIT_COMMENT } from "@/common";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	articleNews: {
 		position: "relative",
 		marginBottom: "30px",
@@ -41,18 +41,21 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 }));
 
-export function Article({ dataNews }: any) {
+export function Article({ dataNews }: { dataNews: IDataArticle }) {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
+	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	//
-	const [text, setText] = React.useState("");
-	const [count, setCount] = React.useState(0);
+	const [text, setText] = React.useState<string>("");
+	const [count, setCount] = React.useState<number>(0);
 
 	// fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-	const [dataContent, setDataContent] = React.useState("");
-	React.useEffect(() => setDataContent(dataNews.details[0].content), []);
+	const [dataContent, setDataContent] = React.useState<any>("");
+	React.useEffect(() => {
+		setDataContent(dataNews.details[0].content);
+		return () => {};
+	}, []);
 
 	// func count word in comment
 	const handleChange = (e: any) => {

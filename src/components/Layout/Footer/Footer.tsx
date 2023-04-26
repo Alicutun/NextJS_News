@@ -14,7 +14,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import TextField from "@mui/material/TextField";
 import { makeStyles } from "tss-react/mui";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	navFooter: {
 		color: "#666666",
 		background: "#f8f8f8",
@@ -47,7 +47,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 export function Footer() {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
+	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	//
 	const options = ["Option 1", "Option 2", "Option 1asd", "Option 2asda"];

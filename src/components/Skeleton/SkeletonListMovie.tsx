@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	border: {
 		border: "1px solid #e6e8eb",
 	},
@@ -20,7 +20,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 const SkeletonListMovie = () => {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
+	const { classes } = useStyles();
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w640 = useMediaQuery("(min-width:640px)");
 

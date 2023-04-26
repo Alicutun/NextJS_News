@@ -9,7 +9,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { TopStory } from "@/components";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	broder: {
 		border: "1px solid #d9d9d9",
 	},
@@ -76,8 +76,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 }));
 
 export default function Index() {
-	const { classes, cx } = useStyles({ color: "red" });
-	const w1220 = useMediaQuery("(min-width:1220px)");
+	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w480 = useMediaQuery("(min-width:480px)");
 

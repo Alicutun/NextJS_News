@@ -8,7 +8,7 @@ import { makeStyles } from "tss-react/mui";
 import axios from "axios";
 import { BASE_URL } from "@/common";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	box: {
 		marginTop: "10px",
 		border: "1px solid #ced2d7",
@@ -49,7 +49,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 const BoxNews: React.FC<{}> = () => {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
+	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w480 = useMediaQuery("(min-width:480px)");
 
@@ -70,6 +70,7 @@ const BoxNews: React.FC<{}> = () => {
 
 	useEffect(() => {
 		fetchListTop10Article();
+		return () => {};
 	}, []);
 
 	return (

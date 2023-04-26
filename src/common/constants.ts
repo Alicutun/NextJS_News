@@ -14,5 +14,4 @@ export const LIMIT = 5;
 export const LOCALE = "en_US";
 
 // limit word comment
-
 export const LIMIT_COMMENT = 500;

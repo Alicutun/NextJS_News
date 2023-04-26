@@ -10,13 +10,19 @@ const BackToTopButton = () => {
 	const [backToTop, setBackToTop] = useState(false);
 
 	useEffect(() => {
-		window.addEventListener("scroll", () => {
+		const handleScroll = () => {
 			if (window.scrollY > 100) {
 				setBackToTop(true);
 			} else {
 				setBackToTop(false);
 			}
-		});
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
 	}, []);
 
 	return (

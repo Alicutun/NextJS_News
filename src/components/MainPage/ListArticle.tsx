@@ -8,12 +8,11 @@ import {
 	useMediaQuery,
 } from "@mui/material";
 import { makeStyles } from "tss-react/mui";
-import { useRouter } from "next/router";
 import SkeletonListMovie from "../Skeleton/SkeletonListMovie";
-import { LIMIT } from "@/common";
+import { IDataArticle, IListArticle, LIMIT } from "@/common";
 import { ItemArticle } from "./ItemArticle";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	border: {
 		border: "1px solid #e6e8eb",
 	},
@@ -38,23 +37,24 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 }));
 
-export const ListArticle: React.FC<{
-	listArticle: any[];
-	page: number;
-	setPage: any;
-	total: number;
-	valueSearch?: any;
-}> = ({ listArticle, page, setPage, total, valueSearch }) => {
-	const { classes, cx } = useStyles({ color: "red" });
+export const ListArticle: React.FC<IListArticle> = ({
+	listArticle,
+	page,
+	setPage,
+	total,
+	valueSearch,
+}) => {
+	//
+	const { classes } = useStyles();
+	const w1220 = useMediaQuery("(min-width:1220px)");
 
 	// fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-	const [listArticles, setDataContent] = React.useState<any[]>([]);
-	React.useEffect(() => setDataContent(listArticle), [listArticle]);
+	const [listArticles, setDataContent] = React.useState<IDataArticle[]>([]);
+	React.useEffect(() => {
+		setDataContent(listArticle);
+		return () => {};
+	}, [listArticle]);
 
-	const w1220 = useMediaQuery("(min-width:1220px)");
-	const w640 = useMediaQuery("(min-width:640px)");
-	const router = useRouter();
-	// console.log("listArticle: ", listArticle);
 	return (
 		<article>
 			{/* Category */}
@@ -74,9 +74,9 @@ export const ListArticle: React.FC<{
 					<Typography>No Data</Typography>
 				) : (
 					<Box marginLeft={w1220 ? "" : "10px"}>
-						{listArticles.map((item: any, index: number) => (
+						{listArticles.map((item: any) => (
 							<ItemArticle
-								key={index}
+								key={item.id}
 								id={item.id}
 								img={item.details[0].summaryImage}
 								title={item.details[0].summary}

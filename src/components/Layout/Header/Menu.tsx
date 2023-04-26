@@ -13,12 +13,12 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import EmailIcon from "@mui/icons-material/Email";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
-import { BASE_URL } from "@/common";
+import { BASE_URL, IDaTaTopic } from "@/common";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
 import { ModalSearch } from "@/components/SubComponents";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	boxMenu: {
 		borderTop: "1px solid #e6e6e6",
 		borderBottom: "1px solid #888",
@@ -49,14 +49,14 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 const Menu = () => {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
+	const { classes } = useStyles();
 	const [openModal, setOpenModal] = useState<boolean>(false);
-	const [fixedMenu, setFixedMenu] = useState(false);
+	const [fixedMenu, setFixedMenu] = useState<boolean>(false);
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	const w500 = useMediaQuery("(min-width:500px)");
+
 	//
-	const [listTopics, setListTopics] = useState<any[]>([]);
+	const [listTopics, setListTopics] = useState<IDaTaTopic[]>([]);
 
 	// handle Scroll
 	useEffect(() => {
@@ -83,6 +83,7 @@ const Menu = () => {
 		};
 
 		fetchArticle();
+		return () => {};
 	}, []);
 
 	return (

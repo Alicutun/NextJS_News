@@ -5,7 +5,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import { makeStyles } from "tss-react/mui";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	backgroundf2f2f2: {
 		background: "#f2f2f2",
 	},
@@ -64,7 +64,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 export const SkeletonCoinbar = () => {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
+	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
 

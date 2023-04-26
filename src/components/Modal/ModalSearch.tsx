@@ -3,10 +3,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import { SearchInput } from "../SubComponents";
 
-export const ModalSearch: React.FC<{ openModal: any; setOpenModal: any }> = ({
-	openModal,
-	setOpenModal,
-}) => {
+export const ModalSearch: React.FC<{
+	openModal: boolean;
+	setOpenModal: any;
+}> = ({ openModal, setOpenModal }) => {
 	return (
 		<Modal
 			open={openModal}

@@ -8,11 +8,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/router";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	boxSearch: {
-		// height: "60px",
+		height: "60px",
 	},
 	boxSearchFixed: {
+		borderBottom: "1px solid #ced2d7",
+
 		background: "white",
 		position: "fixed",
 		top: "0",
@@ -26,13 +28,31 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 }));
 
 const Search = () => {
+	//
 	const router = useRouter();
 
-	const { classes, cx } = useStyles({ color: "red" });
-	const [fixedSearch, setFixedSearch] = useState(false);
+	const { classes } = useStyles();
+	const [fixedSearch, setFixedSearch] = useState<boolean>(false);
 	const w1220 = useMediaQuery("(min-width:1220px)");
 	const w1024 = useMediaQuery("(min-width:1024px)");
-	const w500 = useMediaQuery("(min-width:500px)");
+
+	// handle Scroll
+	React.useEffect(() => {
+		const handleScroll = () => {
+			if (window.scrollY >= 50) {
+				setFixedSearch(true);
+			} else {
+				setFixedSearch(false);
+			}
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	});
+
 	// img -> home
 	function routePage() {
 		router.push("/");

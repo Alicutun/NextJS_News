@@ -15,8 +15,6 @@ export default function Menu({ data }: any) {
 
 	// fetch data when click page
 	const fetchList = async () => {
-		console.log("co vao ko");
-
 		const filter = {
 			include: [
 				{
@@ -37,8 +35,6 @@ export default function Menu({ data }: any) {
 		);
 
 		await setListArticle(data.data);
-		console.log("page", page);
-		console.log("offset", (page - 1) * 5);
 	};
 
 	useEffect(() => {

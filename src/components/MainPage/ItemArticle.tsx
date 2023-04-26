@@ -1,3 +1,4 @@
+import { IItemArticle } from "@/common";
 import { formatTimeListArticle } from "@/utilities";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -8,7 +9,7 @@ import React from "react";
 import { Marker } from "react-mark.js";
 import { makeStyles } from "tss-react/mui";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	borderTop: {
 		borderTop: "1px solid #e6e8eb",
 	},
@@ -36,20 +37,18 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 	},
 }));
 
-export const ItemArticle: React.FC<{
-	key: any;
-	id: number;
-	img: string;
-	title: string;
-	editDate: string;
-	content: string;
-	valueSearch?: string;
-}> = ({ key, id, img, title, editDate, content, valueSearch }) => {
+export const ItemArticle: React.FC<IItemArticle> = ({
+	id,
+	img,
+	title,
+	editDate,
+	content,
+	valueSearch,
+}) => {
 	//
 	const router = useRouter();
 	//
-	const { classes, cx } = useStyles({ color: "red" });
-	const w1220 = useMediaQuery("(min-width:1220px)");
+	const { classes } = useStyles();
 	const w640 = useMediaQuery("(min-width:640px)");
 
 	return (
@@ -60,7 +59,6 @@ export const ItemArticle: React.FC<{
 			container
 			className={classes.borderTop}
 			padding='20px 0'
-			key={key}
 			onClick={() => {
 				router.push({
 					pathname: "/news/[name]",
@@ -74,7 +72,7 @@ export const ItemArticle: React.FC<{
 				container
 				justifyContent='center'
 				alignItems='center'
-				className={Number(key) === 0 ? "" : classes.box1}
+				className={classes.box1}
 				height={w640 ? "77px" : "55px"}
 			>
 				<img height='100%' src={img} alt='' />

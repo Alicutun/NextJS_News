@@ -14,9 +14,16 @@ import { AsidePage, ListArticle, TopStory, Advertise } from "@/components";
 import { makeStyles } from "tss-react/mui";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { BASE_URL, LIMIT, LOCALE } from "@/common";
+import {
+	BASE_URL,
+	IDataArticle,
+	IDataSearchAllTopic,
+	IDataSearchTotal,
+	LIMIT,
+	LOCALE,
+} from "@/common";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	selection: {
 		background: "#fff",
 		width: 200,
@@ -27,12 +34,36 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 			padding: "0.5px 4px 7.5px 6px !important",
 		},
 	},
+	textfield: {
+		height: "56px",
+		width: "50%",
+		".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
+			borderRadius: "0px",
+		},
+	},
+	buttonSearch: {
+		height: "56px",
+		background: "#444",
+		cursor: "pointer",
+		borderRadius: "0px !important ",
+		"&:hover": {
+			backgroundColor: "#444 !important",
+		},
+	},
 }));
+
+// {
+// 	dataSearchModalAllTopic: IDataSearchAllTopic;
+// 	dataSearchModalTotalTopic: IDataSearchTotal[];
+// }
 
 export default function Search({
 	dataSearchModalAllTopic,
 	dataSearchModalTotalTopic,
 }: any) {
+	//
+	const { classes } = useStyles();
+
 	const router = useRouter();
 	//
 	const w1220 = useMediaQuery("(min-width:1220px)");
@@ -44,19 +75,25 @@ export default function Search({
 		"last 1 years ",
 	];
 	const options2 = ["nganh CNTT", "nganh CNTT", "nganh CNTT", "nganh CNTT"];
-	//
+
 	const allTopic = dataSearchModalTotalTopic.find(
-		(s: any) => s.topic === "All topics"
+		(s: IDataSearchTotal) => s.topic === "All topics"
 	);
-	const [listArticle, setListArticle] = useState<any[]>(
+
+	const [listArticle, setListArticle] = useState<IDataArticle[]>(
 		dataSearchModalAllTopic.articles
 	);
+
 	const [total, setTotal] = useState<number>(allTopic.total);
-	const [nameTopic, setNameTopic] = useState(allTopic.topic);
+	const [nameTopic, setNameTopic] = useState<string>(allTopic.topic);
 	const [searchArticle, setSearchArticle] = useState<any>();
 	const [page, setPage] = React.useState(1);
-	//
-	const { classes, cx } = useStyles({ color: "red" });
+
+	useEffect(() => {
+		setTotal(allTopic.total);
+		setNameTopic(allTopic.topic);
+		return () => {};
+	}, [allTopic]);
 
 	// click select topic
 	const handleTopic = async (topicName: string, total: number) => {
@@ -99,6 +136,7 @@ export default function Search({
 		});
 		setPage(1);
 	};
+
 	// press enter search
 	const handleSearchEnter = async (event: any) => {
 		if (event.key === "Enter") {
@@ -108,6 +146,7 @@ export default function Search({
 
 	useEffect(() => {
 		fetchList();
+		return () => {};
 	}, [page, router.query.searchId]);
 
 	return (
@@ -132,32 +171,18 @@ export default function Search({
 							sx={{ borderBottom: "solid 1px #ced2d7" }}
 						>
 							<TextField
-								sx={{
-									height: "56px",
-									width: "50%",
-									".css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root": {
-										borderRadius: "0px",
-									},
-								}}
+								className={classes.textfield}
 								onKeyUp={(e) => handleSearchEnter(e)}
 								onChange={(e) => setSearchArticle(e.target.value)}
 							/>
 
 							<Button
 								disabled={!searchArticle ? true : false}
-								sx={{
-									height: "56px",
-									background: "#444",
-									cursor: "pointer",
-									borderRadius: "0px !important ",
-									"&:hover": {
-										backgroundColor: "#444 !important",
-									},
-								}}
+								className={classes.buttonSearch}
 								onClick={handleSearch}
 							>
 								<Typography m='0 10px' color='white'>
-									Search
+									search
 								</Typography>
 							</Button>
 						</Grid>
@@ -200,7 +225,7 @@ export default function Search({
 								height='70px'
 								lineHeight='70px'
 							>
-								상세 검색
+								Advanced search
 							</Typography>
 						</Grid>
 					</Box>
@@ -216,9 +241,10 @@ export default function Search({
 								Category별
 							</Typography>
 
-							{dataSearchModalTotalTopic?.map((item: any, index: number) => (
+							{dataSearchModalTotalTopic?.map((item: any) => (
 								<Typography
-									key={index}
+									color={item.topic === nameTopic ? "blue" : ""}
+									key={item.topic}
 									onClick={() => handleTopic(item.topic, item.total)}
 									sx={{ cursor: "pointer" }}
 									fontSize='13px'

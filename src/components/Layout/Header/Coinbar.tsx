@@ -12,13 +12,9 @@ import { makeStyles } from "tss-react/mui";
 import { socket } from "@/helpers";
 import { formatPrice } from "@/utilities";
 import Link from "next/link";
-interface IDataSocket {
-	symbol: string;
-	price: string;
-	percent: string;
-}
+import { IDataSocket } from "@/common";
 
-const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
+const useStyles = makeStyles()(() => ({
 	backgroundf2f2f2: {
 		background: "#f2f2f2",
 	},
@@ -34,8 +30,7 @@ const useStyles = makeStyles<{ color: any }>()((theme, { color }) => ({
 
 const Coinbar = () => {
 	//
-	const { classes, cx } = useStyles({ color: "red" });
-	const w1220 = useMediaQuery("(min-width:1220px)");
+	const { classes } = useStyles();
 	const w1024 = useMediaQuery("(min-width:1024px)");
 	const w500 = useMediaQuery("(min-width:500px)");
 	//
