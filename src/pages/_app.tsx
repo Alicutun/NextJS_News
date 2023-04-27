@@ -1,23 +1,23 @@
 // Main scss
-import "@/styles/globals.css";
+import '@/styles/globals.css';
 
-import { Header, Footer } from "@/components";
-import type { AppProps } from "next/app";
-import { createEmotionSsrAdvancedApproach } from "tss-react/next/pagesDir";
-import BackToTopButton from "@/components/SubComponents/BackToTopButton";
+import { Header, Footer, BackToTopButton } from '@/components';
+import type { AppProps } from 'next/app';
+import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
 
 function App({ Component, pageProps }: AppProps) {
-	return (
-		<div>
-			<Header />
-			<Component {...pageProps} />
-			<Footer />
-			<BackToTopButton />
-		</div>
-	);
+  return (
+    <div>
+      <Header />
+      <Component {...pageProps} />
+      <Footer />
+      <BackToTopButton />
+    </div>
+  );
 }
-const { augmentDocumentWithEmotionCache, withAppEmotionCache } =
-	createEmotionSsrAdvancedApproach({ key: "css" });
+const { augmentDocumentWithEmotionCache, withAppEmotionCache } = createEmotionSsrAdvancedApproach({
+  key: 'css',
+});
 
 export { augmentDocumentWithEmotionCache };
 
