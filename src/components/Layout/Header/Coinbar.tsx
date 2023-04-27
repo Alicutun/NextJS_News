@@ -56,7 +56,9 @@ export const Coinbar = () => {
 
   return (
     <>
-      {dataSocket ? (
+      {dataSocket.length === 0 ? (
+        <SkeletonCoinbar />
+      ) : dataSocket ? (
         <Box className={classes.backgroundf2f2f2}>
           <Container disableGutters>
             <Grid container spacing={2}>
@@ -127,7 +129,7 @@ export const Coinbar = () => {
           </Container>
         </Box>
       ) : (
-        <SkeletonCoinbar />
+        <></>
       )}
     </>
   );

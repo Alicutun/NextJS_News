@@ -43,9 +43,9 @@ export const ListArticle: React.FC<IListArticle> = ({
   const w1220 = useMediaQuery('(min-width:1220px)');
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-  const [listArticles, setDataContent] = React.useState<IDataArticle[]>([]);
+  const [listArticles, setDataListAritcles] = React.useState<IDataArticle[]>([]);
   React.useEffect(() => {
-    setDataContent(listArticle);
+    if (listArticle) setDataListAritcles(listArticle);
     return () => {};
   }, [listArticle]);
 
@@ -58,41 +58,35 @@ export const ListArticle: React.FC<IListArticle> = ({
       </Stack>
 
       {/* List article */}
-      {listArticles ? (
-        listArticle?.length === 0 ? (
-          <Typography>No Data</Typography>
-        ) : (
-          <Box marginLeft={w1220 ? '' : '10px'}>
-            {listArticles ? (
-              listArticles.map((item: any) => (
-                <ItemArticle
-                  key={item.id}
-                  id={item.id}
-                  img={item.details[0].summaryImage}
-                  title={item.details[0].summary}
-                  editDate={item.editDate}
-                  content={item.details[0].content}
-                  valueSearch={valueSearch}
-                />
-              ))
-            ) : (
-              <></>
-            )}
-            {/* Pagination */}
-            <Stack alignItems="center" marginBottom="20px">
-              <Pagination
-                size="small"
-                count={Math.ceil(total / LIMIT_PAGE)}
-                page={page}
-                onChange={(_, value) => setPage(value)}
-                showFirstButton
-                showLastButton
-              />
-            </Stack>
-          </Box>
-        )
-      ) : (
+      {listArticle?.length === 0 ? (
         <SkeletonListArticle />
+      ) : listArticles ? (
+        <Box marginLeft={w1220 ? '' : '10px'}>
+          {listArticles.map((item: any) => (
+            <ItemArticle
+              key={item.id}
+              id={item.id}
+              img={item.details[0].summaryImage}
+              title={item.details[0].summary}
+              editDate={item.editDate}
+              content={item.details[0].content}
+              valueSearch={valueSearch}
+            />
+          ))}
+          {/* Pagination */}
+          <Stack alignItems="center" marginBottom="20px">
+            <Pagination
+              size="small"
+              count={Math.ceil(total / LIMIT_PAGE)}
+              page={page}
+              onChange={(_, value) => setPage(value)}
+              showFirstButton
+              showLastButton
+            />
+          </Stack>
+        </Box>
+      ) : (
+        <></>
       )}
     </article>
   );
