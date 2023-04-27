@@ -56,7 +56,6 @@ const BoxNews: React.FC<{}> = () => {
 	const w480 = useMediaQuery("(min-width:480px)");
 
 	const [listData, setListData] = useState<any[]>([]);
-	console.log("listData:", listData);
 
 	// call get top10 news
 	const fetchListTop10Article = async () => {

@@ -91,7 +91,7 @@ export const ListArticle: React.FC<IListArticle> = ({
 								size='small'
 								count={Math.ceil(total / LIMIT_PAGE)}
 								page={page}
-								onChange={(e, value) => setPage(value)}
+								onChange={(_, value) => setPage(value)}
 								showFirstButton
 								showLastButton
 							/>

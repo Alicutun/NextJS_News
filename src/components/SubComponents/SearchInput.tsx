@@ -3,17 +3,17 @@ import React, { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { useRouter } from "next/router";
 
-export const SearchInput: React.FC<{}> = () => {
+export const SearchInput: React.FC<{ onSearch: () => void }> = ({
+	onSearch,
+}) => {
 	//
 	const router = useRouter();
 
 	const [searchArticle, setSearchArticle] = useState<any>();
 
 	const handleSearch = () => {
-		router.push({
-			pathname: "/search/[name]",
-			query: { name: searchArticle },
-		});
+		router.push(`/search?text=${searchArticle}`);
+		onSearch();
 	};
 
 	// press enter search

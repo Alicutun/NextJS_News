@@ -47,7 +47,7 @@ export const ItemArticle: React.FC<IItemArticle> = ({
 }) => {
 	//
 	const router = useRouter();
-	//
+
 	const { classes } = useStyles();
 	const w640 = useMediaQuery("(min-width:640px)");
 

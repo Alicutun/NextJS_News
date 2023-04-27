@@ -27,7 +27,7 @@ export const ModalSearch: React.FC<{
 				}}
 			>
 				<Typography variant='h4'>SEARCH</Typography>
-				<SearchInput />
+				<SearchInput onSearch={() => setOpenModal(false)} />
 				<CloseIcon
 					onClick={() => setOpenModal(false)}
 					fontSize='large'
