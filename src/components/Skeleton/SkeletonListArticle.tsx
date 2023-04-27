@@ -18,7 +18,7 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const SkeletonListMovie = () => {
+export const SkeletonListArticle = () => {
   //
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');

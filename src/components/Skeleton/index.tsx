@@ -1,2 +1,2 @@
-export * from "../Skeleton/SkeletonCoinbar";
-export * from "../Skeleton/SkeletonListMovie";
+export * from '../Skeleton/SkeletonCoinbar';
+export * from './SkeletonListArticle';
