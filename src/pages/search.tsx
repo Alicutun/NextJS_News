@@ -1,54 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import { AsidePage, ListArticle, TopStory, Advertise, DetailSearch } from '@/components';
-import { makeStyles } from 'tss-react/mui';
 import { useRouter } from 'next/router';
 
 import axios from 'axios';
 import {
   BASE_URL,
-  IDataArticle,
   IDataSearchAllTopic,
   IDataSearchTotalTopic,
   IPeriod,
-  ITarget,
   LIMIT_PAGE,
   LOCALE,
 } from '@/common';
 
-const useStyles = makeStyles()(() => ({
-  selection: {
-    background: '#fff',
-    width: 200,
-    '.MuiAutocomplete-inputRoot': {
-      height: '40px',
-    },
-    '.MuiAutocomplete-input': {
-      padding: '0.5px 4px 7.5px 6px !important',
-    },
-  },
-  textfield: {
-    height: '56px',
-    width: '50%',
-    '.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root': {
-      borderRadius: '0px',
-    },
-  },
-  buttonSearch: {
-    height: '56px',
-    background: '#444',
-    cursor: 'pointer',
-    borderRadius: '0px !important ',
-    '&:hover': {
-      backgroundColor: '#444 !important',
-    },
-  },
-}));
-
-const { ONE_WEEK, ONE_MONTH, THREE_MONTH, SIX_MONTH, ONE_YEAR } = IPeriod;
-const iPeriodOptions = [ONE_WEEK, ONE_MONTH, THREE_MONTH, SIX_MONTH, ONE_YEAR];
-const { TITLE_BODY, TITLE, MAIN_TEXT, NAME_REPORTER, KEY_WORD, PHOTO, EVENT_NAME } = ITarget;
-const targetOptions = [TITLE_BODY, TITLE, MAIN_TEXT, NAME_REPORTER, KEY_WORD, PHOTO, EVENT_NAME];
+const { SIX_MONTH } = IPeriod;
 
 interface ISearch {
   dataSearchAllTopic: IDataSearchAllTopic;
@@ -58,86 +23,24 @@ interface ISearch {
 export default function Search(props: ISearch) {
   const router = useRouter();
 
-  const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
-  const w640 = useMediaQuery('(min-width:640px)');
 
-  const [listArticle, setListArticle] = useState<IDataArticle[]>([]);
-  const [total, setTotal] = useState(0);
-  const [nameTopic, setNameTopic] = useState('');
-  const [page, setPage] = useState(1);
-  const [search, setSearch] = useState<string>('');
   const { dataSearchAllTopic, dataSearchTotalTopic } = props;
-  const [period, setPeriod] = useState<string>(SIX_MONTH);
+  const [total, setTotal] = useState(0);
 
-  const allTopic = dataSearchTotalTopic.find(
-    (s: IDataSearchTotalTopic) => s.topic === 'All topics'
-  );
-
-  useEffect(() => {
-    if (!allTopic) {
-      return;
-    }
-
-    setTotal(allTopic.total);
-    setNameTopic(allTopic.topic);
-
-    return () => {};
-  }, [allTopic]);
+  const topicName = router.query.topicName || 'All topics';
+  const topic = dataSearchTotalTopic.find((s: IDataSearchTotalTopic) => s.topic === topicName);
 
   useEffect(() => {
-    setListArticle(dataSearchAllTopic.articles);
+    if (topic) setTotal(topic.total);
     return () => {};
-  }, [dataSearchAllTopic.articles]);
-
-  // fetch data
-  const fetchList = useCallback(async () => {
-    try {
-      const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
-        params: {
-          text: router.query.text,
-          locale: LOCALE,
-          topicName: nameTopic,
-          limit: LIMIT_PAGE,
-          period,
-          page,
-        },
-      });
-      setListArticle(data?.articles);
-    } catch (error) {}
-  }, [nameTopic, page]);
+  }, [router.query]);
 
   // Select Topic
-  const handleTopic = (topicName: string, total: number) => {
-    setNameTopic(topicName);
-    setTotal(total);
-    setPage(1);
+  const handleClickTopic = (topicNameClicked: string) => {
+    router.push(`/search?text=${router.query.text}&page=1&topicName=${topicNameClicked}`);
   };
-
-  // Search in page
-  const handleSearch = () => {
-    router.push(`/search?text=${search}`);
-    setPage(1);
-  };
-
-  // press enter search
-  const handleSearchEnter = async (event: any) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  useEffect(() => {
-    fetchList();
-
-    return () => {};
-  }, [fetchList]);
-
-  useEffect(() => {
-    setSearch(`${router?.query?.text}` ?? '');
-    return () => {};
-  }, [router.query.text]);
 
   return (
     <Container disableGutters>
@@ -174,9 +77,9 @@ export default function Search(props: ISearch) {
               {dataSearchTotalTopic?.map((item: any) => (
                 <Typography
                   marginBottom="5px"
-                  color={item.topic === nameTopic ? 'blue' : ''}
+                  color={item.topic === topicName ? 'blue' : ''}
                   key={item.topic}
-                  onClick={() => handleTopic(item.topic, item.total)}
+                  onClick={() => handleClickTopic(item.topic)}
                   sx={{ cursor: 'pointer' }}
                   fontSize={13}
                 >
@@ -193,13 +96,7 @@ export default function Search(props: ISearch) {
               </Grid>
 
               <Grid item width="100%">
-                <ListArticle
-                  listArticle={listArticle}
-                  page={page}
-                  setPage={setPage}
-                  total={total}
-                  valueSearch={router.query.text}
-                />
+                <ListArticle listArticle={dataSearchAllTopic.articles} total={total} />
               </Grid>
             </Grid>
           </Grid>
@@ -215,12 +112,13 @@ export default function Search(props: ISearch) {
 
 export async function getServerSideProps(context: any) {
   const { query } = context;
-  const { text, period, periodS, periodE, page } = query;
+  const { text, topicName, period, periodS, periodE, page } = query;
 
   const searchData = await axios.get(`${BASE_URL}/articles/search`, {
     params: {
       text,
       locale: LOCALE,
+      topicName,
       limit: LIMIT_PAGE,
       period: period ?? SIX_MONTH,
       periodS,

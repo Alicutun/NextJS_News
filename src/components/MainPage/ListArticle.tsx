@@ -4,6 +4,8 @@ import { Box, Pagination, Stack, Typography, useMediaQuery } from '@mui/material
 import { makeStyles } from 'tss-react/mui';
 import { IDataArticle, IListArticle, LIMIT_PAGE } from '@/common';
 import { ItemArticle } from './ItemArticle';
+import { useRouter } from 'next/router';
+import { useChangeParam } from '@/hooks';
 // import { SkeletonListArticle } from '../Skeleton';
 
 const useStyles = makeStyles()(() => ({
@@ -31,16 +33,13 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const ListArticle: React.FC<IListArticle> = ({
-  listArticle,
-  page,
-  setPage,
-  total,
-  valueSearch,
-}) => {
+export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
   //
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
+  const router = useRouter();
+  const { page } = router.query;
+  const { changeParam } = useChangeParam();
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
   const [listArticles, setDataListAritcles] = React.useState<IDataArticle[]>([]);
@@ -70,7 +69,6 @@ export const ListArticle: React.FC<IListArticle> = ({
               title={item.details[0].summary}
               editDate={item.editDate}
               content={item.details[0].content}
-              valueSearch={valueSearch}
             />
           ))}
           {/* Pagination */}
@@ -78,8 +76,8 @@ export const ListArticle: React.FC<IListArticle> = ({
             <Pagination
               size="small"
               count={Math.ceil(total / LIMIT_PAGE)}
-              page={page}
-              onChange={(_, value) => setPage(value)}
+              page={Number(page) || 1}
+              onChange={(_, value) => changeParam('page', value)}
               showFirstButton
               showLastButton
             />

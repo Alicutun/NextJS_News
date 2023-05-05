@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
-  Container,
   Grid,
   MenuItem,
   Select,
@@ -11,27 +10,15 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { AsidePage, ListArticle, TopStory, Advertise } from '@/components';
 import { makeStyles } from 'tss-react/mui';
 import { useRouter } from 'next/router';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import axios from 'axios';
-import {
-  BASE_URL,
-  IDataArticle,
-  IDataSearchAllTopic,
-  IDataSearchTotalTopic,
-  IPeriod,
-  ITarget,
-  LIMIT_PAGE,
-  LOCALE,
-} from '@/common';
-
+import { IPeriod, ITarget } from '@/common';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 const useStyles = makeStyles()(() => ({
   selection: {
@@ -88,9 +75,9 @@ export const DetailSearch: React.FC<{}> = () => {
       router.push(
         `/search?text=${search}&period=${period}&periodS=${periodStart}&periodE=${periodEnd}&page=${1}`
       );
-    else {
-      if (!periodEnd) setPeriodStart(undefined);
-      else router.push(`/search?text=${search}&period=${period}&page=${1}`);
+    if (!periodEnd) {
+      setPeriodStart(undefined);
+      router.push(`/search?text=${search}&period=${period}&page=1`);
     }
   };
 
@@ -99,15 +86,10 @@ export const DetailSearch: React.FC<{}> = () => {
     setPeriodEnd(undefined);
   };
 
-  // Search in page
-  const handleSearch = () => {
-    router.push(`/search?text=${search}&page=${1}`);
-  };
-
   // press enter search
   const handleSearchEnter = async (event: any) => {
     if (event.key === 'Enter') {
-      handleSearch();
+      searchDetail();
     }
   };
 
@@ -115,6 +97,7 @@ export const DetailSearch: React.FC<{}> = () => {
     setSearch(`${router?.query?.text}` ?? '');
     return () => {};
   }, [router.query.text]);
+
   return (
     <Grid
       margin={w1220 ? '0 0 40px 0' : w1024 ? '0 0 40px 20px' : '0 0 40px 0'}
@@ -138,7 +121,7 @@ export const DetailSearch: React.FC<{}> = () => {
         <Button
           disabled={!search ? true : false}
           className={classes.buttonSearch}
-          onClick={handleSearch}
+          onClick={searchDetail}
         >
           <Typography m="0 10px" color="white">
             search
