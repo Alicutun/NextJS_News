@@ -1,18 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
-import { AsidePage, ListArticle, TopStory, Advertise } from '@/components';
+import { Container, Grid, Typography, useMediaQuery } from '@mui/material';
+import { AsidePage, ListArticle, TopStory, Advertise, DetailSearch } from '@/components';
 import { makeStyles } from 'tss-react/mui';
 import { useRouter } from 'next/router';
+
 import axios from 'axios';
 import {
   BASE_URL,
@@ -65,24 +56,24 @@ interface ISearch {
 }
 
 export default function Search(props: ISearch) {
-  const { dataSearchAllTopic, dataSearchTotalTopic } = props;
   const router = useRouter();
 
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
-  // const w768 = useMediaQuery("(min-width:768px)");
-
-  const allTopic = dataSearchTotalTopic.find(
-    (s: IDataSearchTotalTopic) => s.topic === 'All topics'
-  );
+  const w640 = useMediaQuery('(min-width:640px)');
 
   const [listArticle, setListArticle] = useState<IDataArticle[]>([]);
   const [total, setTotal] = useState(0);
   const [nameTopic, setNameTopic] = useState('');
-  const [page, setPage] = React.useState(1);
-
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState<string>('');
+  const { dataSearchAllTopic, dataSearchTotalTopic } = props;
+  const [period, setPeriod] = useState<string>(SIX_MONTH);
+
+  const allTopic = dataSearchTotalTopic.find(
+    (s: IDataSearchTotalTopic) => s.topic === 'All topics'
+  );
 
   useEffect(() => {
     if (!allTopic) {
@@ -100,23 +91,7 @@ export default function Search(props: ISearch) {
     return () => {};
   }, [dataSearchAllTopic.articles]);
 
-  // click select topic
-  const handleTopic = async (topicName: string, total: number) => {
-    const { data } = await axios.get(`${BASE_URL}/articles/search`, {
-      params: {
-        text: router.query.text,
-        locale: LOCALE,
-        topicName,
-        limit: LIMIT_PAGE,
-      },
-    });
-    setListArticle(data.articles);
-    setNameTopic(topicName);
-    setTotal(total);
-    setPage(1);
-  };
-
-  // fetch data when click pagination
+  // fetch data
   const fetchList = useCallback(async () => {
     try {
       const { data }: any = await axios.get(`${BASE_URL}/articles/search`, {
@@ -125,12 +100,20 @@ export default function Search(props: ISearch) {
           locale: LOCALE,
           topicName: nameTopic,
           limit: LIMIT_PAGE,
+          period,
           page,
         },
       });
       setListArticle(data?.articles);
     } catch (error) {}
-  }, [page]);
+  }, [nameTopic, page]);
+
+  // Select Topic
+  const handleTopic = (topicName: string, total: number) => {
+    setNameTopic(topicName);
+    setTotal(total);
+    setPage(1);
+  };
 
   // Search in page
   const handleSearch = () => {
@@ -162,89 +145,23 @@ export default function Search(props: ISearch) {
       <TopStory />
       {/* ad */}
       <Advertise />
+
       {/* Content */}
       <Grid container columnSpacing={5} mt={w1024 ? '30px' : '20px'}>
-        <Grid item xs={w1024 ? 9 : 12} margin={w1024 ? '' : '0 20px 0 20px'}>
-          <Box
-            marginLeft={w1220 ? '' : w1024 ? '20px' : ''}
-            marginBottom="40px"
-            sx={{ background: '#f7f7f7', border: 'solid 1px #ced2d7' }}
+        {/* form big */}
+        <Grid item xs={w1024 ? 9 : 12}>
+          {/* search */}
+          <DetailSearch />
+
+          {/* result */}
+          <Grid
+            padding={w1220 ? '0 0 0 0' : w1024 ? '0 0 0 20px' : '0 20px 0 20px'}
+            container
+            direction="row"
+            columnSpacing={5}
           >
-            <Grid
-              container
-              height={100}
-              alignItems="center"
-              justifyContent="center"
-              sx={{ borderBottom: 'solid 1px #ced2d7' }}
-            >
-              <TextField
-                value={search ?? ''}
-                className={classes.textfield}
-                onKeyUp={(e) => handleSearchEnter(e)}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-
-              <Button
-                disabled={!search ? true : false}
-                className={classes.buttonSearch}
-                onClick={handleSearch}
-              >
-                <Typography m="0 10px" color="white">
-                  search
-                </Typography>
-              </Button>
-            </Grid>
-
-            <Stack alignItems="center" direction="row" height={70}>
-              <Grid container width="100%" direction="row" alignItems="center" height={40}>
-                <Grid
-                  item
-                  xs={6}
-                  container
-                  alignItems="center"
-                  columnGap={1}
-                  justifyContent="center"
-                >
-                  <Typography fontSize={12}>Search period</Typography>
-                  <Autocomplete
-                    id="controllable-states-demo"
-                    options={iPeriodOptions}
-                    className={classes.selection}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-                <Grid
-                  item
-                  xs={6}
-                  container
-                  alignItems="center"
-                  columnGap={1}
-                  justifyContent="center"
-                >
-                  <Typography fontSize={12}>Search target</Typography>
-                  <Autocomplete
-                    id="controllable-states-demo"
-                    options={targetOptions}
-                    className={classes.selection}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </Grid>
-              </Grid>
-              <Stack
-                sx={{ borderLeft: 'solid 1px #ced2d7' }}
-                width={180}
-                height="100%"
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Typography fontSize={12}>Advanced search</Typography>
-              </Stack>
-            </Stack>
-          </Box>
-
-          <Grid container direction="row" columnSpacing={5}>
-            <Grid item xs={w1220 ? 2 : 12} display={w1220 ? '' : 'none'}>
+            {/* Catagory */}
+            <Grid item xs={w1220 ? 2 : 0} display={w1220 ? '' : 'none'}>
               <Typography
                 fontSize={16}
                 paddingBottom="10px"
@@ -267,22 +184,15 @@ export default function Search(props: ISearch) {
                 </Typography>
               ))}
             </Grid>
-
-            <Grid
-              item
-              direction="column"
-              xs={w1220 ? 10 : 12}
-              container
-              marginLeft={w1220 ? '0' : w1024 ? '20px' : '0'}
-            >
-              {/* Total list */}
-              <Grid item sx={{ width: '100%' }}>
+            {/* Total list */}
+            <Grid item direction="column" xs={w1220 ? 10 : 12} container>
+              <Grid item width="100%">
                 <Typography fontSize="18px" paddingBottom="10px">
                   TOTAL ({total})
                 </Typography>
               </Grid>
 
-              <Grid item sx={{ width: '100%' }}>
+              <Grid item width="100%">
                 <ListArticle
                   listArticle={listArticle}
                   page={page}
@@ -305,18 +215,29 @@ export default function Search(props: ISearch) {
 
 export async function getServerSideProps(context: any) {
   const { query } = context;
+  const { text, period, periodS, periodE, page } = query;
 
   const searchData = await axios.get(`${BASE_URL}/articles/search`, {
     params: {
-      text: query.text ?? '',
+      text,
       locale: LOCALE,
       limit: LIMIT_PAGE,
-      page: 1,
+      period: period ?? SIX_MONTH,
+      periodS,
+      periodE,
+      page: page ?? 1,
     },
   });
+
   const dataSearchAllTopic = searchData.data;
   const searchTotalData = await axios.get(`${BASE_URL}/articles/search-total`, {
-    params: { text: query.text ?? '', locale: LOCALE },
+    params: {
+      text,
+      locale: LOCALE,
+      period: period ?? SIX_MONTH,
+      periodS,
+      periodE,
+    },
   });
   const dataSearchTotalTopic = searchTotalData.data;
 

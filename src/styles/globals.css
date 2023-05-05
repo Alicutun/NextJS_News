@@ -1,10 +1,14 @@
-@import "./_color";
+@import './_color';
 
-@import "./components";
-@import "./pages";
+@import './components';
+@import './pages';
 
 * {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  overflow: overlay;
 }

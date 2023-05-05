@@ -1,7 +1,7 @@
+import React from 'react';
 import { Box, useMediaQuery } from '@mui/material';
 import { BoxNews } from './BoxNews';
 import { BoxLive } from './BoxLive';
-import React from 'react';
 
 export const AsidePage = () => {
   //

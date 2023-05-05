@@ -4,7 +4,7 @@ import { Box, Pagination, Stack, Typography, useMediaQuery } from '@mui/material
 import { makeStyles } from 'tss-react/mui';
 import { IDataArticle, IListArticle, LIMIT_PAGE } from '@/common';
 import { ItemArticle } from './ItemArticle';
-import { SkeletonListArticle } from '../Skeleton';
+// import { SkeletonListArticle } from '../Skeleton';
 
 const useStyles = makeStyles()(() => ({
   border: {
@@ -58,9 +58,9 @@ export const ListArticle: React.FC<IListArticle> = ({
       </Stack>
 
       {/* List article */}
-      {listArticle?.length === 0 ? (
-        <SkeletonListArticle />
-      ) : listArticles ? (
+      {listArticles?.length === 0 ? (
+        <Typography>No data</Typography> // <SkeletonListArticle />
+      ) : (
         <Box marginLeft={w1220 ? '' : '10px'}>
           {listArticles.map((item: any) => (
             <ItemArticle
@@ -85,8 +85,6 @@ export const ListArticle: React.FC<IListArticle> = ({
             />
           </Stack>
         </Box>
-      ) : (
-        <></>
       )}
     </article>
   );
