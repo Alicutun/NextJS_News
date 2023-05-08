@@ -4,46 +4,67 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BASE_URL, IDataArticle } from '@/common';
+import axios from 'axios';
+import { format } from 'timeago.js';
+import { Skeleton } from '@mui/material';
 
 export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
   //
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
 
-  const words = [
-    { id: 0, value: 'con chim canh cut' },
-    { id: 1, value: 'con dieu hau' },
-    { id: 2, value: 'con chuon chuon' },
-    { id: 3, value: 'con soc' },
-    { id: 4, value: 'con con meo' },
-    { id: 5, value: 'con ha ma' },
-  ];
-
-  const [wordData, setWordData] = useState<any>(words[0]);
+  const [listData, setListData] = useState<IDataArticle[]>([]);
+  const [wordData, setWordData] = useState<IDataArticle>();
   const [i, setI] = useState<number>(0);
 
-  React.useEffect(() => {
+  // call get top10 news
+  const fetchListTop10Article = async () => {
+    const { data } = await axios.get(
+      `${BASE_URL}/articles?filter=${encodeURIComponent(
+        JSON.stringify({
+          order: 'clickCount DESC',
+          limit: 5,
+        })
+      )}`
+    );
+    setListData(data.data);
+  };
+
+  useEffect(() => {
+    fetchListTop10Article();
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    if (!listData) {
+      return;
+    }
+    setWordData(listData[0]);
+    setI(1);
+    return () => {};
+  }, [listData]);
+
+  useEffect(() => {
+    if (!listData) {
+      return;
+    }
     const timer = setTimeout(() => {
-      if (i === 0) {
-        setWordData(words[0]);
-        setI((i) => i + 1);
+      if (i < listData.length && i !== 0) {
+        setWordData(listData[i]);
+        setI((prev) => prev + 1);
       }
 
-      if (i < words.length && i !== 0) {
-        setWordData(words[i]);
-        setI((i) => i + 1);
-      }
-
-      if (i === words.length) {
-        setWordData(words[0]);
+      if (i === listData.length) {
+        setWordData(listData[0]);
         setI(1);
       }
-    }, 10000);
+    }, 5000);
     return () => {
       clearTimeout(timer);
     };
-  }, [i]);
+  }, [listData, i]);
 
   return (
     <Container disableGutters>
@@ -57,15 +78,20 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
         <Typography color="#448aff" fontWeight="bold">
           TOP STORIES
         </Typography>
-        <Typography marginLeft="10px">{wordData.value}</Typography>
 
-        <Box color="#999" margin="3px 2px 0 10px">
-          <AccessTimeIcon sx={{ fontSize: '15px' }} />
-        </Box>
-
-        <Typography color="#999" fontSize={12} pt="2px">
-          24분전
-        </Typography>
+        {!wordData ? (
+          <Skeleton sx={{ marginLeft: '10px' }} width={200} />
+        ) : (
+          <>
+            <Typography marginLeft="10px">{wordData?.details[0].summary}</Typography>
+            <Box color="#999" margin="3px 2px 0 10px">
+              <AccessTimeIcon sx={{ fontSize: '15px' }} />
+            </Box>
+            <Typography color="#999" fontSize={12} pt="2px">
+              {format(wordData?.createDate)}
+            </Typography>
+          </>
+        )}
       </Grid>
     </Container>
   );

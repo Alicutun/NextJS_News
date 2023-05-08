@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -6,7 +6,10 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { makeStyles } from 'tss-react/mui';
-
+import { BASE_URL, IDataArticle } from '@/common';
+import axios from 'axios';
+import { formatTimeToYMD } from '@/utilities';
+import { format } from 'timeago.js';
 const useStyles = makeStyles()(() => ({
   boxLive: {
     marginTop: '10px',
@@ -41,9 +44,11 @@ const useStyles = makeStyles()(() => ({
     border: '1px solid #ced2d7',
   },
   time: {
+    background: 'white',
     position: 'absolute',
     top: '5px',
     left: '-18px',
+    lineHeight: '13px',
   },
   timeIcon: {
     position: 'absolute',
@@ -63,7 +68,26 @@ export const BoxLive = () => {
   //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
-  const w480 = useMediaQuery('(min-width:480px)');
+
+  const [listData, setListData] = useState<IDataArticle[]>([]);
+
+  // call get top10 news
+  const fetchListTop10Article = async () => {
+    const { data } = await axios.get(
+      `${BASE_URL}/articles?filter=${encodeURIComponent(
+        JSON.stringify({
+          order: 'clickCount DESC',
+          limit: 10,
+        })
+      )}`
+    );
+    setListData(data.data);
+  };
+
+  useEffect(() => {
+    fetchListTop10Article();
+    return () => {};
+  }, []);
 
   return (
     <Box className={w1024 ? classes.boxLive : classes.boxLiveRes}>
@@ -83,52 +107,57 @@ export const BoxLive = () => {
         </Typography>
       </Stack>
       <Grid container height={w1024 ? '285px' : 'auto'} overflow="auto">
-        {Array.from(Array(w1024 ? 5 : w480 ? 5 : 5)).map((_, index) => (
-          <Grid item xs={12} key={index}>
-            <Stack
-              direction={w1024 ? 'column' : 'row'}
-              alignItems={w1024 ? '' : 'center'}
-              justifyContent="space-between"
-              className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
-            >
-              {/* time */}
+        {listData &&
+          listData.map((item) => (
+            <Grid item xs={12} key={item.id}>
               <Stack
-                alignItems="center"
-                justifyContent="center"
-                direction="column"
-                className={w1024 ? '' : classes.stackTime}
+                direction={w1024 ? 'column' : 'row'}
+                alignItems={w1024 ? '' : 'center'}
+                justifyContent="space-between"
+                className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
               >
-                <AccessTimeIcon className={w1024 ? classes.timeIcon : ''} />
-                <Typography fontSize={11} className={w1024 ? classes.time : ''}>
-                  17분전
-                </Typography>
-              </Stack>
-
-              {/* content */}
-              <Grid container direction="column" justifyContent="flex-start">
-                <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
-                  코빗도 적자…매출 43억, 영업손실 358억
-                </Typography>
-                <Typography
-                  display={w1024 ? 'none' : ''}
-                  padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'}
-                  fontSize="13px"
-                  color="#999"
+                {/* time */}
+                <Stack
+                  alignItems="center"
+                  justifyContent="center"
+                  direction="column"
+                  className={w1024 ? '' : classes.stackTime}
                 >
-                  김지현 기자 2023-04-14 블록체인
-                </Typography>
-              </Grid>
-              {/* Image */}
-              <img
-                style={{ padding: w1024 ? '0 20px' : '0 10px' }}
-                height={w1024 ? '80px' : '70px'}
-                width={165}
-                src="https://newsimg.sedaily.com/2023/04/14/29OAUBRQ91_1_s.jpg"
-                alt=""
-              />
-            </Stack>
-          </Grid>
-        ))}
+                  <AccessTimeIcon className={w1024 ? classes.timeIcon : ''} />
+                  <Typography
+                    fontSize={11}
+                    textAlign="center"
+                    className={w1024 ? classes.time : ''}
+                  >
+                    {format(item.createDate)}
+                  </Typography>
+                </Stack>
+
+                {/* content */}
+                <Grid container direction="column" justifyContent="flex-start">
+                  <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
+                    {item.details[0].summary}
+                  </Typography>
+                  <Typography
+                    display={w1024 ? 'none' : ''}
+                    padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'}
+                    fontSize="13px"
+                    color="#999"
+                  >
+                    김지현 기자 {formatTimeToYMD(item.createDate)} 블록체인
+                  </Typography>
+                </Grid>
+                {/* Image */}
+                <img
+                  style={{ padding: w1024 ? '0 20px' : '0 10px' }}
+                  height={w1024 ? '80px' : '70px'}
+                  width={165}
+                  src={item.details[0].summaryImage}
+                  alt=""
+                />
+              </Stack>
+            </Grid>
+          ))}
       </Grid>
     </Box>
   );

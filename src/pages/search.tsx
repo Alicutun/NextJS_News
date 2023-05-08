@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Grid, Typography, useMediaQuery } from '@mui/material';
 import { AsidePage, ListArticle, TopStory, Advertise, DetailSearch } from '@/components';
 import { useRouter } from 'next/router';
-
 import axios from 'axios';
 import {
   BASE_URL,

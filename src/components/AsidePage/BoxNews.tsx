@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { makeStyles } from 'tss-react/mui';
 import axios from 'axios';
-import { BASE_URL } from '@/common';
+import { BASE_URL, IDataArticle } from '@/common';
 import { useRouter } from 'next/router';
 
 const useStyles = makeStyles()(() => ({
@@ -56,7 +56,7 @@ export const BoxNews: React.FC<{}> = () => {
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w480 = useMediaQuery('(min-width:480px)');
 
-  const [listData, setListData] = useState<any[]>([]);
+  const [listData, setListData] = useState<IDataArticle[]>([]);
 
   // call get top10 news
   const fetchListTop10Article = async () => {

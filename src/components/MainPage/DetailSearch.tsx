@@ -134,9 +134,16 @@ export const DetailSearch: React.FC<{}> = () => {
         direction={w640 ? 'row' : 'column'}
         height={w640 ? 60 : 'auto'}
         sx={{ borderBottom: 'solid 1px #ced2d7' }}
-        padding="0 20px"
       >
-        <Grid container width="100%" direction="row" alignItems="center" marginTop="10px">
+        <Grid
+          container
+          width="100%"
+          direction="row"
+          alignItems="center"
+          marginTop="10px"
+          columnSpacing={w640 ? 2 : 0}
+          padding="0 20px"
+        >
           <Grid
             item
             xs={w640 ? 6 : 12}
@@ -145,18 +152,16 @@ export const DetailSearch: React.FC<{}> = () => {
             direction="row"
             alignItems="center"
           >
-            <Grid item xs={3} container justifyContent="center">
+            <Grid item xs={2} container>
               <Typography fontSize={12}>Search period</Typography>
             </Grid>
-            <Grid item xs={9} paddingRight="10px">
+            <Grid item xs={10}>
               <Select
                 fullWidth
                 size="small"
                 value={period}
                 onChange={(event: SelectChangeEvent) => setPeriod(event.target.value as string)}
-                sx={{
-                  fontSize: '13px',
-                }}
+                sx={{ fontSize: '13px' }}
               >
                 {iPeriodOptions.map((item) => (
                   <MenuItem key={item} value={item} sx={{ fontSize: '13px' }}>
@@ -167,10 +172,10 @@ export const DetailSearch: React.FC<{}> = () => {
             </Grid>
           </Grid>
           <Grid item xs={w640 ? 6 : 12} paddingBottom="10px" container alignItems="center">
-            <Grid item xs={3} container justifyContent="center">
+            <Grid item xs={2} container>
               <Typography fontSize={12}>Search target</Typography>
             </Grid>
-            <Grid item xs={9} paddingRight="10px">
+            <Grid item xs={10}>
               <Select
                 fullWidth
                 size="small"
@@ -214,57 +219,72 @@ export const DetailSearch: React.FC<{}> = () => {
           {/* include word */}
           <Grid
             item
-            xs={w640 ? 6 : 12}
+            xs={w640 ? 3 : 12}
             paddingBottom="10px"
             container
             direction="row"
             alignItems="center"
           >
-            <Grid item xs={3} container justifyContent="center">
+            <Grid item xs={3} container>
               <Typography fontSize={12}>Also includes the words</Typography>
             </Grid>
-            <Grid item xs={9} paddingRight="10px">
-              <TextField
-                fullWidth
-                sx={{
-                  '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
-                    height: '0px',
-                  },
-                }}
-              />
+            <Grid item xs={9}>
+              <TextField fullWidth size="small" />
             </Grid>
           </Grid>
-          <Grid item xs={w640 ? 6 : 12} paddingBottom="10px" container alignItems="center">
-            <Grid item xs={3} container justifyContent="center">
+          <Grid item xs={w640 ? 3 : 12} paddingBottom="10px" container alignItems="center">
+            <Grid item xs={3} container>
               <Typography fontSize={12}>Except for the words</Typography>
             </Grid>
-            <Grid item xs={9} paddingRight="10px">
-              <TextField
-                fullWidth
-                sx={{
-                  '.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input': {
-                    height: '0px',
-                  },
-                }}
-              />
+            <Grid item xs={9}>
+              <TextField fullWidth size="small" />
             </Grid>
           </Grid>
           {/* periodS - periodE */}
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Grid container alignItems="center" columnGap={1} paddingBottom="10px">
-              <Typography>Period setting </Typography>
-              <DatePicker
-                sx={{ fontSize: '13px' }}
-                value={periodStart ? dayjs(periodStart) : null}
-                onChange={(newValue) => setPeriodStart(newValue?.toISOString())}
-              />
-              <Typography>~</Typography>
-              <DatePicker
-                value={periodEnd ? dayjs(periodEnd) : null}
-                onChange={(newValue) => setPeriodEnd(newValue?.toISOString())}
-              />
-            </Grid>
-          </LocalizationProvider>
+          <Grid item xs={w640 ? 6 : 12}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Grid container paddingBottom="10px" alignItems="center">
+                <Grid item xs={3} container justifyContent={w640 ? 'center' : ''}>
+                  <Typography fontSize={12}>Period setting</Typography>
+                </Grid>
+                <Grid item xs={9} container alignItems="center">
+                  <DatePicker
+                    sx={{ width: '45%' }}
+                    value={periodStart ? dayjs(periodStart) : null}
+                    onChange={(newValue) => setPeriodStart(newValue?.toISOString())}
+                    slotProps={{
+                      textField: {
+                        size: 'small',
+                      },
+                      openPickerButton: {
+                        size: 'small',
+                      },
+                      openPickerIcon: {
+                        fontSize: '10px',
+                      },
+                    }}
+                  />
+                  <Typography>&nbsp;~&nbsp;</Typography>
+                  <DatePicker
+                    sx={{ width: '45%' }}
+                    value={periodEnd ? dayjs(periodEnd) : null}
+                    onChange={(newValue) => setPeriodEnd(newValue?.toISOString())}
+                    slotProps={{
+                      textField: {
+                        size: 'small',
+                      },
+                      openPickerButton: {
+                        size: 'small',
+                      },
+                      openPickerIcon: {
+                        fontSize: '10px',
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </LocalizationProvider>
+          </Grid>
           {/* Button  */}
           <Grid
             item
