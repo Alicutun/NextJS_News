@@ -6,6 +6,7 @@ import { IDataArticle, IListArticle, LIMIT_PAGE } from '@/common';
 import { ItemArticle } from './ItemArticle';
 import { useRouter } from 'next/router';
 import { useChangeParam } from '@/hooks';
+import { SkeletonListArticle } from '../Skeleton';
 // import { SkeletonListArticle } from '../Skeleton';
 
 const useStyles = makeStyles()(() => ({
@@ -57,32 +58,36 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
       </Stack>
 
       {/* List article */}
-      {listArticles?.length === 0 ? (
-        <Typography>No data</Typography> // <SkeletonListArticle />
+      {listArticle ? (
+        listArticles?.length === 0 ? (
+          <Typography>No data</Typography>
+        ) : (
+          <Box marginLeft={w1220 ? '' : '10px'}>
+            {listArticles.map((item: any) => (
+              <ItemArticle
+                key={item.id}
+                id={item.id}
+                img={item.details[0].summaryImage}
+                title={item.details[0].summary}
+                editDate={item.editDate}
+                content={item.details[0].content}
+              />
+            ))}
+            {/* Pagination */}
+            <Stack alignItems="center" marginBottom="20px">
+              <Pagination
+                size="small"
+                count={Math.ceil(total / LIMIT_PAGE)}
+                page={Number(page) || 1}
+                onChange={(_, value) => changeParam('page', value)}
+                showFirstButton
+                showLastButton
+              />
+            </Stack>
+          </Box>
+        )
       ) : (
-        <Box marginLeft={w1220 ? '' : '10px'}>
-          {listArticles.map((item: any) => (
-            <ItemArticle
-              key={item.id}
-              id={item.id}
-              img={item.details[0].summaryImage}
-              title={item.details[0].summary}
-              editDate={item.editDate}
-              content={item.details[0].content}
-            />
-          ))}
-          {/* Pagination */}
-          <Stack alignItems="center" marginBottom="20px">
-            <Pagination
-              size="small"
-              count={Math.ceil(total / LIMIT_PAGE)}
-              page={Number(page) || 1}
-              onChange={(_, value) => changeParam('page', value)}
-              showFirstButton
-              showLastButton
-            />
-          </Stack>
-        </Box>
+        <SkeletonListArticle />
       )}
     </article>
   );

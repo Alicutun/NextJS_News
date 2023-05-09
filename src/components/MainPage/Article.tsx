@@ -51,11 +51,11 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   const [count, setCount] = React.useState<number>(0);
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-  const [dataContent, setDataContent] = React.useState<any>('');
-  React.useEffect(() => {
-    setDataContent(dataNews.details[0].content);
-    return () => {};
-  }, []);
+  // const [dataContent, setDataContent] = React.useState<any>('');
+  // React.useEffect(() => {
+  //   setDataContent(dataNews.details[0].content);
+  //   return () => {};
+  // }, []);
 
   // func count word in comment
   const handleChange = (e: any) => {
@@ -116,7 +116,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
         </Grid>
       </Grid>
       {/* print */}
-      <Box ref={componentPDF} dangerouslySetInnerHTML={{ __html: dataContent }} />
+      <Box ref={componentPDF} dangerouslySetInnerHTML={{ __html: dataNews.details[0].content }} />
 
       <Grid container direction="column" spacing={2} paddingTop="100px">
         <Grid item container direction="row" justifyContent="space-between" alignItems="center">

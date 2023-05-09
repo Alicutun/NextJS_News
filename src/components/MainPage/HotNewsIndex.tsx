@@ -5,6 +5,7 @@ import { Stack, Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
@@ -22,7 +23,7 @@ const useStyles = makeStyles()(() => ({
   textHeight40: {
     height: '40px',
     lineHeight: '20px',
-    overflow: ' hidden',
+    overflow: 'hidden',
   },
   text1024: {
     overflow: 'hidden',
@@ -48,6 +49,14 @@ export const HotNewsIndex: React.FC<{
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w480 = useMediaQuery('(min-width:480px)');
   const router = useRouter();
+
+  // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
+  const [listArticle, setDataListAritcles] = useState<IDataArticle[]>([]);
+  useEffect(() => {
+    if (listArticles) setDataListAritcles(listArticles);
+    return () => {};
+  }, [listArticles]);
+
   return (
     <Box className={w1024 ? (background ? classes.background : '') : ''} padding="70px 0">
       <Box width={w1200 ? '1200px' : '100%'} margin="0 auto">
@@ -129,7 +138,7 @@ export const HotNewsIndex: React.FC<{
           height={w1024 ? '' : 105}
           overflow={w1024 ? '' : 'hidden'}
         >
-          {listArticles.slice(w1024 ? 0 : 1).map((item) => (
+          {listArticle.slice(w1024 ? 0 : 1).map((item) => (
             <Grid
               item
               xs={w1024 ? 2.4 : w480 ? 6 : 12}
@@ -173,11 +182,12 @@ export const HotNewsIndex: React.FC<{
                     display={w1024 ? '' : 'none'}
                     fontSize="13px"
                     height="36px"
-                    overflow="hidden"
                     color="#666"
-                  >
-                    {item.details[0].content}
-                  </Typography>
+                    className="textNoWrap2Word"
+                    dangerouslySetInnerHTML={{
+                      __html: item.details[0].content,
+                    }}
+                  ></Typography>
                   <Typography
                     display={w1024 ? '' : 'none'}
                     color="#999"

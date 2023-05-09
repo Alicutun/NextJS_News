@@ -23,13 +23,7 @@ const useStyles = makeStyles()(() => ({
     paddingBottom: '3px',
     fontSize: '12px',
   },
-  itemContent: {
-    fontSize: '13px',
-    color: '#888888',
-    lineHeight: '19px',
-    overflow: 'hidden',
-    maxHeight: '35px ',
-  },
+
   marker: {
     fontWeight: 'bold',
     background: 'none',
@@ -80,13 +74,17 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, editDate, 
         </Typography>
         {/* use Marker to highlight-text */}
         <Marker mark={text} options={{ className: classes.marker }}>
-          <Box
-            className={classes.itemContent}
+          <Typography
+            fontSize={13}
+            color="#888888"
+            lineHeight="19px"
+            maxHeight="35px "
+            className="textNoWrap2Word"
             display={w640 ? '' : 'none'}
             dangerouslySetInnerHTML={{
               __html: content,
             }}
-          ></Box>
+          ></Typography>
         </Marker>
       </Grid>
     </Grid>
