@@ -10,7 +10,7 @@ export enum RestPaths {
 // Pagination list article
 export const LIMIT_PAGE = 5;
 
-// locate call api
+// locale call api
 export const LOCALE = 'en_US';
 
 // limit word comment
