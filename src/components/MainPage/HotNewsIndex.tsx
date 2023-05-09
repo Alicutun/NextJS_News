@@ -138,68 +138,69 @@ export const HotNewsIndex: React.FC<{
           height={w1024 ? '' : 105}
           overflow={w1024 ? '' : 'hidden'}
         >
-          {listArticle.slice(w1024 ? 0 : 1).map((item) => (
-            <Grid
-              item
-              xs={w1024 ? 2.4 : w480 ? 6 : 12}
-              key={item.id}
-              onClick={() => {
-                router.push({
-                  pathname: '/news/[id]',
-                  query: { id: item.id },
-                });
-              }}
-            >
-              <Box
-                sx={
-                  w1024
-                    ? {
-                        border: '1px solid #d9d9d9',
-                        cursor: 'pointer',
-                        background: 'white',
-                        '&:hover': {
-                          transform: 'translateY(-10px)',
-                          transition: '0.4s',
-                          background: `${colorTopic}`,
-                          border: `1px solid ${colorTopic}`,
-                          '& .MuiTypography-root': {
-                            color: 'white',
-                          },
-                        },
-                      }
-                    : {}
-                }
+          {listArticle.length > 0 &&
+            listArticle.slice(w1024 ? 0 : 1).map((item) => (
+              <Grid
+                item
+                xs={w1024 ? 2.4 : w480 ? 6 : 12}
+                key={item.id}
+                onClick={() => {
+                  router.push({
+                    pathname: '/news/[id]',
+                    query: { id: item.id },
+                  });
+                }}
               >
-                {w1024 ? <img width="100%" src={item.details[0].summaryImage} alt="" /> : ''}
-                <Box padding={w1024 ? '20px 15px' : ''}>
-                  <Typography
-                    noWrap={w1024 ? false : true}
-                    className={w1024 ? classes.text1024 : classes.textRes}
-                  >
-                    {item.details[0].summary}
-                  </Typography>
-                  <Typography
-                    display={w1024 ? '' : 'none'}
-                    fontSize="13px"
-                    height="36px"
-                    color="#666"
-                    className="textNoWrap2Word"
-                    dangerouslySetInnerHTML={{
-                      __html: item.details[0].content,
-                    }}
-                  ></Typography>
-                  <Typography
-                    display={w1024 ? '' : 'none'}
-                    color="#999"
-                    fontSize="12px"
-                    marginTop="9px"
-                  >
-                    임진혁 기자 {formatTimeToYMD(item.createDate)}
-                  </Typography>
+                <Box
+                  sx={
+                    w1024
+                      ? {
+                          border: '1px solid #d9d9d9',
+                          cursor: 'pointer',
+                          background: 'white',
+                          '&:hover': {
+                            transform: 'translateY(-10px)',
+                            transition: '0.4s',
+                            background: `${colorTopic}`,
+                            border: `1px solid ${colorTopic}`,
+                            '& .MuiTypography-root': {
+                              color: 'white',
+                            },
+                          },
+                        }
+                      : {}
+                  }
+                >
+                  {w1024 ? <img width="100%" src={item.details[0].summaryImage} alt="" /> : ''}
+                  <Box padding={w1024 ? '20px 15px' : ''}>
+                    <Typography
+                      noWrap={w1024 ? false : true}
+                      className={w1024 ? classes.text1024 : classes.textRes}
+                    >
+                      {item.details[0].summary}
+                    </Typography>
+                    <Typography
+                      display={w1024 ? '' : 'none'}
+                      fontSize="13px"
+                      height="36px"
+                      color="#666"
+                      className="textNoWrap2Word"
+                      dangerouslySetInnerHTML={{
+                        __html: item.details[0].content,
+                      }}
+                    ></Typography>
+                    <Typography
+                      display={w1024 ? '' : 'none'}
+                      color="#999"
+                      fontSize="12px"
+                      marginTop="9px"
+                    >
+                      임진혁 기자 {formatTimeToYMD(item.createDate)}
+                    </Typography>
+                  </Box>
                 </Box>
-              </Box>
-            </Grid>
-          ))}
+              </Grid>
+            ))}
         </Grid>
       </Box>
     </Box>

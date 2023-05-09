@@ -82,7 +82,7 @@ export const BoxNews: React.FC<{}> = () => {
         Best click
       </Typography>
       <Grid container>
-        {listData ? (
+        {listData.length > 0 &&
           listData?.slice(0, w1024 ? 5 : w480 ? 10 : 5).map((item, index) => (
             <Grid
               sx={{
@@ -157,10 +157,7 @@ export const BoxNews: React.FC<{}> = () => {
                 </Stack>
               </Stack>
             </Grid>
-          ))
-        ) : (
-          <></>
-        )}
+          ))}
       </Grid>
     </Box>
   );

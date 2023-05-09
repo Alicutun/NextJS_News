@@ -18,18 +18,19 @@ import { IDataArticle, LIMIT_COMMENT } from '@/common';
 import { formatTimeToYMD_HMS } from '@/utilities';
 
 const useStyles = makeStyles()(() => ({
-  articleNews: {
+  main: {
     position: 'relative',
     marginBottom: '30px',
   },
-  articleNewsRes1220: {
+  mainRes1220: {
     margin: '0 0 30px 20px',
   },
-  articleNewsRes1024: {
+  mainRes1024: {
     margin: '0 20px 30px',
   },
   topNews: {
-    paddingBottom: '20px',
+    paddingBottom: '10px',
+    marginBottom: '20px',
     borderBottom: '1px solid #ced2d7',
   },
   buttonP: {
@@ -51,11 +52,11 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   const [count, setCount] = React.useState<number>(0);
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-  // const [dataContent, setDataContent] = React.useState<any>('');
-  // React.useEffect(() => {
-  //   setDataContent(dataNews.details[0].content);
-  //   return () => {};
-  // }, []);
+  const [dataContent, setDataContent] = React.useState<any>('');
+  React.useEffect(() => {
+    setDataContent(dataNews.details[0].content);
+    return () => {};
+  }, []);
 
   // func count word in comment
   const handleChange = (e: any) => {
@@ -73,15 +74,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   });
 
   return (
-    <article
-      className={
-        w1220
-          ? classes.articleNews
-          : w1024
-          ? classes.articleNewsRes1220
-          : classes.articleNewsRes1024
-      }
-    >
+    <article className={w1220 ? classes.main : w1024 ? classes.mainRes1220 : classes.mainRes1024}>
       <Box position="absolute" left={-180}>
         <img src="https://tpc.googlesyndication.com/simgad/6913498388766754588" alt="" />
       </Box>
@@ -116,20 +109,19 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
         </Grid>
       </Grid>
       {/* print */}
-      <Box ref={componentPDF} dangerouslySetInnerHTML={{ __html: dataNews.details[0].content }} />
+      <Box
+        width="100%"
+        overflow="hidden"
+        ref={componentPDF}
+        dangerouslySetInnerHTML={{ __html: dataContent }}
+      />
 
       <Grid container direction="column" spacing={2} paddingTop="100px">
         <Grid item container direction="row" justifyContent="space-between" alignItems="center">
           <Grid item xs={6} container gap="10px">
-            <FacebookShareButton url={'https://www.decenter.kr/NewsView/29OATPNBV1/GZ03'}>
-              <FacebookIcon size={40} round={true} />
-            </FacebookShareButton>
-            <TwitterShareButton url={'https://www.decenter.kr/NewsView/29OATPNBV1/GZ03'}>
-              <TwitterIcon size={40} round={true} />
-            </TwitterShareButton>
-            <EmailShareButton url={'https://www.decenter.kr/NewsView/29OATPNBV1/GZ03'}>
-              <EmailIcon size={40} round={true} />
-            </EmailShareButton>
+            <FacebookIcon size={40} round={true} />
+            <FacebookIcon size={40} round={true} />
+            <FacebookIcon size={40} round={true} />
           </Grid>
 
           <Grid item xs={6} container justifyContent="flex-end">
@@ -191,17 +183,10 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
 
         <Grid item container>
           <Grid item container xs={6} justifyContent={'center'}>
-            <Box
-              sx={{
-                width: '300px',
-                height: '300px',
-                background: 'gray',
-              }}
-            ></Box>
+            <Box width={250} height={250} sx={{ background: 'gray' }}></Box>
           </Grid>
-
           <Grid item container xs={6} justifyContent={'center'}>
-            <Box sx={{ width: '300px', height: '300px', background: 'gray' }}></Box>
+            <Box width={250} height={250} sx={{ background: 'gray' }}></Box>
           </Grid>
         </Grid>
       </Grid>

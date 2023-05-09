@@ -124,7 +124,7 @@ export const Menu = () => {
             direction="row"
             fontSize={w1024 ? '20px' : '18px'}
           >
-            {listTopics ? (
+            {listTopics.length > 0 &&
               listTopics?.map((item) => (
                 <Button
                   disabled={Number(router.query.menuId) === Number(item.id) ? true : false}
@@ -152,10 +152,7 @@ export const Menu = () => {
                     {item.name}
                   </Typography>
                 </Button>
-              ))
-            ) : (
-              <></>
-            )}
+              ))}
           </Grid>
 
           {/* Menu right */}

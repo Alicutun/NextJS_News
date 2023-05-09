@@ -73,18 +73,19 @@ export default function Search(props: ISearch) {
                 Category별
               </Typography>
 
-              {dataSearchTotalTopic?.map((item: any) => (
-                <Typography
-                  marginBottom="5px"
-                  color={item.topic === topicName ? 'blue' : ''}
-                  key={item.topic}
-                  onClick={() => handleClickTopic(item.topic)}
-                  sx={{ cursor: 'pointer' }}
-                  fontSize={13}
-                >
-                  {item.topic} ({item.total})
-                </Typography>
-              ))}
+              {dataSearchTotalTopic &&
+                dataSearchTotalTopic?.map((item: any) => (
+                  <Typography
+                    marginBottom="5px"
+                    color={item.topic === topicName ? 'blue' : ''}
+                    key={item.topic}
+                    onClick={() => handleClickTopic(item.topic)}
+                    sx={{ cursor: 'pointer' }}
+                    fontSize={13}
+                  >
+                    {item.topic} ({item.total})
+                  </Typography>
+                ))}
             </Grid>
             {/* Total list */}
             <Grid item direction="column" xs={w1220 ? 10 : 12} container>

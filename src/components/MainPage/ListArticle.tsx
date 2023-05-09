@@ -7,7 +7,6 @@ import { ItemArticle } from './ItemArticle';
 import { useRouter } from 'next/router';
 import { useChangeParam } from '@/hooks';
 import { SkeletonListArticle } from '../Skeleton';
-// import { SkeletonListArticle } from '../Skeleton';
 
 const useStyles = makeStyles()(() => ({
   border: {

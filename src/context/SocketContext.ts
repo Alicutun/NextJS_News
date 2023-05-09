@@ -6,6 +6,7 @@ export const socket = io(`${BASE_URL}`, {
   path: '/stream',
   reconnectionDelayMax: 10000,
 });
+
 export interface SocketCoin {
   socket: Socket;
 }
