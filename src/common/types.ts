@@ -70,3 +70,9 @@ export enum ITarget {
   PHOTO = 'Photo',
   EVENT_NAME = 'Event name',
 }
+
+export enum IColorTopic {
+  BlOCKCHAIN = '#009b28',
+  ITINDUSTRY = '#ef6800',
+  POLICY = '#b70b17',
+}

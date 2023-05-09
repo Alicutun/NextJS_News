@@ -55,8 +55,8 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, editDate, 
       padding="20px 0"
       onClick={() => {
         router.push({
-          pathname: '/news/[name]',
-          query: { name: id },
+          pathname: '/news/[id]',
+          query: { id: id },
         });
       }}
     >

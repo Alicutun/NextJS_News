@@ -28,21 +28,21 @@ export default function News({ data }: { data: IDataArticle }) {
 
 export async function getServerSideProps(context: any) {
   const { params } = context;
+  console.log('params:', params);
   const filter = {
-    filter: {
-      include: [
-        {
-          relation: 'user',
-          scope: {
-            include: [{ relation: 'profile' }],
-          },
+    include: [
+      {
+        relation: 'user',
+        scope: {
+          include: [{ relation: 'profile' }],
         },
-      ],
-    },
+      },
+    ],
   };
-  const { data } = await axios.get(`${BASE_URL}/articles/${params.newsId}`, {
-    params: filter,
-  });
+  const { data } = await axios.get(
+    `${BASE_URL}/articles/${params.newsId}?filter=${encodeURIComponent(JSON.stringify(filter))}`
+  );
+
   return {
     props: {
       data,
