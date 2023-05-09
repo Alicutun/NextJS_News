@@ -7,12 +7,14 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
-import { socket } from '@/helpers';
 import { formatPrice } from '@/utilities';
 import Link from 'next/link';
 import { IDataSocket } from '@/common';
+import { SocketContext } from '@/context';
+
+// import { socket } from '@/helpers';
 
 const useStyles = makeStyles()(() => ({
   backgroundf2f2f2: {
@@ -33,12 +35,14 @@ export const Coinbar = () => {
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w500 = useMediaQuery('(min-width:500px)');
-  //
+
   const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
     socket.on('connect', () => {
       socket.emit('authenticate');
+      // console.log('SOCKET CONNECTED');
     });
 
     socket.on('authenticated', () => {
@@ -52,7 +56,7 @@ export const Coinbar = () => {
     });
 
     return () => {};
-  }, []);
+  }, [socket]);
 
   return (
     <>
