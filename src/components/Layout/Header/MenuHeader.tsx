@@ -155,7 +155,7 @@ export const MenuHeader = () => {
               ))}
             <Button
               // disabled
-
+              disabled={String(router.query.menuId) === 'issue' ? true : false}
               onClick={() => {
                 router.push({
                   pathname: '/issue',
@@ -167,7 +167,7 @@ export const MenuHeader = () => {
                 component="a"
                 sx={{
                   textDecoration: 'none',
-                  color: 'black',
+                  color: w1024 ? (String(router.pathname) === '/issue' ? 'blue' : '#000') : '#fff',
                 }}
               >
                 Issue

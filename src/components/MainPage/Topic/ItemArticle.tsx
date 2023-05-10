@@ -83,7 +83,7 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, editDate, 
             dangerouslySetInnerHTML={{
               __html: content,
             }}
-          ></Typography>
+          />
         </Marker>
       </Grid>
     </Grid>

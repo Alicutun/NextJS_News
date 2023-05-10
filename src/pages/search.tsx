@@ -35,7 +35,11 @@ const Search: React.FC<{
 
   // Select Topic
   const handleClickTopic = (topicNameClicked: string) => {
-    router.push(`/search?text=${router.query.text}&page=1&topicName=${topicNameClicked}`);
+    router.push(
+      `/search?text=${router.query.text}&page=1&topicName=${topicNameClicked}`,
+      undefined,
+      { scroll: false }
+    );
   };
 
   return (

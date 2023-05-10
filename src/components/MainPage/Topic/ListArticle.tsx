@@ -6,7 +6,7 @@ import { IDataArticle, IListArticle, LIMIT_PAGE } from '@/common';
 import { ItemArticle } from './ItemArticle';
 import { useRouter } from 'next/router';
 import { useChangeParam } from '@/hooks';
-import { SkeletonListArticle } from '../Skeleton';
+import { SkeletonListArticle } from '../../Skeleton';
 
 const useStyles = makeStyles()(() => ({
   border: {
@@ -44,7 +44,9 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
   const [listArticles, setDataListAritcles] = React.useState<IDataArticle[]>([]);
   React.useEffect(() => {
-    if (listArticle) setDataListAritcles(listArticle);
+    if (listArticle) {
+      setDataListAritcles(listArticle);
+    }
     return () => {};
   }, [listArticle]);
 

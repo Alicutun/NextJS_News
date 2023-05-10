@@ -1,8 +1,7 @@
-import { Advertise, AsidePage, TopStory } from '@/components';
+import { Advertise, AsidePage, ListIssue, TopStory } from '@/components';
 import { useMediaQuery } from '@mui/material';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import React from 'react';
 
 const Issue: React.FC = () => {
@@ -16,7 +15,7 @@ const Issue: React.FC = () => {
       {/* Content */}
       <Grid container columnSpacing={5} mt={w1024 ? '30px' : '20px'}>
         <Grid item xs={w1024 ? 9 : 12}>
-          <Typography>Page issue</Typography>
+          <ListIssue />
         </Grid>
         <Grid item xs={w1024 ? 3 : 12}>
           <AsidePage />
