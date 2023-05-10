@@ -4,7 +4,7 @@ import { Container, Grid, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 import { BASE_URL, IDataArticle } from '@/common';
 
-export default function News({ data }: { data: IDataArticle }) {
+const News: React.FC<{ data: IDataArticle }> = ({ data }) => {
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (
@@ -24,7 +24,9 @@ export default function News({ data }: { data: IDataArticle }) {
       </Grid>
     </Container>
   );
-}
+};
+
+export default News;
 
 export async function getServerSideProps(context: any) {
   const { params } = context;

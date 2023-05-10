@@ -14,18 +14,15 @@ import {
 
 const { SIX_MONTH } = IPeriod;
 
-interface ISearch {
+const Search: React.FC<{
   dataSearchAllTopic: IDataSearchAllTopic;
   dataSearchTotalTopic: IDataSearchTotalTopic[];
-}
-
-export default function Search(props: ISearch) {
+}> = ({ dataSearchAllTopic, dataSearchTotalTopic }) => {
   const router = useRouter();
 
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
 
-  const { dataSearchAllTopic, dataSearchTotalTopic } = props;
   const [total, setTotal] = useState(0);
 
   const topicName = router.query.topicName || 'All topics';
@@ -108,7 +105,9 @@ export default function Search(props: ISearch) {
       </Grid>
     </Container>
   );
-}
+};
+
+export default Search;
 
 export async function getServerSideProps(context: any) {
   const { query } = context;

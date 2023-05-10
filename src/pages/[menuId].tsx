@@ -3,7 +3,7 @@ import { Advertise, AsidePage, ListArticle, TopStory } from '@/components';
 import { Container, Grid, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 
-export default function Menu({ articles }: { articles: IDataTopic }) {
+const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (
@@ -23,7 +23,9 @@ export default function Menu({ articles }: { articles: IDataTopic }) {
       </Grid>
     </Container>
   );
-}
+};
+
+export default Menu;
 
 export async function getServerSideProps(context: any) {
   const { query } = context;

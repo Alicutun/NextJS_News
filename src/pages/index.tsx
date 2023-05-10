@@ -2,7 +2,7 @@ import { BASE_URL, IColorTopic, IDataTopic, LIMIT_PAGE } from '@/common';
 import { HotNewsIndex, TopIndex, TopStory } from '@/components';
 import axios from 'axios';
 
-export default function Index({ articles }: { articles: IDataTopic }) {
+const Index: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
   return (
     <section>
       <TopStory display={true} />
@@ -27,7 +27,10 @@ export default function Index({ articles }: { articles: IDataTopic }) {
       />
     </section>
   );
-}
+};
+
+export default Index;
+
 export async function getServerSideProps(context: any) {
   const { query } = context;
   const { page } = query;

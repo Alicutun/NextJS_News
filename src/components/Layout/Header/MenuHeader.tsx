@@ -47,7 +47,7 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const Menu = () => {
+export const MenuHeader = () => {
   //
   const { classes } = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -153,6 +153,26 @@ export const Menu = () => {
                   </Typography>
                 </Button>
               ))}
+            <Button
+              // disabled
+
+              onClick={() => {
+                router.push({
+                  pathname: '/issue',
+                });
+              }}
+            >
+              <Typography
+                noWrap
+                component="a"
+                sx={{
+                  textDecoration: 'none',
+                  color: 'black',
+                }}
+              >
+                Issue
+              </Typography>
+            </Button>
           </Grid>
 
           {/* Menu right */}
