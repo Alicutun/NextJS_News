@@ -1,36 +1,14 @@
-import React from 'react';
-import { Autocomplete, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LinkIcon from '@mui/icons-material/Link';
-import TextField from '@mui/material/TextField';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import { Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import React, { useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
+import { MenuFooter } from './MenuFooter';
+import { ModalFooter } from '@/components/Modal';
 
 const useStyles = makeStyles()(() => ({
-  navFooter: {
-    color: '#666666',
-    background: '#f8f8f8',
-    padding: '15px 20px',
-    border: 'solid 1px #eaeaea;',
-  },
-  navFooterRes: {
-    color: '#666666',
-    background: '#303030',
-    padding: '15px 20px',
-  },
-  optionFooter: {
-    borderRadius: '50px',
-    background: '#fff',
-    width: 200,
-    '.MuiAutocomplete-inputRoot': {
-      height: '40px',
-      borderRadius: '50px',
-    },
-    '.MuiAutocomplete-input': {
-      padding: '0.5px 4px 7.5px 6px !important',
-    },
-  },
   addressRes: {
     color: '#999',
     borderTop: '1px solid #3f3f3f',
@@ -42,12 +20,6 @@ export const Footer = () => {
   //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
-  //
-  const options = ['Option 1', 'Option 2', 'Option 1asd', 'Option 2asda'];
-  //
-  const [value, setValue] = React.useState<string | null>(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
-
   return (
     <footer>
       <Container disableGutters>
@@ -66,37 +38,7 @@ export const Footer = () => {
         </Stack>
 
         {/* menu footer */}
-        <Stack
-          direction="row"
-          alignItems="center"
-          spacing={2}
-          mt="20px"
-          className={w1024 ? classes.navFooter : classes.navFooterRes}
-        >
-          <Grid container gap="20px">
-            <Typography>회사소개</Typography>
-            <Typography fontWeight="bold" color="black">
-              회사소개
-            </Typography>
-            <Typography>회사소개</Typography>
-            <Typography>회사소개</Typography>
-          </Grid>
-
-          <Autocomplete
-            value={value}
-            onChange={(event: any, newValue: string | null) => {
-              setValue(newValue);
-            }}
-            inputValue={inputValue}
-            onInputChange={(event, newInputValue) => {
-              setInputValue(newInputValue);
-            }}
-            id="controllable-states-demo"
-            options={options}
-            className={classes.optionFooter}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </Stack>
+        <MenuFooter />
 
         {/* address */}
         <Stack

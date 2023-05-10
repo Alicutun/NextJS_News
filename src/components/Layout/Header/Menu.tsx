@@ -16,7 +16,7 @@ import axios from 'axios';
 import { BASE_URL, IDaTaTopic } from '@/common';
 import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
-import { ModalSearch } from '@/components/SubComponents';
+import { ModalSearch } from '@/components/Modal';
 
 const useStyles = makeStyles()(() => ({
   boxMenu: {

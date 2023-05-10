@@ -1,1 +1,2 @@
-export * from "./ModalSearch";
+export * from './ModalSearch';
+export * from './ModalFooter';
