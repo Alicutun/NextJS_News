@@ -3,10 +3,8 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LinkIcon from '@mui/icons-material/Link';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
-import React, { useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { MenuFooter } from './MenuFooter';
-import { ModalFooter } from '@/components/Modal';
 
 const useStyles = makeStyles()(() => ({
   addressRes: {

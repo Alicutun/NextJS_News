@@ -1,8 +1,6 @@
 import AddIcon from '@mui/icons-material/Add';
 import ShortcutIcon from '@mui/icons-material/Shortcut';
 import { Box, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 import React from 'react';
 
 export const ItemIssue: React.FC<{
@@ -10,9 +8,7 @@ export const ItemIssue: React.FC<{
   colorBackground: string;
   listLink?: string;
 }> = ({ nameBox, colorBackground, listLink }) => {
-  const router = useRouter();
   const w1024 = useMediaQuery('(min-width:1024px)');
-  const w640 = useMediaQuery('(min-width:640px)');
   return (
     <Box sx={{ background: `${colorBackground}` }} mb={2}>
       <Grid container height={75} padding="0 20px" border="1px solid rgba(0,0,0,0.1)">

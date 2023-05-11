@@ -1,5 +1,5 @@
-import { Modal, Stack, Typography, Input, Grid } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Modal, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { SearchInput } from '../SubComponents';
 

@@ -4,7 +4,7 @@ import { BoxNews } from './BoxNews';
 import { BoxLive } from './BoxLive';
 
 export const AsidePage = () => {
-  //
+  ///
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (
