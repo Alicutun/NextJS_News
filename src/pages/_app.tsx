@@ -4,11 +4,14 @@ import { Header, Footer, BackToTopButton } from '@/components';
 import type { AppProps } from 'next/app';
 import { createEmotionSsrAdvancedApproach } from 'tss-react/next/pagesDir';
 import { SocketContext, socket } from '@/context';
+import { useDataSocket } from '@/context/SocketData';
 
 function App({ Component, pageProps }: AppProps) {
+  const { dataSocket } = useDataSocket();
+
   return (
     <div>
-      <SocketContext.Provider value={{ socket }}>
+      <SocketContext.Provider value={{ socket, dataSocket }}>
         <Header />
         <Component {...pageProps} />
         <Footer />

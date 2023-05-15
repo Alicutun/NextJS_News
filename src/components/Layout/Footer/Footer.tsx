@@ -21,7 +21,6 @@ export const Footer = () => {
   return (
     <footer>
       <Container disableGutters>
-        {/* Link */}
         <Stack
           mt="100px"
           justifyContent={w1024 ? 'flex-end' : 'center'}
@@ -35,7 +34,6 @@ export const Footer = () => {
           <LinkIcon />
         </Stack>
 
-        {/* menu footer */}
         <MenuFooter />
 
         {/* address */}

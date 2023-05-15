@@ -45,7 +45,6 @@ export const SkeletonListArticle = () => {
             <Box marginLeft="10px">
               <Skeleton width="40%" />
               <Skeleton width="30%" />
-
               <Skeleton sx={{ marginTop: '5px' }} />
               <Skeleton width="95%" />
             </Box>

@@ -35,7 +35,6 @@ const useStyles = makeStyles()(() => ({
 
 export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
   //
-  console.log('listArticle:', listArticle);
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
   const router = useRouter();
@@ -65,7 +64,7 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
           <Typography>No data</Typography>
         ) : (
           <Box marginLeft={w1220 ? '' : '10px'}>
-            {listArticles.map((item: any) => (
+            {listArticles?.map((item: any) => (
               <ItemArticle
                 key={item.id}
                 id={item.id}

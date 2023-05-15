@@ -107,57 +107,52 @@ export const BoxLive = () => {
         </Typography>
       </Stack>
       <Grid container height={w1024 ? '285px' : 'auto'} overflow="auto">
-        {listData &&
-          listData.map((item) => (
-            <Grid item xs={12} key={item.id}>
+        {listData?.map((item) => (
+          <Grid item xs={12} key={item.id}>
+            <Stack
+              direction={w1024 ? 'column' : 'row'}
+              alignItems={w1024 ? '' : 'center'}
+              justifyContent="space-between"
+              className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
+            >
+              {/* time */}
               <Stack
-                direction={w1024 ? 'column' : 'row'}
-                alignItems={w1024 ? '' : 'center'}
-                justifyContent="space-between"
-                className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
+                alignItems="center"
+                justifyContent="center"
+                direction="column"
+                className={w1024 ? '' : classes.stackTime}
               >
-                {/* time */}
-                <Stack
-                  alignItems="center"
-                  justifyContent="center"
-                  direction="column"
-                  className={w1024 ? '' : classes.stackTime}
-                >
-                  <AccessTimeIcon className={w1024 ? classes.timeIcon : ''} />
-                  <Typography
-                    fontSize={11}
-                    textAlign="center"
-                    className={w1024 ? classes.time : ''}
-                  >
-                    {format(item.createdAt)}
-                  </Typography>
-                </Stack>
-
-                {/* content */}
-                <Grid container direction="column" justifyContent="flex-start">
-                  <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
-                    {item.details?.[0].summary}
-                  </Typography>
-                  <Typography
-                    display={w1024 ? 'none' : ''}
-                    padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'}
-                    fontSize="13px"
-                    color="#999"
-                  >
-                    김지현 기자 {formatTimeToYMD(item.createdAt)} 블록체인
-                  </Typography>
-                </Grid>
-                {/* Image */}
-                <img
-                  style={{ padding: w1024 ? '0 20px' : '0 10px' }}
-                  height={w1024 ? '80px' : '70px'}
-                  width={165}
-                  src={item.details?.[0].summaryImage}
-                  alt=""
-                />
+                <AccessTimeIcon className={w1024 ? classes.timeIcon : ''} />
+                <Typography fontSize={11} textAlign="center" className={w1024 ? classes.time : ''}>
+                  {format(item.createdAt)}
+                </Typography>
               </Stack>
-            </Grid>
-          ))}
+
+              {/* content */}
+              <Grid container direction="column" justifyContent="flex-start">
+                <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
+                  {item.details?.[0].summary}
+                </Typography>
+                <Typography
+                  display={w1024 ? 'none' : ''}
+                  padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'}
+                  fontSize="13px"
+                  color="#999"
+                >
+                  김지현 기자 {formatTimeToYMD(item.createdAt)} 블록체인
+                </Typography>
+              </Grid>
+              {/* Image */}
+              <img
+                style={{ padding: w1024 ? '0 20px' : '0 10px' }}
+                height={w1024 ? '80px' : '70px'}
+                width={165}
+                src={item.details?.[0].summaryImage}
+                alt=""
+              />
+            </Stack>
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

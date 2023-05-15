@@ -72,25 +72,24 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
           <img height="100%" src={listArticles[0].details?.[0].summaryImage} alt="" />
         ) : (
           <>
-            {listArticles &&
-              listArticles.slice(0, w480 ? 4 : 2).map((item) => (
-                <Grid
-                  item
-                  xs={w480 ? 3 : 6}
-                  key={item.id}
-                  onClick={() => {
-                    router.push({
-                      pathname: '/news/[id]',
-                      query: { id: item.id },
-                    });
-                  }}
-                >
-                  <img width="100%" src={item.details?.[0].summaryImage} alt="" />
-                  <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
-                    {item.details?.[0].summary}
-                  </Typography>
-                </Grid>
-              ))}
+            {listArticles?.slice(0, w480 ? 4 : 2).map((item) => (
+              <Grid
+                item
+                xs={w480 ? 3 : 6}
+                key={item.id}
+                onClick={() => {
+                  router.push({
+                    pathname: '/news/[id]',
+                    query: { id: item.id },
+                  });
+                }}
+              >
+                <img width="100%" src={item.details?.[0].summaryImage} alt="" />
+                <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
+                  {item.details?.[0].summary}
+                </Typography>
+              </Grid>
+            ))}
           </>
         )}
       </Grid>
@@ -105,43 +104,42 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
         marginTop={w1024 ? '' : '10px'}
         padding={w1024 ? '0 0 0 16px' : '0 20px'}
       >
-        {listArticles &&
-          listArticles.slice(1).map((item) => (
-            <Grid
-              item
-              container
-              xs={w480 ? 6 : 12}
-              key={item.id}
-              onClick={() => {
-                router.push({
-                  pathname: '/news/[id]',
-                  query: { id: listArticles[0].id },
-                });
-              }}
-            >
-              <Grid className={w1024 ? classes.itemTopIndex : ''} container>
-                <Grid item height="120px" overflow="hidden" display={w1024 ? '' : 'none'}>
-                  <img width="100%" src={item.details?.[0].summaryImage} alt="" />
-                </Grid>
-                <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
-                  <Typography
-                    display={w1024 ? '' : 'none'}
-                    className={w1024 ? classes.boxContentItem : ''}
-                    padding="0 5px"
-                    fontSize="12px"
-                  >
-                    블록체인
-                  </Typography>
-                  <Typography
-                    className={w1024 ? classes.textTopIndex : classes.textTopIndexRes}
-                    noWrap={w1024 ? false : true}
-                  >
-                    {item.details?.[0].summary}
-                  </Typography>
-                </Grid>
+        {listArticles?.slice(1).map((item) => (
+          <Grid
+            item
+            container
+            xs={w480 ? 6 : 12}
+            key={item.id}
+            onClick={() => {
+              router.push({
+                pathname: '/news/[id]',
+                query: { id: listArticles[0].id },
+              });
+            }}
+          >
+            <Grid className={w1024 ? classes.itemTopIndex : ''} container>
+              <Grid item height="120px" overflow="hidden" display={w1024 ? '' : 'none'}>
+                <img width="100%" src={item.details?.[0].summaryImage} alt="" />
+              </Grid>
+              <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
+                <Typography
+                  display={w1024 ? '' : 'none'}
+                  className={w1024 ? classes.boxContentItem : ''}
+                  padding="0 5px"
+                  fontSize="12px"
+                >
+                  블록체인
+                </Typography>
+                <Typography
+                  className={w1024 ? classes.textTopIndex : classes.textTopIndexRes}
+                  noWrap={w1024 ? false : true}
+                >
+                  {item.details?.[0].summary}
+                </Typography>
               </Grid>
             </Grid>
-          ))}
+          </Grid>
+        ))}
       </Grid>
     </Grid>
   );

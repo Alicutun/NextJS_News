@@ -1,4 +1,6 @@
 import { SkeletonCoinbar } from '@/components/Skeleton';
+import { SocketContext } from '@/context';
+import { formatPrice } from '@/utilities';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Box from '@mui/material/Box';
@@ -7,12 +9,9 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from 'tss-react/mui';
-import { formatPrice } from '@/utilities';
 import Link from 'next/link';
-import { IDataSocket } from '@/common';
-import { SocketContext } from '@/context';
+import React, { useContext } from 'react';
+import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
   backgroundf2f2f2: {
@@ -28,39 +27,19 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const Coinbar = () => {
+export const Coinbar: React.FC = () => {
   //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w500 = useMediaQuery('(min-width:500px)');
 
-  const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
-  const { socket } = useContext(SocketContext);
-
-  useEffect(() => {
-    socket.on('connect', () => {
-      socket.emit('authenticate');
-      // console.log('SOCKET CONNECTED');
-    });
-
-    socket.on('authenticated', () => {
-      socket.emit('join', {
-        rooms: ['market-price'],
-      });
-    });
-
-    socket.on('market-price', (args) => {
-      setDataSocket(args);
-    });
-
-    return () => {};
-  }, [socket]);
+  const { dataSocket } = useContext(SocketContext);
 
   return (
     <>
-      {dataSocket.length === 0 ? (
+      {dataSocket?.length === 0 ? (
         <SkeletonCoinbar />
-      ) : dataSocket ? (
+      ) : (
         <Box className={classes.backgroundf2f2f2}>
           <Container disableGutters>
             <Grid container spacing={2}>
@@ -130,8 +109,6 @@ export const Coinbar = () => {
             </Grid>
           </Container>
         </Box>
-      ) : (
-        <></>
       )}
     </>
   );

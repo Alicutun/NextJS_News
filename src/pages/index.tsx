@@ -3,7 +3,6 @@ import { HotNewsIndex, TopIndex, TopStory } from '@/components';
 import axios from 'axios';
 
 const Index: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
-  console.log('articles:', articles);
   return (
     <section>
       <TopStory display={true} />

@@ -163,7 +163,7 @@ export const DetailSearch: React.FC<{}> = () => {
                 onChange={(event: SelectChangeEvent) => setPeriod(event.target.value as string)}
                 sx={{ fontSize: '13px' }}
               >
-                {iPeriodOptions.map((item) => (
+                {iPeriodOptions?.map((item) => (
                   <MenuItem key={item} value={item} sx={{ fontSize: '13px' }}>
                     {item}
                   </MenuItem>
@@ -183,7 +183,7 @@ export const DetailSearch: React.FC<{}> = () => {
                 onChange={(event: SelectChangeEvent) => setTarget(event.target.value as string)}
                 sx={{ fontSize: '13px' }}
               >
-                {targetOptions.map((item) => (
+                {targetOptions?.map((item) => (
                   <MenuItem key={item} value={item} sx={{ fontSize: '13px' }}>
                     {item}
                   </MenuItem>

@@ -52,7 +52,6 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   const [count, setCount] = useState<number>(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [sizeText, setSizeText] = useState<string>('15px');
-  console.log('sizeText:', sizeText);
 
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {

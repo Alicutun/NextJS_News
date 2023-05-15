@@ -89,7 +89,6 @@ export const MenuHeader = () => {
         w1024 ? (fixedMenu ? classes.boxMenuFixed : classes.boxMenu) : classes.boxMenuBackground
       }
     >
-      {/* show modal search */}
       {openModal && <ModalSearch openModal={openModal} setOpenModal={setOpenModal} />}
 
       <Container disableGutters>
@@ -120,37 +119,35 @@ export const MenuHeader = () => {
             direction="row"
             fontSize={w1024 ? '20px' : '18px'}
           >
-            {listTopics.length > 0 &&
-              listTopics?.map((item) => (
-                <Button
-                  disabled={Number(router.query.menuId) === Number(item.id) ? true : false}
-                  // disabled
-                  key={item.id}
-                  onClick={() => {
-                    router.push({
-                      pathname: '/[name]',
-                      query: { name: item.id },
-                    });
+            {listTopics?.map((item) => (
+              <Button
+                disabled={Number(router.query.menuId) === Number(item.id) ? true : false}
+                // disabled
+                key={item.id}
+                onClick={() => {
+                  router.push({
+                    pathname: '/[name]',
+                    query: { name: item.id },
+                  });
+                }}
+              >
+                <Typography
+                  noWrap
+                  component="a"
+                  sx={{
+                    textDecoration: 'none',
+                    color: w1024
+                      ? Number(router.query.menuId) === Number(item.id)
+                        ? 'blue'
+                        : '#000'
+                      : '#fff',
                   }}
                 >
-                  <Typography
-                    noWrap
-                    component="a"
-                    sx={{
-                      textDecoration: 'none',
-                      color: w1024
-                        ? Number(router.query.menuId) === Number(item.id)
-                          ? 'blue'
-                          : '#000'
-                        : '#fff',
-                    }}
-                  >
-                    {item.name}
-                  </Typography>
-                </Button>
-              ))}
+                  {item.name}
+                </Typography>
+              </Button>
+            ))}
             <Button
-              // disabled
               disabled={String(router.query.menuId) === 'issue' ? true : false}
               onClick={() => {
                 router.push({

@@ -30,7 +30,6 @@ export default News;
 
 export async function getServerSideProps(context: any) {
   const { params } = context;
-  console.log('params:', params);
   const filter = {
     include: [
       {

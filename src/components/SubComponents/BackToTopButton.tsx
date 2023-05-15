@@ -4,9 +4,8 @@ import Grid from '@mui/material/Grid';
 import { useMediaQuery } from '@mui/material';
 
 export const BackToTopButton = () => {
-  //
   const w1024 = useMediaQuery('(min-width:1024px)');
-  //
+
   const [backToTop, setBackToTop] = useState(false);
 
   useEffect(() => {
