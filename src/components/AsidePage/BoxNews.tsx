@@ -143,7 +143,7 @@ export const BoxNews: React.FC<{}> = () => {
                   noWrap={w1024 ? false : true}
                   overflow="hidden"
                 >
-                  {item.details[0].summary}
+                  {item.details?.[0].summary}
                 </Typography>
                 {/* image */}
                 <Stack
@@ -153,7 +153,7 @@ export const BoxNews: React.FC<{}> = () => {
                   className={classes.boxImg}
                   alignItems="center"
                 >
-                  <img height="100%" src={item.details[0].summaryImage} alt="" />
+                  <img height="100%" src={item.details?.[0].summaryImage} alt="" />
                 </Stack>
               </Stack>
             </Grid>

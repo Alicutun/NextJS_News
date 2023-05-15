@@ -1,8 +1,8 @@
 export interface IDataArticle {
   clickCount: number;
-  createDate: string;
+  createdAt: string;
   details: any;
-  editDate: string;
+  modifiedAt: string;
   id: number;
   jobId: string;
   publishAt: string;
@@ -38,7 +38,7 @@ export interface IItemArticle {
   id: number;
   img: string;
   title: string;
-  editDate: string;
+  modifiedAt: string;
   content: string;
   valueSearch?: string;
 }

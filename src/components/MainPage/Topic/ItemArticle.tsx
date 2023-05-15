@@ -30,13 +30,17 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, editDate, content }) => {
+export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, modifiedAt, content }) => {
   //
   const router = useRouter();
   const { text } = router.query;
 
   const { classes } = useStyles();
   const w640 = useMediaQuery('(min-width:640px)');
+
+  // let html = document.getElementById( ).innerHTML;
+  // const input = document.getElementById('content') as HTMLInputElement | null;
+  // input?.innerHTML;
 
   return (
     <Grid
@@ -69,7 +73,7 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, editDate, 
           {title}
         </Typography>
         <Typography className={classes.itemTime}>
-          김정우 기자 | {formatTimeToYMD(editDate)}
+          김정우 기자 | {formatTimeToYMD(modifiedAt)}
         </Typography>
         {/* use Marker to highlight-text */}
         <Marker mark={text} options={{ className: classes.marker }}>
@@ -84,6 +88,7 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, editDate, 
               __html: content,
             }}
           />
+          {/* <div id="content"></div> */}
         </Marker>
       </Grid>
     </Grid>

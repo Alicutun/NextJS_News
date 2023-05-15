@@ -83,12 +83,12 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
           <Skeleton sx={{ marginLeft: '10px' }} width={200} />
         ) : (
           <>
-            <Typography marginLeft="10px">{wordData?.details[0].summary}</Typography>
+            <Typography marginLeft="10px">{wordData?.details?.[0].summary}</Typography>
             <Box color="#999" margin="3px 2px 0 10px">
               <AccessTimeIcon sx={{ fontSize: '15px' }} />
             </Box>
             <Typography color="#999" fontSize={12} pt="2px">
-              {format(wordData?.createDate)}
+              {format(wordData?.createdAt)}
             </Typography>
           </>
         )}

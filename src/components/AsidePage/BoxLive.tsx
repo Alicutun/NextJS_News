@@ -129,14 +129,14 @@ export const BoxLive = () => {
                     textAlign="center"
                     className={w1024 ? classes.time : ''}
                   >
-                    {format(item.createDate)}
+                    {format(item.createdAt)}
                   </Typography>
                 </Stack>
 
                 {/* content */}
                 <Grid container direction="column" justifyContent="flex-start">
                   <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
-                    {item.details[0].summary}
+                    {item.details?.[0].summary}
                   </Typography>
                   <Typography
                     display={w1024 ? 'none' : ''}
@@ -144,7 +144,7 @@ export const BoxLive = () => {
                     fontSize="13px"
                     color="#999"
                   >
-                    김지현 기자 {formatTimeToYMD(item.createDate)} 블록체인
+                    김지현 기자 {formatTimeToYMD(item.createdAt)} 블록체인
                   </Typography>
                 </Grid>
                 {/* Image */}
@@ -152,7 +152,7 @@ export const BoxLive = () => {
                   style={{ padding: w1024 ? '0 20px' : '0 10px' }}
                   height={w1024 ? '80px' : '70px'}
                   width={165}
-                  src={item.details[0].summaryImage}
+                  src={item.details?.[0].summaryImage}
                   alt=""
                 />
               </Stack>

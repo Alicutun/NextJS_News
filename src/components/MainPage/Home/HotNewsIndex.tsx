@@ -9,17 +9,16 @@ import { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
-  broderTopBottom: {
+  borderTopBottom: {
     borderBottom: '1px solid #d9d9d9',
     borderTop: '1px solid #d9d9d9',
   },
-  broderTop9px: {
+  borderTop9px: {
     borderTop: '9px solid #eceeef',
   },
   background: {
     background: '#f3f3f3',
   },
-
   textHeight40: {
     height: '40px',
     lineHeight: '20px',
@@ -39,11 +38,11 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const HotNewsIndex: React.FC<{
-  listArticles: IDataArticle[];
+  listArticle: IDataArticle[];
   background: boolean;
   nameTopic?: string;
   colorTopic?: string;
-}> = ({ listArticles, background, nameTopic, colorTopic }) => {
+}> = ({ listArticle, background, nameTopic, colorTopic }) => {
   const { classes } = useStyles();
   const w1200 = useMediaQuery('(min-width:1200px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
@@ -51,11 +50,13 @@ export const HotNewsIndex: React.FC<{
   const router = useRouter();
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-  const [listArticle, setDataListAritcles] = useState<IDataArticle[]>([]);
+  const [listArticles, setDataListArticles] = useState<IDataArticle[]>([]);
   useEffect(() => {
-    if (listArticles) setDataListAritcles(listArticles);
+    if (listArticle) {
+      setDataListArticles(listArticle);
+    }
     return () => {};
-  }, [listArticles]);
+  }, [listArticle]);
 
   return (
     <Box className={w1024 ? (background ? classes.background : '') : ''} padding="70px 0">
@@ -63,7 +64,7 @@ export const HotNewsIndex: React.FC<{
         <Stack
           direction={w1024 ? 'column' : 'row'}
           justifyContent={w1024 ? '' : 'space-between'}
-          className={w1024 ? '' : classes.broderTop9px}
+          className={w1024 ? '' : classes.borderTop9px}
           padding={w1024 ? '5px 0 15px 0' : '10px 20px 10px 20px'}
         >
           <Grid container justifyContent="center">
@@ -93,11 +94,11 @@ export const HotNewsIndex: React.FC<{
             justifyContent="space-between"
             margin="0 20px"
             padding="20px 0"
-            className={classes.broderTopBottom}
+            className={classes.borderTopBottom}
             onClick={() => {
               router.push({
                 pathname: '/news/[id]',
-                query: { id: listArticles[0].id },
+                query: { id: listArticle[0].id },
               });
             }}
           >
@@ -108,7 +109,7 @@ export const HotNewsIndex: React.FC<{
                 fontWeight="bold"
                 lineHeight={w480 ? '40px' : 'none'}
               >
-                {listArticles[0].details[0].summary}
+                {/* {listArticles[0].details?.[0].summary} */}
               </Typography>
               <Typography
                 color={w480 ? '#666' : '#999999'}
@@ -116,16 +117,16 @@ export const HotNewsIndex: React.FC<{
                 margin="10px 0"
                 className={classes.textHeight40}
               >
-                {listArticles[0].details[0].content}
+                {/* {listArticles[0].details?.[0].content} */}
               </Typography>
               <Typography color="#999" fontSize="12px" display={w480 ? '' : 'none'}>
-                도예리 기자 yeri.do@ | {formatTimeToYMD(listArticles[0].createDate)}
+                도예리 기자 yeri.do@ | {formatTimeToYMD(listArticle[0].createdAt)}
               </Typography>
             </Box>
             <img
               width={w480 ? '215px' : '115px'}
               height={w480 ? '120px' : '70px'}
-              src={listArticles[0].details[0].summaryImage}
+              src={listArticle[0].details?.[0].summaryImage}
               alt=""
             />
           </Stack>
@@ -138,69 +139,68 @@ export const HotNewsIndex: React.FC<{
           height={w1024 ? '' : 105}
           overflow={w1024 ? '' : 'hidden'}
         >
-          {listArticle.length > 0 &&
-            listArticle.slice(w1024 ? 0 : 1).map((item) => (
-              <Grid
-                item
-                xs={w1024 ? 2.4 : w480 ? 6 : 12}
-                key={item.id}
-                onClick={() => {
-                  router.push({
-                    pathname: '/news/[id]',
-                    query: { id: item.id },
-                  });
-                }}
-              >
-                <Box
-                  sx={
-                    w1024
-                      ? {
-                          border: '1px solid #d9d9d9',
-                          cursor: 'pointer',
-                          background: 'white',
-                          '&:hover': {
-                            transform: 'translateY(-10px)',
-                            transition: '0.4s',
-                            background: `${colorTopic}`,
-                            border: `1px solid ${colorTopic}`,
-                            '& .MuiTypography-root': {
-                              color: 'white',
-                            },
+          {listArticles?.slice(w1024 ? 0 : 1).map((item) => (
+            <Grid
+              item
+              xs={w1024 ? 2.4 : w480 ? 6 : 12}
+              key={item.id}
+              onClick={() => {
+                router.push({
+                  pathname: '/news/[id]',
+                  query: { id: item.id },
+                });
+              }}
+            >
+              <Box
+                sx={
+                  w1024
+                    ? {
+                        border: '1px solid #d9d9d9',
+                        cursor: 'pointer',
+                        background: 'white',
+                        '&:hover': {
+                          transform: 'translateY(-10px)',
+                          transition: '0.4s',
+                          background: `${colorTopic}`,
+                          border: `1px solid ${colorTopic}`,
+                          '& .MuiTypography-root': {
+                            color: 'white',
                           },
-                        }
-                      : {}
-                  }
-                >
-                  {w1024 ? <img width="100%" src={item.details[0].summaryImage} alt="" /> : ''}
-                  <Box padding={w1024 ? '20px 15px' : ''}>
-                    <Typography
-                      noWrap={w1024 ? false : true}
-                      className={w1024 ? classes.text1024 : classes.textRes}
-                    >
-                      {item.details[0].summary}
-                    </Typography>
-                    <Typography
-                      display={w1024 ? '' : 'none'}
-                      fontSize="13px"
-                      height="36px"
-                      color="#666"
-                      className="textNoWrap2Word"
-                      dangerouslySetInnerHTML={{
-                        __html: item.details[0].content,
-                      }}
-                    ></Typography>
-                    <Typography
-                      display={w1024 ? '' : 'none'}
-                      color="#999"
-                      fontSize="12px"
-                      marginTop="9px"
-                    >
-                      임진혁 기자 {formatTimeToYMD(item.createDate)}
-                    </Typography>
-                  </Box>
+                        },
+                      }
+                    : {}
+                }
+              >
+                {w1024 ? <img width="100%" src={item.details?.[0].summaryImage} alt="" /> : ''}
+                <Box padding={w1024 ? '20px 15px' : ''}>
+                  <Typography
+                    noWrap={w1024 ? false : true}
+                    className={w1024 ? classes.text1024 : classes.textRes}
+                  >
+                    {item.details?.[0].summary}
+                  </Typography>
+                  <Typography
+                    display={w1024 ? '' : 'none'}
+                    fontSize="13px"
+                    height="36px"
+                    color="#666"
+                    className="textNoWrap2Word"
+                    dangerouslySetInnerHTML={{
+                      __html: item.details?.[0].content,
+                    }}
+                  ></Typography>
+                  <Typography
+                    display={w1024 ? '' : 'none'}
+                    color="#999"
+                    fontSize="12px"
+                    marginTop="9px"
+                  >
+                    임진혁 기자 {formatTimeToYMD(item.createdAt)}
+                  </Typography>
                 </Box>
-              </Grid>
-            ))}
+              </Box>
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </Box>

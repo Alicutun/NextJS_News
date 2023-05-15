@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { Box, Button, Grid, Menu, MenuItem, Typography, useMediaQuery } from '@mui/material';
 import PrintIcon from '@mui/icons-material/Print';
 import SubjectIcon from '@mui/icons-material/Subject';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
@@ -48,12 +48,22 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w1220 = useMediaQuery('(min-width:1220px)');
   //
-  const [text, setText] = React.useState<string>('');
-  const [count, setCount] = React.useState<number>(0);
+  const [text, setText] = useState<string>('');
+  const [count, setCount] = useState<number>(0);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [sizeText, setSizeText] = useState<string>('15px');
+  console.log('sizeText:', sizeText);
 
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-  const [dataContent, setDataContent] = React.useState<any>('');
-  React.useEffect(() => {
+  const [dataContent, setDataContent] = useState<any>('');
+  useEffect(() => {
     setDataContent(dataNews.details[0].content);
     return () => {};
   }, []);
@@ -61,14 +71,15 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   // func count word in comment
   const handleChange = (e: any) => {
     const length = e.target.value.toString().length;
-    if (length <= LIMIT_COMMENT) {
-      setText(e.target.value);
-      setCount(length);
+    if (length > LIMIT_COMMENT) {
+      return;
     }
+    setText(e.target.value);
+    setCount(length);
   };
 
   // func print PDF
-  const componentPDF = React.useRef(null);
+  const componentPDF = useRef(null);
   const generatePDF = useReactToPrint({
     content: () => componentPDF.current,
   });
@@ -84,8 +95,8 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
         </Typography>
 
         <Grid item container marginBottom="15px" fontSize={12} gap="32px">
-          <Box>입력 {formatTimeToYMD_HMS(dataNews.createDate)}</Box>
-          <Box>수정 {formatTimeToYMD_HMS(dataNews.editDate)}</Box>
+          <Box>입력 {formatTimeToYMD_HMS(dataNews.createdAt)}</Box>
+          <Box>수정 {formatTimeToYMD_HMS(dataNews.modifiedAt)}</Box>
           <Box>김정우 기자</Box>
         </Grid>
 
@@ -102,8 +113,39 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
             </EmailShareButton>
           </Grid>
 
-          <Grid item xs={6} container justifyContent="flex-end" gap="10px">
-            <SubjectIcon />
+          <Grid item xs={6} container justifyContent="flex-end" alignItems="center" gap="10px">
+            <Button onClick={handleClick}>
+              <SubjectIcon />
+            </Button>
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+              <MenuItem
+                onClick={() => {
+                  setSizeText('15px');
+                  handleClose();
+                }}
+                sx={{ fontSize: '15px' }}
+              >
+                Text
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setSizeText('17px');
+                  handleClose();
+                }}
+                sx={{ fontSize: '17px' }}
+              >
+                Text
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setSizeText('20px');
+                  handleClose();
+                }}
+                sx={{ fontSize: '20px' }}
+              >
+                Text
+              </MenuItem>
+            </Menu>
             <PrintIcon sx={{ cursor: 'pointer' }} onClick={generatePDF} />
           </Grid>
         </Grid>
@@ -111,6 +153,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
       {/* print */}
       <Box
         width="100%"
+        sx={{ fontSize: `${sizeText}` }}
         overflow="hidden"
         ref={componentPDF}
         dangerouslySetInnerHTML={{ __html: dataContent }}

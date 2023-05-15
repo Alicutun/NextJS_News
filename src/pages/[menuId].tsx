@@ -31,6 +31,9 @@ export async function getServerSideProps(context: any) {
   const { query } = context;
   const { menuId, page } = query;
   const filter = {
+    where: {
+      status: 'PUBLIC',
+    },
     include: [
       {
         relation: 'user',

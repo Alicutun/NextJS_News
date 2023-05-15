@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DoneIcon from '@mui/icons-material/Done';
 import { Box, Pagination, Stack, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
@@ -35,6 +35,7 @@ const useStyles = makeStyles()(() => ({
 
 export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
   //
+  console.log('listArticle:', listArticle);
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
   const router = useRouter();
@@ -42,10 +43,10 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
   const { changeParam } = useChangeParam();
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
-  const [listArticles, setDataListAritcles] = React.useState<IDataArticle[]>([]);
-  React.useEffect(() => {
+  const [listArticles, setDataListArticles] = useState<IDataArticle[]>([]);
+  useEffect(() => {
     if (listArticle) {
-      setDataListAritcles(listArticle);
+      setDataListArticles(listArticle);
     }
     return () => {};
   }, [listArticle]);
@@ -68,10 +69,10 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
               <ItemArticle
                 key={item.id}
                 id={item.id}
-                img={item.details[0].summaryImage}
-                title={item.details[0].summary}
-                editDate={item.editDate}
-                content={item.details[0].content}
+                img={item.details?.[0].summaryImage}
+                title={item.details?.[0].summary}
+                modifiedAt={item.modifiedAt}
+                content={item.details?.[0].content}
               />
             ))}
             {/* Pagination */}

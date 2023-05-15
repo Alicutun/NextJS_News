@@ -36,8 +36,8 @@ export const MenuFooter = () => {
   const w1024 = useMediaQuery('(min-width:1024px)');
   const options = ['Option 1', 'Option 2', 'Option 1a', 'Option 2a'];
 
-  const [value, setValue] = React.useState<string | null>(options[0]);
-  const [inputValue, setInputValue] = React.useState('');
+  const [value, setValue] = useState<string | null>(options[0]);
+  const [inputValue, setInputValue] = useState('');
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [nameHead1, setNameHead1] = useState<string>('');

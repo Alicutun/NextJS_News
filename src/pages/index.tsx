@@ -3,24 +3,25 @@ import { HotNewsIndex, TopIndex, TopStory } from '@/components';
 import axios from 'axios';
 
 const Index: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
+  console.log('articles:', articles);
   return (
     <section>
       <TopStory display={true} />
       <TopIndex listArticles={articles.data} />
       <HotNewsIndex
-        listArticles={articles.data}
+        listArticle={articles.data}
         background={true}
         nameTopic="Business"
         colorTopic={IColorTopic.BlOCKCHAIN}
       />
       <HotNewsIndex
-        listArticles={articles.data}
+        listArticle={articles.data}
         background={false}
         nameTopic="Health"
         colorTopic={IColorTopic.ITINDUSTRY}
       />
       <HotNewsIndex
-        listArticles={articles.data}
+        listArticle={articles.data}
         background={true}
         nameTopic="Entertainment"
         colorTopic={IColorTopic.POLICY}
@@ -35,6 +36,9 @@ export async function getServerSideProps(context: any) {
   const { query } = context;
   const { page } = query;
   const filter = {
+    where: {
+      status: 'PUBLIC',
+    },
     include: [
       {
         relation: 'user',

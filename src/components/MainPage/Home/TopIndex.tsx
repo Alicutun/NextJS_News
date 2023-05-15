@@ -69,7 +69,7 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
         width="100%"
       >
         {w1024 ? (
-          <img height="100%" src={listArticles[0].details[0].summaryImage} alt="" />
+          <img height="100%" src={listArticles[0].details?.[0].summaryImage} alt="" />
         ) : (
           <>
             {listArticles &&
@@ -85,9 +85,9 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                     });
                   }}
                 >
-                  <img width="100%" src={item.details[0].summaryImage} alt="" />
+                  <img width="100%" src={item.details?.[0].summaryImage} alt="" />
                   <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
-                    {item.details[0].summary}
+                    {item.details?.[0].summary}
                   </Typography>
                 </Grid>
               ))}
@@ -121,7 +121,7 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
             >
               <Grid className={w1024 ? classes.itemTopIndex : ''} container>
                 <Grid item height="120px" overflow="hidden" display={w1024 ? '' : 'none'}>
-                  <img width="100%" src={item.details[0].summaryImage} alt="" />
+                  <img width="100%" src={item.details?.[0].summaryImage} alt="" />
                 </Grid>
                 <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
                   <Typography
@@ -136,7 +136,7 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                     className={w1024 ? classes.textTopIndex : classes.textTopIndexRes}
                     noWrap={w1024 ? false : true}
                   >
-                    {item.details[0].summary}
+                    {item.details?.[0].summary}
                   </Typography>
                 </Grid>
               </Grid>

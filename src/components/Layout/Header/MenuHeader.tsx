@@ -61,11 +61,7 @@ export const MenuHeader = () => {
   // handle Scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY >= 140) {
-        setFixedMenu(true);
-      } else {
-        setFixedMenu(false);
-      }
+      setFixedMenu(window.scrollY >= 140);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -73,16 +69,16 @@ export const MenuHeader = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  });
+  }, []);
+
   const router = useRouter();
 
   useEffect(() => {
-    const fetchArticle = async () => {
-      const { data } = await axios.get(`${BASE_URL}/topics`);
+    axios.get(`${BASE_URL}/topics`).then((rs) => {
+      const { data } = rs;
       setListTopics(data);
-    };
+    });
 
-    fetchArticle();
     return () => {};
   }, []);
 
