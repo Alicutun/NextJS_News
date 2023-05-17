@@ -7,6 +7,7 @@ import { makeStyles } from 'tss-react/mui';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 const useStyles = makeStyles()(() => ({
   boxSearch: {
@@ -14,16 +15,12 @@ const useStyles = makeStyles()(() => ({
   },
   boxSearchFixed: {
     borderBottom: '1px solid #ced2d7',
-
     background: 'white',
     position: 'fixed',
     top: '0',
     right: '0',
     left: '0',
     zIndex: '10',
-  },
-  imgLogo: {
-    cursor: 'pointer',
   },
 }));
 
@@ -75,27 +72,43 @@ export const Search = () => {
               marginLeft: '30px',
             }}
           />
-          <Box marginTop="4px" display={w1024 ? '' : 'none'} paddingLeft={w1220 ? '' : '20px'}>
-            <img
-              src="https://branchimg.sedaily.com/Decenter/top_verbal.jpg"
-              alt="블록체인의 모든 것, 디센터"
-            />
+          <Box
+            marginTop="4px"
+            display={w1024 ? '' : 'none'}
+            paddingLeft={w1220 ? '' : '20px'}
+            sx={{ width: '100%' }}
+          >
+            <Box sx={{ position: 'relative', height: '30px' }}>
+              <Image
+                fill
+                style={{ objectFit: 'contain' }}
+                src="https://branchimg.sedaily.com/Decenter/top_verbal.jpg"
+                alt="블록체인의 모든 것, 디센터"
+              />
+            </Box>
           </Box>
         </Stack>
-
         {/* Search mid */}
-        <img
-          className={classes.imgLogo}
-          height={w1024 ? '' : 27}
-          src={
-            w1024
-              ? 'https://branchimg.sedaily.com/Decenter/logo2.png'
-              : 'https://branchimg.sedaily.com/Decenter/decenter_m_logo.svg'
-          }
-          alt="Decenter"
-          onClick={routePage}
-        />
-
+        <Box
+          height={w1024 ? 60 : 27}
+          width="100%"
+          sx={{
+            position: 'relative',
+            cursor: 'pointer',
+          }}
+        >
+          <Image
+            fill
+            style={{ objectFit: 'contain' }}
+            src={
+              w1024
+                ? 'https://branchimg.sedaily.com/Decenter/logo2.png'
+                : 'https://branchimg.sedaily.com/Decenter/decenter_m_logo.svg'
+            }
+            alt="Decenter"
+            onClick={routePage}
+          />
+        </Box>
         {/* Search right */}
         <Stack
           direction="row"

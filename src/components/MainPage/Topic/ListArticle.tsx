@@ -34,6 +34,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
+  console.log('listArticle:', listArticle);
   //
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');

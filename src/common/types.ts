@@ -1,7 +1,7 @@
 export interface IDataArticle {
   clickCount: number;
   createdAt: string;
-  details: any;
+  details: IDetailArticle[];
   modifiedAt: string;
   id: number;
   jobId: string;
@@ -10,6 +10,13 @@ export interface IDataArticle {
   status: string;
   user?: any;
   userId: number;
+}
+
+export interface IDetailArticle {
+  locale: string;
+  summary: string;
+  summaryImage: string;
+  content: string;
 }
 
 export interface IDataSearchAllTopic {

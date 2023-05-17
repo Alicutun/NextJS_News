@@ -3,6 +3,7 @@ import { formatTimeToYMD } from '@/utilities';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { Marker } from 'react-mark.js';
@@ -65,8 +66,11 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, modifiedAt
         alignItems="center"
         className={classes.box1}
         height={w640 ? '77px' : '55px'}
+        sx={{
+          position: 'relative',
+        }}
       >
-        <img height="100%" src={img} alt="" />
+        <Image fill style={{ objectFit: 'contain' }} src={img} alt="" />
       </Grid>
       <Grid item xs={10} paddingLeft="15px">
         <Typography noWrap fontSize={20} color="#000" lineHeight="24px">

@@ -10,6 +10,7 @@ import { BASE_URL, IDataArticle } from '@/common';
 import axios from 'axios';
 import { formatTimeToYMD } from '@/utilities';
 import { format } from 'timeago.js';
+import Image from 'next/image';
 const useStyles = makeStyles()(() => ({
   boxLive: {
     marginTop: '10px',
@@ -97,15 +98,20 @@ export const BoxLive = () => {
         direction="row"
         className={w1024 ? classes.nameBox : classes.nameBoxRes}
       >
-        <img
-          height="55%"
-          src="https://img.sedaily.com/Html/Special/politics/politics_13.png"
-          alt=""
-        />
+        <Box
+          sx={{
+            height: '55%',
+            aspectRatio: '2/1',
+            position: 'relative',
+          }}
+        >
+          <Image fill src="https://img.sedaily.com/Html/Special/politics/politics_13.png" alt="" />
+        </Box>
         <Typography fontSize="16px" fontWeight="bold">
           Wire
         </Typography>
       </Stack>
+
       <Grid container height={w1024 ? '285px' : 'auto'} overflow="auto">
         {listData?.map((item) => (
           <Grid item xs={12} key={item.id}>
@@ -143,13 +149,22 @@ export const BoxLive = () => {
                 </Typography>
               </Grid>
               {/* Image */}
-              <img
-                style={{ padding: w1024 ? '0 20px' : '0 10px' }}
-                height={w1024 ? '80px' : '70px'}
-                width={165}
-                src={item.details?.[0].summaryImage}
-                alt=""
-              />
+              <Box
+                sx={{
+                  position: 'relative',
+                  margin: w1024 ? '0 20px' : '0 10px',
+                  height: w1024 ? '80px' : '63px',
+                  width: '140px',
+                  border: '1px solid #ced2d7',
+                }}
+              >
+                <Image
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  src={item.details?.[0].summaryImage}
+                  alt=""
+                />
+              </Box>
             </Stack>
           </Grid>
         ))}

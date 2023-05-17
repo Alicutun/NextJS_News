@@ -4,6 +4,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Stack, Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
@@ -67,7 +68,7 @@ export const HotNewsIndex: React.FC<{
           className={w1024 ? '' : classes.borderTop9px}
           padding={w1024 ? '5px 0 15px 0' : '10px 20px 10px 20px'}
         >
-          <Grid container justifyContent="center">
+          <Grid container justifyContent={w1024 ? 'center' : ''}>
             <Typography lineHeight="40px" fontSize={w1024 ? '32px' : '16px'}>
               {nameTopic}&nbsp;
             </Typography>
@@ -123,12 +124,15 @@ export const HotNewsIndex: React.FC<{
                 도예리 기자 yeri.do@ | {formatTimeToYMD(listArticle[0].createdAt)}
               </Typography>
             </Box>
-            <img
+            <Box
               width={w480 ? '215px' : '115px'}
               height={w480 ? '120px' : '70px'}
-              src={listArticle[0].details?.[0].summaryImage}
-              alt=""
-            />
+              sx={{
+                position: 'relative',
+              }}
+            >
+              <Image fill src={listArticle[0].details?.[0].summaryImage} alt="" />
+            </Box>
           </Stack>
         )}
         {/*  */}
@@ -150,6 +154,7 @@ export const HotNewsIndex: React.FC<{
                   query: { id: item.id },
                 });
               }}
+              width="100%"
             >
               <Box
                 sx={
@@ -171,7 +176,19 @@ export const HotNewsIndex: React.FC<{
                     : {}
                 }
               >
-                {w1024 ? <img width="100%" src={item.details?.[0].summaryImage} alt="" /> : ''}
+                {w1024 ? (
+                  <Box
+                    sx={{
+                      width: '100%',
+                      aspectRatio: '16/9',
+                      position: 'relative',
+                    }}
+                  >
+                    <Image fill src={item.details?.[0].summaryImage} alt="" />
+                  </Box>
+                ) : (
+                  ''
+                )}
                 <Box padding={w1024 ? '20px 15px' : ''}>
                   <Typography
                     noWrap={w1024 ? false : true}

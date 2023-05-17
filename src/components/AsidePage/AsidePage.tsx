@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, useMediaQuery } from '@mui/material';
 import { BoxNews } from './BoxNews';
 import { BoxLive } from './BoxLive';
+import Image from 'next/image';
 
 export const AsidePage = () => {
   ///
@@ -9,19 +10,22 @@ export const AsidePage = () => {
 
   return (
     <aside>
-      {/* Image */}
-      <Box display={w1024 ? '' : 'none'}>
-        <img
-          width="100%"
+      <Box
+        display={w1024 ? '' : 'none'}
+        sx={{
+          width: '100%',
+          aspectRatio: '1/1',
+          position: 'relative',
+        }}
+      >
+        <Image
+          loading="lazy"
+          fill
           src="https://tpc.googlesyndication.com/simgad/6687191721012509281"
-          alt=""
+          alt="image 1"
         />
       </Box>
-
-      {/* Box */}
       <BoxNews />
-
-      {/* Box live */}
       <BoxLive />
     </aside>
   );

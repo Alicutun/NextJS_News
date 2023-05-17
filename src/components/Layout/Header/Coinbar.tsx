@@ -1,6 +1,4 @@
 import { SkeletonCoinbar } from '@/components/Skeleton';
-import { SocketContext } from '@/context';
-import { formatPrice } from '@/utilities';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Box from '@mui/material/Box';
@@ -9,9 +7,13 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Link from 'next/link';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
+import { formatPrice } from '@/utilities';
+import Link from 'next/link';
+import { IDataSocket } from '@/common';
+import { SocketContext } from '@/context';
+import Image from 'next/image';
 
 const useStyles = makeStyles()(() => ({
   backgroundf2f2f2: {
@@ -27,19 +29,24 @@ const useStyles = makeStyles()(() => ({
   },
 }));
 
-export const Coinbar: React.FC = () => {
+export const Coinbar = () => {
   //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w500 = useMediaQuery('(min-width:500px)');
 
-  const { dataSocket } = useContext(SocketContext);
+  const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
+  const { socket } = useContext(SocketContext);
+
+  socket.on('market-price', (args) => {
+    setDataSocket(args);
+  });
 
   return (
     <>
-      {dataSocket?.length === 0 ? (
+      {dataSocket.length === 0 ? (
         <SkeletonCoinbar />
-      ) : (
+      ) : dataSocket ? (
         <Box className={classes.backgroundf2f2f2}>
           <Container disableGutters>
             <Grid container spacing={2}>
@@ -103,12 +110,21 @@ export const Coinbar: React.FC = () => {
                 container
               >
                 <Link href="https://www.bithumb.com">
-                  <img src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png" alt="" />
+                  <Box sx={{ height: '12px', width: '54px', position: 'relative' }}>
+                    <Image
+                      fill
+                      style={{ objectFit: 'contain' }}
+                      src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png"
+                      alt=""
+                    />
+                  </Box>
                 </Link>
               </Grid>
             </Grid>
           </Container>
         </Box>
+      ) : (
+        <></>
       )}
     </>
   );

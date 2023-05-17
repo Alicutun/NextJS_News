@@ -2,6 +2,7 @@ import { Box, Container, Link, Skeleton } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Image from 'next/image';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
 
@@ -105,7 +106,14 @@ export const SkeletonCoinbar = () => {
             container
           >
             <Link href="https://www.bithumb.com">
-              <img src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png" alt="" />
+              <Box sx={{ height: '12px', width: '54px', position: 'relative' }}>
+                <Image
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png"
+                  alt=""
+                />
+              </Box>
             </Link>
           </Grid>
         </Grid>

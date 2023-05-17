@@ -16,6 +16,7 @@ import {
 } from 'react-share';
 import { IDataArticle, LIMIT_COMMENT } from '@/common';
 import { formatTimeToYMD_HMS } from '@/utilities';
+import Image from 'next/image';
 
 const useStyles = makeStyles()(() => ({
   main: {
@@ -85,8 +86,13 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
 
   return (
     <article className={w1220 ? classes.main : w1024 ? classes.mainRes1220 : classes.mainRes1024}>
-      <Box position="absolute" left={-180}>
-        <img src="https://tpc.googlesyndication.com/simgad/6913498388766754588" alt="" />
+      <Box position="absolute" left={-180} width={160} height={600}>
+        <Image
+          style={{ objectFit: 'contain' }}
+          fill
+          src="https://tpc.googlesyndication.com/simgad/6913498388766754588"
+          alt=""
+        />
       </Box>
       <Grid container direction="column" className={classes.topNews}>
         <Typography marginBottom="10px" variant="h2" fontSize="32px" fontWeight="bold">

@@ -1,7 +1,8 @@
 import { IDataArticle } from '@/common';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { makeStyles } from 'tss-react/mui';
 
@@ -61,17 +62,18 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
       <Grid
         item
         xs={w1024 ? 7 : 12}
-        container={w1024 ? false : true}
-        spacing={w1024 ? '' : 2}
         padding={w1024 ? '' : '0 20px'}
         overflow={w1024 ? 'hidden' : ''}
         height="100%"
-        width="100%"
+        sx={{
+          width: '100%',
+          position: 'relative',
+        }}
       >
         {w1024 ? (
-          <img height="100%" src={listArticles[0].details?.[0].summaryImage} alt="" />
+          <Image fill src={listArticles[0].details?.[0].summaryImage} alt="" />
         ) : (
-          <>
+          <Grid container spacing={2}>
             {listArticles?.slice(0, w480 ? 4 : 2).map((item) => (
               <Grid
                 item
@@ -83,14 +85,23 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                     query: { id: item.id },
                   });
                 }}
+                width="100%"
               >
-                <img width="100%" src={item.details?.[0].summaryImage} alt="" />
+                <Box
+                  sx={{
+                    width: '100%',
+                    position: 'relative',
+                    aspectRatio: '16/9',
+                  }}
+                >
+                  <Image fill src={item.details?.[0].summaryImage} alt="" />
+                </Box>
                 <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
                   {item.details?.[0].summary}
                 </Typography>
               </Grid>
             ))}
-          </>
+          </Grid>
         )}
       </Grid>
 
@@ -118,8 +129,22 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
             }}
           >
             <Grid className={w1024 ? classes.itemTopIndex : ''} container>
-              <Grid item height="120px" overflow="hidden" display={w1024 ? '' : 'none'}>
-                <img width="100%" src={item.details?.[0].summaryImage} alt="" />
+              <Grid
+                item
+                height="120px"
+                width="100%"
+                overflow="hidden"
+                display={w1024 ? '' : 'none'}
+              >
+                <Box
+                  sx={{
+                    width: '100%',
+                    aspectRatio: '16/9',
+                    position: 'relative',
+                  }}
+                >
+                  <Image fill src={item.details?.[0].summaryImage} alt="" />
+                </Box>
               </Grid>
               <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
                 <Typography

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { BASE_URL, IDataArticle, IDetailArticle } from '@/common';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { makeStyles } from 'tss-react/mui';
 import axios from 'axios';
-import { BASE_URL, IDataArticle } from '@/common';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
   box: {
@@ -45,6 +46,7 @@ const useStyles = makeStyles()(() => ({
   boxImg: {
     background: '#f7f7f7',
     border: '1px solid #ced2d7',
+    position: 'relative',
   },
 }));
 
@@ -57,7 +59,6 @@ export const BoxNews: React.FC<{}> = () => {
   const w480 = useMediaQuery('(min-width:480px)');
 
   const [listData, setListData] = useState<IDataArticle[]>([]);
-  console.log('listData:', listData);
 
   // call get top10 news
   const fetchListTop10Article = async () => {
@@ -83,79 +84,86 @@ export const BoxNews: React.FC<{}> = () => {
         Best click
       </Typography>
       <Grid container>
-        {listData?.slice(0, w1024 ? 5 : w480 ? 10 : 5).map((item, index) => (
-          <Grid
-            sx={{
-              cursor: 'pointer',
-            }}
-            item
-            xs={w1024 ? 12 : w480 ? 6 : 12}
-            key={item.id}
-            onClick={() => {
-              router.push({
-                pathname: '/news/[name]',
-                query: { name: item.id },
-              });
-            }}
-          >
-            <Stack
-              alignItems="center"
-              justifyContent={w1024 ? 'space-between' : ''}
-              direction="row"
-              columnGap={1}
-              padding={w1024 ? '10px 0' : '10px 0 10px 10px'}
-              margin="0 10px"
-              className={w1024 ? (Number(index) === 4 ? '' : classes.itemBox) : classes.itemBoxRes}
+        {listData?.slice(0, w1024 ? 5 : w480 ? 10 : 5).map(({ details, id }, index) => {
+          const { summary, summaryImage } =
+            details?.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+          return (
+            <Grid
+              sx={{
+                cursor: 'pointer',
+              }}
+              item
+              xs={w1024 ? 12 : w480 ? 6 : 12}
+              key={id}
+              onClick={() => {
+                router.push({
+                  pathname: '/news/[name]',
+                  query: { name: id },
+                });
+              }}
             >
-              {/* css number */}
-              {w1024 ? (
-                <Box
-                  sx={{
-                    background: 'orange',
-                    borderRadius: '50%',
-                  }}
-                >
-                  <Typography fontSize={11} padding="1px 0px 0 6px" width="18px">
+              <Stack
+                alignItems="center"
+                justifyContent={w1024 ? 'space-between' : ''}
+                direction="row"
+                columnGap={1}
+                padding={w1024 ? '10px 0' : '10px 0 10px 10px'}
+                margin="0 10px"
+                className={
+                  w1024 ? (Number(index) === 4 ? '' : classes.itemBox) : classes.itemBoxRes
+                }
+              >
+                {/* css number */}
+                {w1024 ? (
+                  <Box
+                    sx={{
+                      background: 'orange',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    <Typography fontSize={11} padding="1px 0px 0 6px" width="18px">
+                      {index + 1}
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Typography
+                    fontSize={15}
+                    paddingLeft="6px"
+                    marginRight={index === 9 ? (w1024 ? '' : '5px') : ''}
+                    width={18}
+                    color="#0078bd"
+                    fontWeight="bold"
+                  >
                     {index + 1}
                   </Typography>
-                </Box>
-              ) : (
+                )}
+                {/* summary item */}
                 <Typography
-                  fontSize={15}
-                  paddingLeft="6px"
-                  marginRight={index === 9 ? (w1024 ? '' : '5px') : ''}
-                  width={18}
-                  color="#0078bd"
-                  fontWeight="bold"
+                  maxHeight={w1024 ? '39px' : 'auto'}
+                  width="100%"
+                  alignContent="center"
+                  justifyContent="flex-start"
+                  fontSize={w1024 ? '13px' : '15px'}
+                  noWrap={w1024 ? false : true}
+                  overflow="hidden"
                 >
-                  {index + 1}
+                  {summary}
                 </Typography>
-              )}
-              {/* summary item */}
-              <Typography
-                maxHeight={w1024 ? '39px' : 'auto'}
-                width="100%"
-                alignContent="center"
-                justifyContent="flex-start"
-                fontSize={w1024 ? '13px' : '15px'}
-                noWrap={w1024 ? false : true}
-                overflow="hidden"
-              >
-                {item.details?.map((item: any) => item.summary)}
-              </Typography>
-              {/* image */}
-              <Stack
-                width="100px"
-                display={w1024 ? '' : 'none'}
-                height={35}
-                className={classes.boxImg}
-                alignItems="center"
-              >
-                <img height="100%" src={item.details?.[0].summaryImage} alt="" />
+
+                {/* image */}
+                <Stack
+                  width="100px"
+                  display={w1024 ? '' : 'none'}
+                  height={35}
+                  className={classes.boxImg}
+                  alignItems="center"
+                >
+                  <Image style={{ objectFit: 'contain' }} fill src={summaryImage ?? ''} alt="" />
+                </Stack>
               </Stack>
-            </Stack>
-          </Grid>
-        ))}
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );

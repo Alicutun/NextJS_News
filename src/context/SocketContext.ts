@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { BASE_URL, IDataSocket } from '@/common';
+import { BASE_URL } from '@/common';
 import { Socket, io } from 'socket.io-client';
 
 export const socket = io(`${BASE_URL}`, {
@@ -13,7 +13,7 @@ export interface SocketCoin {
 
 socket.on('connect', () => {
   socket.emit('authenticate');
-  console.log('SOCKET CONNECTED');
+  // console.log('SOCKET CONNECTED');
 });
 
 socket.on('authenticated', () => {
@@ -22,4 +22,4 @@ socket.on('authenticated', () => {
   });
 });
 
-export const SocketContext = createContext<any>({});
+export const SocketContext = createContext<SocketCoin>({} as SocketCoin);
