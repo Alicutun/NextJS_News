@@ -14,7 +14,7 @@ import {
   EmailShareButton,
   EmailIcon,
 } from 'react-share';
-import { IDataArticle, LIMIT_COMMENT } from '@/common';
+import { IDataArticle, IDetailArticle, LIMIT_COMMENT } from '@/common';
 import { formatTimeToYMD_HMS } from '@/utilities';
 import Image from 'next/image';
 
@@ -44,6 +44,7 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
+  console.log('dataNews:', dataNews);
   //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
@@ -61,10 +62,14 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const { summary, content } =
+    dataNews?.details.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
   const [dataContent, setDataContent] = useState<any>('');
   useEffect(() => {
-    setDataContent(dataNews.details[0].content);
+    setDataContent(content);
     return () => {};
   }, []);
 
@@ -96,7 +101,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
       </Box>
       <Grid container direction="column" className={classes.topNews}>
         <Typography marginBottom="10px" variant="h2" fontSize="32px" fontWeight="bold">
-          {dataNews.details[0].summary}
+          {summary}
         </Typography>
 
         <Grid item container marginBottom="15px" fontSize={12} gap="32px">

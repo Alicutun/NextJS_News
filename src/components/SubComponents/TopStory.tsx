@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { useEffect, useState } from 'react';
-import { BASE_URL, IDataArticle } from '@/common';
+import { BASE_URL, IDataArticle, IDetailArticle } from '@/common';
 import axios from 'axios';
 import { format } from 'timeago.js';
 import { Skeleton } from '@mui/material';
@@ -83,7 +83,9 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
           <Skeleton sx={{ marginLeft: '10px' }} width={200} />
         ) : (
           <>
-            <Typography marginLeft="10px">{wordData?.details?.[0].summary}</Typography>
+            <Typography marginLeft="10px">
+              {wordData?.details?.find((el: IDetailArticle) => el.locale === 'en_US')?.summary}
+            </Typography>
             <Box color="#999" margin="3px 2px 0 10px">
               <AccessTimeIcon sx={{ fontSize: '15px' }} />
             </Box>

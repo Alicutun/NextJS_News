@@ -1,4 +1,4 @@
-import { IDataArticle } from '@/common';
+import { IDataArticle, IDetailArticle } from '@/common';
 import { formatTimeToYMD } from '@/utilities';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Stack, Typography, useMediaQuery } from '@mui/material';
@@ -59,6 +59,9 @@ export const HotNewsIndex: React.FC<{
     return () => {};
   }, [listArticle]);
 
+  const { summary, content, summaryImage } =
+    listArticles[0]?.details.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+
   return (
     <Box className={w1024 ? (background ? classes.background : '') : ''} padding="70px 0">
       <Box width={w1200 ? '1200px' : '100%'} margin="0 auto">
@@ -90,11 +93,11 @@ export const HotNewsIndex: React.FC<{
         {w1024 ? (
           <></>
         ) : (
-          <Stack
+          <Grid
+            container
             direction="row"
             justifyContent="space-between"
-            margin="0 20px"
-            padding="20px 0"
+            padding="20px"
             className={classes.borderTopBottom}
             onClick={() => {
               router.push({
@@ -103,37 +106,43 @@ export const HotNewsIndex: React.FC<{
               });
             }}
           >
-            <Box paddingRight="20px">
-              <Typography
-                color="#000"
-                fontSize={w480 ? '20px' : '17px'}
-                fontWeight="bold"
-                lineHeight={w480 ? '40px' : 'none'}
-              >
-                {/* {listArticles[0].details?.[0].summary} */}
-              </Typography>
-              <Typography
-                color={w480 ? '#666' : '#999999'}
-                fontSize="14px"
-                margin="10px 0"
-                className={classes.textHeight40}
-              >
-                {/* {listArticles[0].details?.[0].content} */}
-              </Typography>
-              <Typography color="#999" fontSize="12px" display={w480 ? '' : 'none'}>
-                도예리 기자 yeri.do@ | {formatTimeToYMD(listArticle[0].createdAt)}
-              </Typography>
-            </Box>
-            <Box
-              width={w480 ? '215px' : '115px'}
+            <Grid item xs={9}>
+              <Box paddingRight="20px">
+                <Typography
+                  color="#000"
+                  fontSize={w480 ? '20px' : '17px'}
+                  fontWeight="bold"
+                  lineHeight={w480 ? '40px' : 'none'}
+                >
+                  {summary}
+                </Typography>
+                <Typography
+                  color={w480 ? '#666' : '#999999'}
+                  fontSize="14px"
+                  margin="10px 0"
+                  className={classes.textHeight40}
+                >
+                  {content}
+                </Typography>
+                <Typography color="#999" fontSize="12px" display={w480 ? '' : 'none'}>
+                  도예리 기자 yeri.do@ | {formatTimeToYMD(listArticle[0].createdAt)}
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid
+              item
+              justifyContent="flex-end"
+              xs={3}
+              width="100%"
               height={w480 ? '120px' : '70px'}
               sx={{
                 position: 'relative',
+                border: '1px solid #ced2d7',
               }}
             >
-              <Image fill src={listArticle[0].details?.[0].summaryImage} alt="" />
-            </Box>
-          </Stack>
+              <Image fill style={{ objectFit: 'contain' }} src={summaryImage ?? ''} alt="" />
+            </Grid>
+          </Grid>
         )}
         {/*  */}
         <Grid
@@ -143,81 +152,85 @@ export const HotNewsIndex: React.FC<{
           height={w1024 ? '' : 105}
           overflow={w1024 ? '' : 'hidden'}
         >
-          {listArticles?.slice(w1024 ? 0 : 1).map((item) => (
-            <Grid
-              item
-              xs={w1024 ? 2.4 : w480 ? 6 : 12}
-              key={item.id}
-              onClick={() => {
-                router.push({
-                  pathname: '/news/[id]',
-                  query: { id: item.id },
-                });
-              }}
-              width="100%"
-            >
-              <Box
-                sx={
-                  w1024
-                    ? {
-                        border: '1px solid #d9d9d9',
-                        cursor: 'pointer',
-                        background: 'white',
-                        '&:hover': {
-                          transform: 'translateY(-10px)',
-                          transition: '0.4s',
-                          background: `${colorTopic}`,
-                          border: `1px solid ${colorTopic}`,
-                          '& .MuiTypography-root': {
-                            color: 'white',
-                          },
-                        },
-                      }
-                    : {}
-                }
+          {listArticles?.slice(w1024 ? 0 : 1).map((item) => {
+            const { summary, summaryImage, content } =
+              item.details?.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+            return (
+              <Grid
+                item
+                xs={w1024 ? 2.4 : w480 ? 6 : 12}
+                key={item.id}
+                onClick={() => {
+                  router.push({
+                    pathname: '/news/[id]',
+                    query: { id: item.id },
+                  });
+                }}
+                width="100%"
               >
-                {w1024 ? (
-                  <Box
-                    sx={{
-                      width: '100%',
-                      aspectRatio: '16/9',
-                      position: 'relative',
-                    }}
-                  >
-                    <Image fill src={item.details?.[0].summaryImage} alt="" />
+                <Box
+                  sx={
+                    w1024
+                      ? {
+                          border: '1px solid #d9d9d9',
+                          cursor: 'pointer',
+                          background: 'white',
+                          '&:hover': {
+                            transform: 'translateY(-10px)',
+                            transition: '0.4s',
+                            background: `${colorTopic}`,
+                            border: `1px solid ${colorTopic}`,
+                            '& .MuiTypography-root': {
+                              color: 'white',
+                            },
+                          },
+                        }
+                      : {}
+                  }
+                >
+                  {w1024 ? (
+                    <Box
+                      sx={{
+                        width: '100%',
+                        aspectRatio: '16/9',
+                        position: 'relative',
+                      }}
+                    >
+                      <Image fill src={summaryImage ?? ''} alt="" />
+                    </Box>
+                  ) : (
+                    ''
+                  )}
+                  <Box padding={w1024 ? '20px 15px' : ''}>
+                    <Typography
+                      noWrap={w1024 ? false : true}
+                      className={w1024 ? classes.text1024 : classes.textRes}
+                    >
+                      {summary}
+                    </Typography>
+                    <Typography
+                      display={w1024 ? '' : 'none'}
+                      fontSize="13px"
+                      height="36px"
+                      color="#666"
+                      className="textNoWrap2Word"
+                      dangerouslySetInnerHTML={{
+                        __html: content ?? '',
+                      }}
+                    ></Typography>
+                    <Typography
+                      display={w1024 ? '' : 'none'}
+                      color="#999"
+                      fontSize="12px"
+                      marginTop="9px"
+                    >
+                      임진혁 기자 {formatTimeToYMD(item.createdAt)}
+                    </Typography>
                   </Box>
-                ) : (
-                  ''
-                )}
-                <Box padding={w1024 ? '20px 15px' : ''}>
-                  <Typography
-                    noWrap={w1024 ? false : true}
-                    className={w1024 ? classes.text1024 : classes.textRes}
-                  >
-                    {item.details?.[0].summary}
-                  </Typography>
-                  <Typography
-                    display={w1024 ? '' : 'none'}
-                    fontSize="13px"
-                    height="36px"
-                    color="#666"
-                    className="textNoWrap2Word"
-                    dangerouslySetInnerHTML={{
-                      __html: item.details?.[0].content,
-                    }}
-                  ></Typography>
-                  <Typography
-                    display={w1024 ? '' : 'none'}
-                    color="#999"
-                    fontSize="12px"
-                    marginTop="9px"
-                  >
-                    임진혁 기자 {formatTimeToYMD(item.createdAt)}
-                  </Typography>
                 </Box>
-              </Box>
-            </Grid>
-          ))}
+              </Grid>
+            );
+          })}
         </Grid>
       </Box>
     </Box>

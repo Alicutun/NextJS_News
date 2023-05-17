@@ -1,4 +1,4 @@
-import { IDataArticle } from '@/common';
+import { IDataArticle, IDetailArticle } from '@/common';
 import { Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -71,36 +71,47 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
         }}
       >
         {w1024 ? (
-          <Image fill src={listArticles[0].details?.[0].summaryImage} alt="" />
+          <Image
+            fill
+            src={
+              listArticles[0]?.details?.find((el: IDetailArticle) => el.locale === 'en_US')
+                ?.summaryImage ?? ''
+            }
+            alt=""
+          />
         ) : (
           <Grid container spacing={2}>
-            {listArticles?.slice(0, w480 ? 4 : 2).map((item) => (
-              <Grid
-                item
-                xs={w480 ? 3 : 6}
-                key={item.id}
-                onClick={() => {
-                  router.push({
-                    pathname: '/news/[id]',
-                    query: { id: item.id },
-                  });
-                }}
-                width="100%"
-              >
-                <Box
-                  sx={{
-                    width: '100%',
-                    position: 'relative',
-                    aspectRatio: '16/9',
+            {listArticles?.slice(0, w480 ? 4 : 2).map(({ details, id }) => {
+              const { summary, summaryImage } =
+                details?.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+              return (
+                <Grid
+                  item
+                  xs={w480 ? 3 : 6}
+                  key={id}
+                  onClick={() => {
+                    router.push({
+                      pathname: '/news/[id]',
+                      query: { id: id },
+                    });
                   }}
+                  width="100%"
                 >
-                  <Image fill src={item.details?.[0].summaryImage} alt="" />
-                </Box>
-                <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
-                  {item.details?.[0].summary}
-                </Typography>
-              </Grid>
-            ))}
+                  <Box
+                    sx={{
+                      width: '100%',
+                      position: 'relative',
+                      aspectRatio: '16/9',
+                    }}
+                  >
+                    <Image fill src={summaryImage ?? ''} alt="" />
+                  </Box>
+                  <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
+                    {summary}
+                  </Typography>
+                </Grid>
+              );
+            })}
           </Grid>
         )}
       </Grid>
@@ -115,56 +126,60 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
         marginTop={w1024 ? '' : '10px'}
         padding={w1024 ? '0 0 0 16px' : '0 20px'}
       >
-        {listArticles?.slice(1).map((item) => (
-          <Grid
-            item
-            container
-            xs={w480 ? 6 : 12}
-            key={item.id}
-            onClick={() => {
-              router.push({
-                pathname: '/news/[id]',
-                query: { id: listArticles[0].id },
-              });
-            }}
-          >
-            <Grid className={w1024 ? classes.itemTopIndex : ''} container>
-              <Grid
-                item
-                height="120px"
-                width="100%"
-                overflow="hidden"
-                display={w1024 ? '' : 'none'}
-              >
-                <Box
-                  sx={{
-                    width: '100%',
-                    aspectRatio: '16/9',
-                    position: 'relative',
-                  }}
-                >
-                  <Image fill src={item.details?.[0].summaryImage} alt="" />
-                </Box>
-              </Grid>
-              <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
-                <Typography
+        {listArticles?.slice(1).map((item) => {
+          const { summary, summaryImage } =
+            item.details?.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+          return (
+            <Grid
+              item
+              container
+              xs={w480 ? 6 : 12}
+              key={item.id}
+              onClick={() => {
+                router.push({
+                  pathname: '/news/[id]',
+                  query: { id: listArticles[0].id },
+                });
+              }}
+            >
+              <Grid className={w1024 ? classes.itemTopIndex : ''} container>
+                <Grid
+                  item
+                  height="120px"
+                  width="100%"
+                  overflow="hidden"
                   display={w1024 ? '' : 'none'}
-                  className={w1024 ? classes.boxContentItem : ''}
-                  padding="0 5px"
-                  fontSize="12px"
                 >
-                  블록체인
-                </Typography>
-                <Typography
-                  className={w1024 ? classes.textTopIndex : classes.textTopIndexRes}
-                  noWrap={w1024 ? false : true}
-                >
-                  {item.details?.[0].summary}
-                </Typography>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      aspectRatio: '16/9',
+                      position: 'relative',
+                    }}
+                  >
+                    <Image fill src={summaryImage ?? ''} alt="" />
+                  </Box>
+                </Grid>
+                <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
+                  <Typography
+                    display={w1024 ? '' : 'none'}
+                    className={w1024 ? classes.boxContentItem : ''}
+                    padding="0 5px"
+                    fontSize="12px"
+                  >
+                    블록체인
+                  </Typography>
+                  <Typography
+                    className={w1024 ? classes.textTopIndex : classes.textTopIndexRes}
+                    noWrap={w1024 ? false : true}
+                  >
+                    {summary}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        ))}
+          );
+        })}
       </Grid>
     </Grid>
   );

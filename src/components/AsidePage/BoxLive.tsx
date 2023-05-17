@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { makeStyles } from 'tss-react/mui';
-import { BASE_URL, IDataArticle } from '@/common';
+import { BASE_URL, IDataArticle, IDetailArticle } from '@/common';
 import axios from 'axios';
 import { formatTimeToYMD } from '@/utilities';
 import { format } from 'timeago.js';
@@ -113,61 +113,64 @@ export const BoxLive = () => {
       </Stack>
 
       <Grid container height={w1024 ? '285px' : 'auto'} overflow="auto">
-        {listData?.map((item) => (
-          <Grid item xs={12} key={item.id}>
-            <Stack
-              direction={w1024 ? 'column' : 'row'}
-              alignItems={w1024 ? '' : 'center'}
-              justifyContent="space-between"
-              className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
-            >
-              {/* time */}
+        {listData?.map((item) => {
+          const { summary, summaryImage } =
+            item.details?.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+          return (
+            <Grid item xs={12} key={item.id}>
               <Stack
-                alignItems="center"
-                justifyContent="center"
-                direction="column"
-                className={w1024 ? '' : classes.stackTime}
+                direction={w1024 ? 'column' : 'row'}
+                alignItems={w1024 ? '' : 'center'}
+                justifyContent="space-between"
+                className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
               >
-                <AccessTimeIcon className={w1024 ? classes.timeIcon : ''} />
-                <Typography fontSize={11} textAlign="center" className={w1024 ? classes.time : ''}>
-                  {format(item.createdAt)}
-                </Typography>
-              </Stack>
-
-              {/* content */}
-              <Grid container direction="column" justifyContent="flex-start">
-                <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
-                  {item.details?.[0].summary}
-                </Typography>
-                <Typography
-                  display={w1024 ? 'none' : ''}
-                  padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'}
-                  fontSize="13px"
-                  color="#999"
+                {/* time */}
+                <Stack
+                  alignItems="center"
+                  justifyContent="center"
+                  direction="column"
+                  className={w1024 ? '' : classes.stackTime}
                 >
-                  김지현 기자 {formatTimeToYMD(item.createdAt)} 블록체인
-                </Typography>
-              </Grid>
-              {/* Image */}
-              <Box
-                sx={{
-                  position: 'relative',
-                  margin: w1024 ? '0 20px' : '0 10px',
-                  height: w1024 ? '80px' : '63px',
-                  width: '140px',
-                  border: '1px solid #ced2d7',
-                }}
-              >
-                <Image
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  src={item.details?.[0].summaryImage}
-                  alt=""
-                />
-              </Box>
-            </Stack>
-          </Grid>
-        ))}
+                  <AccessTimeIcon className={w1024 ? classes.timeIcon : ''} />
+                  <Typography
+                    fontSize={11}
+                    textAlign="center"
+                    className={w1024 ? classes.time : ''}
+                  >
+                    {format(item.createdAt)}
+                  </Typography>
+                </Stack>
+
+                {/* content */}
+                <Grid container direction="column" justifyContent="flex-start">
+                  <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
+                    {summary}
+                  </Typography>
+                  <Typography
+                    display={w1024 ? 'none' : ''}
+                    padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'}
+                    fontSize="13px"
+                    color="#999"
+                  >
+                    김지현 기자 {formatTimeToYMD(item.createdAt)} 블록체인
+                  </Typography>
+                </Grid>
+                {/* Image */}
+                <Box
+                  sx={{
+                    position: 'relative',
+                    margin: w1024 ? '0 20px' : '0 10px',
+                    height: w1024 ? '80px' : '63px',
+                    width: '140px',
+                    border: '1px solid #ced2d7',
+                  }}
+                >
+                  <Image fill style={{ objectFit: 'contain' }} src={summaryImage ?? ''} alt="" />
+                </Box>
+              </Stack>
+            </Grid>
+          );
+        })}
       </Grid>
     </Box>
   );

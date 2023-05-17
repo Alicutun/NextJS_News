@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import DoneIcon from '@mui/icons-material/Done';
 import { Box, Pagination, Stack, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
-import { IDataArticle, IListArticle, LIMIT_PAGE } from '@/common';
+import { IDataArticle, IDetailArticle, IListArticle, LIMIT_PAGE } from '@/common';
 import { ItemArticle } from './ItemArticle';
 import { useRouter } from 'next/router';
 import { useChangeParam } from '@/hooks';
@@ -65,16 +65,20 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
           <Typography>No data</Typography>
         ) : (
           <Box marginLeft={w1220 ? '' : '10px'}>
-            {listArticles?.map((item: any) => (
-              <ItemArticle
-                key={item.id}
-                id={item.id}
-                img={item.details?.[0].summaryImage}
-                title={item.details?.[0].summary}
-                modifiedAt={item.modifiedAt}
-                content={item.details?.[0].content}
-              />
-            ))}
+            {listArticles?.map(({ id, details, modifiedAt }) => {
+              const { summary, summaryImage, content } =
+                details?.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
+              return (
+                <ItemArticle
+                  key={id}
+                  id={id}
+                  img={summaryImage ?? ''}
+                  title={summary ?? ''}
+                  modifiedAt={modifiedAt}
+                  content={content ?? ''}
+                />
+              );
+            })}
             {/* Pagination */}
             <Stack alignItems="center" marginBottom="20px">
               <Pagination
