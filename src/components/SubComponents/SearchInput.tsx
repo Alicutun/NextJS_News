@@ -10,7 +10,7 @@ export const SearchInput: React.FC<{ onSearch: () => void }> = ({ onSearch }) =>
   const [searchArticle, setSearchArticle] = useState<any>();
 
   const handleSearch = () => {
-    router.push(`/search?text=${searchArticle}`);
+    router.push(`/${router.query.locale}/search?text=${searchArticle}`);
     onSearch();
   };
 

@@ -5,7 +5,6 @@ import { BoxLive } from './BoxLive';
 import Image from 'next/image';
 
 export const AsidePage = () => {
-  ///
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (
@@ -19,7 +18,6 @@ export const AsidePage = () => {
         }}
       >
         <Image
-          loading="lazy"
           fill
           src="https://tpc.googlesyndication.com/simgad/6687191721012509281"
           alt="image 1"

@@ -1,4 +1,4 @@
-import { BASE_URL, IDataArticle, IDetailArticle } from '@/common';
+import { NetworkRequest, IDataArticle, IDetailArticle } from '@/common';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -14,7 +14,7 @@ const useStyles = makeStyles()(() => ({
   box: {
     marginTop: '10px',
     border: '1px solid #ced2d7',
-    height: '336px',
+    height: '342px',
     overflow: 'hidden',
   },
   boxRes: {
@@ -63,7 +63,7 @@ export const BoxNews: React.FC<{}> = () => {
   // call get top10 news
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}/articles?filter=${encodeURIComponent(
+      `${NetworkRequest.BASE_URL}/articles?filter=${encodeURIComponent(
         JSON.stringify({
           order: 'clickCount DESC',
           limit: 10,
@@ -96,9 +96,9 @@ export const BoxNews: React.FC<{}> = () => {
               xs={w1024 ? 12 : w480 ? 6 : 12}
               key={id}
               onClick={() => {
-                router.push({
-                  pathname: '/news/[name]',
-                  query: { name: id },
+                router.replace({
+                  pathname: '/[locale]/news/[name]',
+                  query: { name: id, locale: router.query.locale },
                 });
               }}
             >

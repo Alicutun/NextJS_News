@@ -90,9 +90,9 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                   xs={w480 ? 3 : 6}
                   key={id}
                   onClick={() => {
-                    router.push({
-                      pathname: '/news/[id]',
-                      query: { id: id },
+                    router.replace({
+                      pathname: '/[locale]/news/[id]',
+                      query: { id: id, locale: router.query.locale },
                     });
                   }}
                   width="100%"
@@ -136,9 +136,9 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
               xs={w480 ? 6 : 12}
               key={item.id}
               onClick={() => {
-                router.push({
-                  pathname: '/news/[id]',
-                  query: { id: listArticles[0].id },
+                router.replace({
+                  pathname: '/[locale]/news/[id]',
+                  query: { id: listArticles[0].id, locale: router.query.locale },
                 });
               }}
             >

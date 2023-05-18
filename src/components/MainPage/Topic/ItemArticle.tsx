@@ -52,9 +52,9 @@ export const ItemArticle: React.FC<IItemArticle> = ({ id, img, title, modifiedAt
       className={classes.borderTop}
       padding="20px 0"
       onClick={() => {
-        router.push({
-          pathname: '/news/[id]',
-          query: { id: id },
+        router.replace({
+          pathname: '/[locale]/news/[id]',
+          query: { id: id, locale: router.query.locale },
         });
       }}
     >

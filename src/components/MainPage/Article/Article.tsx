@@ -44,7 +44,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
-  console.log('dataNews:', dataNews);
   //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');

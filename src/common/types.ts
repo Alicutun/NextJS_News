@@ -83,3 +83,8 @@ export enum IColorTopic {
   ITINDUSTRY = '#ef6800',
   POLICY = '#b70b17',
 }
+
+export enum LOCALES {
+  US = 'en_US',
+  KR = 'ko_KR',
+}

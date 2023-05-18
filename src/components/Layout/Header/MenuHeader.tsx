@@ -13,7 +13,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-import { BASE_URL, IDaTaTopic } from '@/common';
+import { NetworkRequest, IDaTaTopic } from '@/common';
 import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
 import { ModalSearch } from '@/components/Modal';
@@ -74,7 +74,7 @@ export const MenuHeader = () => {
   const router = useRouter();
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/topics`).then((rs) => {
+    axios.get(`${NetworkRequest.BASE_URL}/topics`).then((rs) => {
       const { data } = rs;
       setListTopics(data);
     });
@@ -121,13 +121,13 @@ export const MenuHeader = () => {
           >
             {listTopics?.map((item) => (
               <Button
-                disabled={Number(router.query.menuId) === Number(item.id) ? true : false}
+                disabled={Number(router.query.topicId) === Number(item.id) ? true : false}
                 // disabled
                 key={item.id}
                 onClick={() => {
-                  router.push({
-                    pathname: '/[name]',
-                    query: { name: item.id },
+                  router.replace({
+                    pathname: '/[locale]/topic/[name]',
+                    query: { name: item.id, locale: router.query.locale },
                   });
                 }}
               >
@@ -137,7 +137,7 @@ export const MenuHeader = () => {
                   sx={{
                     textDecoration: 'none',
                     color: w1024
-                      ? Number(router.query.menuId) === Number(item.id)
+                      ? Number(router.query.topicId) === Number(item.id)
                         ? 'blue'
                         : '#000'
                       : '#fff',
@@ -148,10 +148,10 @@ export const MenuHeader = () => {
               </Button>
             ))}
             <Button
-              disabled={String(router.query.menuId) === 'issue' ? true : false}
+              disabled={String(router.query.topicId) === 'issue' ? true : false}
               onClick={() => {
-                router.push({
-                  pathname: '/issue',
+                router.replace({
+                  pathname: `/${router.query.locale}/issue`,
                 });
               }}
             >

@@ -69,15 +69,16 @@ export const DetailSearch: React.FC<{}> = () => {
   const [target, setTarget] = useState<string>(TITLE_BODY);
   const [periodEnd, setPeriodEnd] = useState<string>();
 
-  // handle Search detail
   const searchDetail = () => {
     if (periodStart && periodEnd)
       router.push(
-        `/search?text=${search}&period=${period}&periodS=${periodStart}&periodE=${periodEnd}&page=${1}`
+        `/${
+          router.query.locale
+        }/search?text=${search}&period=${period}&periodS=${periodStart}&periodE=${periodEnd}&page=${1}`
       );
     if (!periodEnd) {
       setPeriodStart(undefined);
-      router.push(`/search?text=${search}&period=${period}&page=1`);
+      router.push(`/${router.query.locale}/search?text=${search}&period=${period}&page=1`);
     }
   };
 
@@ -86,7 +87,6 @@ export const DetailSearch: React.FC<{}> = () => {
     setPeriodEnd(undefined);
   };
 
-  // press enter search
   const handleSearchEnter = async (event: any) => {
     if (event.key === 'Enter') {
       searchDetail();

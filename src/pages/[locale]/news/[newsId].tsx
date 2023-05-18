@@ -1,9 +1,10 @@
-import { BASE_URL, IDataTopic, LIMIT_PAGE } from '@/common';
-import { Advertise, AsidePage, ListArticle, TopStory } from '@/components';
+import React from 'react';
+import { Advertise, Article, AsidePage, TopStory } from '@/components';
 import { Container, Grid, useMediaQuery } from '@mui/material';
 import axios from 'axios';
+import { NetworkRequest, IDataArticle } from '@/common';
 
-const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
+const News: React.FC<{ data: IDataArticle }> = ({ data }) => {
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (
@@ -15,7 +16,7 @@ const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
       {/* Content */}
       <Grid container columnSpacing={5} mt={w1024 ? '30px' : '20px'}>
         <Grid item xs={w1024 ? 9 : 12}>
-          <ListArticle listArticle={articles.data} total={articles.total} />
+          <Article dataNews={data} />
         </Grid>
         <Grid item xs={w1024 ? 3 : 12}>
           <AsidePage />
@@ -25,15 +26,11 @@ const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
   );
 };
 
-export default Menu;
+export default News;
 
 export async function getServerSideProps(context: any) {
-  const { query } = context;
-  const { menuId, page } = query;
+  const { params } = context;
   const filter = {
-    where: {
-      status: 'PUBLIC',
-    },
     include: [
       {
         relation: 'user',
@@ -42,14 +39,16 @@ export async function getServerSideProps(context: any) {
         },
       },
     ],
-    limit: LIMIT_PAGE,
-    offset: page ? (page - 1) * LIMIT_PAGE : 0,
   };
   const { data } = await axios.get(
-    `${BASE_URL}/topics/${menuId}/articles?filter=${encodeURIComponent(JSON.stringify(filter))}`
+    `${NetworkRequest.BASE_URL}/articles/${params.newsId}?filter=${encodeURIComponent(
+      JSON.stringify(filter)
+    )}`
   );
 
   return {
-    props: { articles: data },
+    props: {
+      data,
+    },
   };
 }

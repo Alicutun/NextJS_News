@@ -1,8 +1,8 @@
 import { createContext } from 'react';
-import { BASE_URL } from '@/common';
+import { NetworkRequest } from '@/common';
 import { Socket, io } from 'socket.io-client';
 
-export const socket = io(`${BASE_URL}`, {
+export const socket = io(`${NetworkRequest.BASE_URL}`, {
   path: '/stream',
   reconnectionDelayMax: 10000,
 });

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React, { useEffect, useState } from 'react';
-import { BASE_URL, IDataArticle, IDetailArticle } from '@/common';
+import { NetworkRequest, IDataArticle, IDetailArticle } from '@/common';
 import axios from 'axios';
 import { format } from 'timeago.js';
 import { Skeleton } from '@mui/material';
@@ -22,7 +22,7 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
   // call get top10 news
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}/articles?filter=${encodeURIComponent(
+      `${NetworkRequest.BASE_URL}/articles?filter=${encodeURIComponent(
         JSON.stringify({
           order: 'clickCount DESC',
           limit: 5,

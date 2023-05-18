@@ -34,7 +34,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
-  console.log('listArticle:', listArticle);
   //
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
@@ -53,13 +52,11 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
 
   return (
     <article>
-      {/* Category */}
       <Stack direction="row" className={classes.box1} padding="10px 0px 10px 10px" columnGap={1}>
         <DoneIcon style={{ color: 'orange' }} />
         <Typography>By most recent | By accuracy</Typography>
       </Stack>
 
-      {/* List article */}
       {listArticle ? (
         listArticles?.length === 0 ? (
           <Typography>No data</Typography>

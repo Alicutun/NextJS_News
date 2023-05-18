@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Grid, Typography, useMediaQuery } from '@mui/material';
-import { AsidePage, ListArticle, TopStory, Advertise, DetailSearch } from '@/components';
-import { useRouter } from 'next/router';
-import axios from 'axios';
 import {
-  BASE_URL,
   IDataSearchAllTopic,
   IDataSearchTotalTopic,
   IPeriod,
   LIMIT_PAGE,
-  LOCALE,
+  NetworkRequest,
 } from '@/common';
+import { Advertise, AsidePage, DetailSearch, ListArticle, TopStory } from '@/components';
+import { Container, Grid, Typography, useMediaQuery } from '@mui/material';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 
 const { SIX_MONTH } = IPeriod;
 
@@ -113,13 +112,13 @@ const Search: React.FC<{
 export default Search;
 
 export async function getServerSideProps(context: any) {
-  const { query } = context;
-  const { text, topicName, period, periodS, periodE, page } = query;
+  const { query, params } = context;
 
-  const searchData = await axios.get(`${BASE_URL}/articles/search`, {
+  const { text, topicName, period, periodS, periodE, page, locale } = query;
+  const searchData = await axios.get(`${NetworkRequest.BASE_URL}/articles/search`, {
     params: {
       text,
-      locale: LOCALE,
+      locale,
       topicName,
       limit: LIMIT_PAGE,
       period: period ?? SIX_MONTH,
@@ -130,10 +129,10 @@ export async function getServerSideProps(context: any) {
   });
 
   const dataSearchAllTopic = searchData.data;
-  const searchTotalData = await axios.get(`${BASE_URL}/articles/search-total`, {
+  const searchTotalData = await axios.get(`${NetworkRequest.BASE_URL}/articles/search-total`, {
     params: {
       text,
-      locale: LOCALE,
+      locale,
       period: period ?? SIX_MONTH,
       periodS,
       periodE,

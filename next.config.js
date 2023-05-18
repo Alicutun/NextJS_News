@@ -13,4 +13,13 @@ module.exports = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/en_US',
+        permanent: false,
+      },
+    ];
+  },
 };

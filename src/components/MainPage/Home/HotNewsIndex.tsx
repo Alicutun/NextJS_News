@@ -100,9 +100,9 @@ export const HotNewsIndex: React.FC<{
             padding="20px"
             className={classes.borderTopBottom}
             onClick={() => {
-              router.push({
-                pathname: '/news/[id]',
-                query: { id: listArticle[0].id },
+              router.replace({
+                pathname: '[locale]/news/[id]',
+                query: { id: listArticle[0].id, locale: router.query.locale },
               });
             }}
           >
@@ -161,9 +161,9 @@ export const HotNewsIndex: React.FC<{
                 xs={w1024 ? 2.4 : w480 ? 6 : 12}
                 key={item.id}
                 onClick={() => {
-                  router.push({
-                    pathname: '/news/[id]',
-                    query: { id: item.id },
+                  router.replace({
+                    pathname: '/[locale]/news/[id]',
+                    query: { id: item.id, locale: router.query.locale },
                   });
                 }}
                 width="100%"

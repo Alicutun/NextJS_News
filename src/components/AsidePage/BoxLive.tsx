@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { makeStyles } from 'tss-react/mui';
-import { BASE_URL, IDataArticle, IDetailArticle } from '@/common';
+import { NetworkRequest, IDataArticle, IDetailArticle } from '@/common';
 import axios from 'axios';
 import { formatTimeToYMD } from '@/utilities';
 import { format } from 'timeago.js';
@@ -75,7 +75,7 @@ export const BoxLive = () => {
   // call get top10 news
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(
-      `${BASE_URL}/articles?filter=${encodeURIComponent(
+      `${NetworkRequest.BASE_URL}/articles?filter=${encodeURIComponent(
         JSON.stringify({
           order: 'clickCount DESC',
           limit: 10,
@@ -121,7 +121,6 @@ export const BoxLive = () => {
               <Stack
                 direction={w1024 ? 'column' : 'row'}
                 alignItems={w1024 ? '' : 'center'}
-                justifyContent="space-between"
                 className={w1024 ? classes.itemBoxLive : classes.itemBoxLiveRes}
               >
                 {/* time */}
@@ -143,7 +142,7 @@ export const BoxLive = () => {
 
                 {/* content */}
                 <Grid container direction="column" justifyContent="flex-start">
-                  <Typography padding={w1024 ? '15px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
+                  <Typography padding={w1024 ? '21px 20px 5px' : '5px 0 0 20px'} fontSize="13px">
                     {summary}
                   </Typography>
                   <Typography
@@ -159,7 +158,7 @@ export const BoxLive = () => {
                 <Box
                   sx={{
                     position: 'relative',
-                    margin: w1024 ? '0 20px' : '0 10px',
+                    margin: w1024 ? '0 20px 5px' : '0 10px',
                     height: w1024 ? '80px' : '63px',
                     width: '140px',
                     border: '1px solid #ced2d7',
