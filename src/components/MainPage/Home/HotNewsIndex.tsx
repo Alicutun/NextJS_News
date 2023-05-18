@@ -89,7 +89,7 @@ export const HotNewsIndex: React.FC<{
             <NavigateNextIcon />
           )}
         </Stack>
-        {/*  */}
+
         {w1024 ? (
           <></>
         ) : (

@@ -44,11 +44,10 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
-  //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w1220 = useMediaQuery('(min-width:1220px)');
-  //
+
   const [text, setText] = useState<string>('');
   const [count, setCount] = useState<number>(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -73,7 +72,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   }, []);
 
   // func count word in comment
-  const handleChange = (e: any) => {
+  const handleChangeWord = (e: any) => {
     const length = e.target.value.toString().length;
     if (length > LIMIT_COMMENT) {
       return;
@@ -205,7 +204,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
               placeholder="댓글 이용 시 클린한 댓글을 입력해 주세요"
               inputProps={{ maxLength: LIMIT_COMMENT }}
               value={text}
-              onChange={handleChange}
+              onChange={handleChangeWord}
             />
           </Grid>
 

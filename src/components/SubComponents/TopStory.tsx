@@ -1,17 +1,16 @@
+import { IDataArticle, IDetailArticle, NetworkRequest } from '@/common';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { Skeleton } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import React, { useEffect, useState } from 'react';
-import { NetworkRequest, IDataArticle, IDetailArticle } from '@/common';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
-import { Skeleton } from '@mui/material';
 
 export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
-  //
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
 
@@ -19,7 +18,6 @@ export const TopStory: React.FC<{ display?: boolean }> = ({ display }) => {
   const [wordData, setWordData] = useState<IDataArticle>();
   const [i, setI] = useState<number>(0);
 
-  // call get top10 news
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(
       `${NetworkRequest.BASE_URL}/articles?filter=${encodeURIComponent(

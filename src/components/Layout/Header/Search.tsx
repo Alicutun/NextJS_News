@@ -25,7 +25,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const Search = () => {
-  //
   const router = useRouter();
 
   const { classes } = useStyles();
@@ -33,7 +32,6 @@ export const Search = () => {
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
 
-  // handle Scroll
   useEffect(() => {
     const handleScroll = () => {
       setFixedSearch(window.scrollY >= 50);
@@ -46,7 +44,6 @@ export const Search = () => {
     };
   });
 
-  // img -> home
   const routePage = () => {
     router.push('/');
   };

@@ -38,11 +38,9 @@ const useStyles = makeStyles()(() => ({
   itemBox: {
     borderBottom: '1px solid #ced2d7',
   },
-
   itemBoxRes: {
     borderTop: '1px solid #eceeef',
   },
-
   boxImg: {
     background: '#f7f7f7',
     border: '1px solid #ced2d7',
@@ -51,7 +49,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const BoxNews: React.FC<{}> = () => {
-  //
   const router = useRouter();
 
   const { classes } = useStyles();
@@ -59,8 +56,8 @@ export const BoxNews: React.FC<{}> = () => {
   const w480 = useMediaQuery('(min-width:480px)');
 
   const [listData, setListData] = useState<IDataArticle[]>([]);
+  console.log('listData:', listData);
 
-  // call get top10 news
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(
       `${NetworkRequest.BASE_URL}/articles?filter=${encodeURIComponent(

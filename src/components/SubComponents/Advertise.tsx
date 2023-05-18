@@ -4,7 +4,6 @@ import Image from 'next/image';
 import React from 'react';
 
 export const Advertise = () => {
-  //
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { IPeriod, ITarget } from '@/common';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import {
   Button,
   Grid,
@@ -10,15 +12,13 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { makeStyles } from 'tss-react/mui';
-import { useRouter } from 'next/router';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { IPeriod, ITarget } from '@/common';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
   selection: {
@@ -34,8 +34,8 @@ const useStyles = makeStyles()(() => ({
   textfield: {
     height: '56px',
     width: '50%',
-    '.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root': {
-      borderRadius: '0px',
+    '& > div': {
+      borderRadius: '0',
     },
   },
   buttonSearch: {
@@ -234,7 +234,9 @@ export const DetailSearch: React.FC<{}> = () => {
           </Grid>
           <Grid item xs={w640 ? 3 : 12} paddingBottom="10px" container alignItems="center">
             <Grid item xs={3} container>
-              <Typography fontSize={12}>Except for the words</Typography>
+              <Typography fontSize={12} textAlign={w640 ? 'center' : 'left'}>
+                Except for the words
+              </Typography>
             </Grid>
             <Grid item xs={9}>
               <TextField fullWidth size="small" />

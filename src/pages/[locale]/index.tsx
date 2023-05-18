@@ -1,4 +1,4 @@
-import { NetworkRequest, IColorTopic, IDataTopic, LIMIT_PAGE } from '@/common';
+import { IColorTopic, IDataTopic, LIMIT_PAGE, NetworkRequest } from '@/common';
 import { HotNewsIndex, TopIndex, TopStory } from '@/components';
 import axios from 'axios';
 
@@ -49,6 +49,7 @@ export async function getServerSideProps(context: any) {
     limit: LIMIT_PAGE,
     offset: page ? (page - 1) * LIMIT_PAGE : 0,
   };
+
   const { data } = await axios.get(
     `${NetworkRequest.BASE_URL}/topics/${3}/articles?filter=${encodeURIComponent(
       JSON.stringify(filter)

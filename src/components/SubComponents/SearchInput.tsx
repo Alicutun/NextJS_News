@@ -4,7 +4,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
 
 export const SearchInput: React.FC<{ onSearch: () => void }> = ({ onSearch }) => {
-  //
   const router = useRouter();
 
   const [searchArticle, setSearchArticle] = useState<any>();
@@ -28,8 +27,8 @@ export const SearchInput: React.FC<{ onSearch: () => void }> = ({ onSearch }) =>
         sx={{
           height: '56px',
           width: '50%',
-          '.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root': {
-            borderRadius: '0px',
+          '& > div': {
+            borderRadius: '0',
           },
         }}
         onKeyUp={(e) => handleSearchEnter(e)}

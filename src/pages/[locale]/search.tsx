@@ -30,12 +30,11 @@ const Search: React.FC<{
   useEffect(() => {
     if (topic) setTotal(topic.total);
     return () => {};
-  }, [router.query]);
+  }, [router.query, topic]);
 
-  // Select Topic
   const handleClickTopic = (topicNameClicked: string) => {
     router.push(
-      `/search?text=${router.query.text}&page=1&topicName=${topicNameClicked}`,
+      `/${router.query.locale}/search?text=${router.query.text}&page=1&topicName=${topicNameClicked}`,
       undefined,
       { scroll: false }
     );
@@ -43,18 +42,11 @@ const Search: React.FC<{
 
   return (
     <Container disableGutters>
-      {/* header_topstory */}
       <TopStory />
-      {/* ad */}
       <Advertise />
-
-      {/* Content */}
       <Grid container columnSpacing={5} mt={w1024 ? '30px' : '20px'}>
-        {/* form big */}
         <Grid item xs={w1024 ? 9 : 12}>
-          {/* search */}
           <DetailSearch />
-
           {/* result */}
           <Grid
             padding={w1220 ? '0 0 0 0' : w1024 ? '0 0 0 20px' : '0 20px 0 20px'}
@@ -112,7 +104,7 @@ const Search: React.FC<{
 export default Search;
 
 export async function getServerSideProps(context: any) {
-  const { query, params } = context;
+  const { query } = context;
 
   const { text, topicName, period, periodS, periodE, page, locale } = query;
   const searchData = await axios.get(`${NetworkRequest.BASE_URL}/articles/search`, {

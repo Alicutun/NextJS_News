@@ -1,8 +1,7 @@
-import React from 'react';
 import { Box, useMediaQuery } from '@mui/material';
-import { BoxNews } from './BoxNews';
-import { BoxLive } from './BoxLive';
 import Image from 'next/image';
+import { BoxLive } from './BoxLive';
+import { BoxNews } from './BoxNews';
 
 export const AsidePage = () => {
   const w1024 = useMediaQuery('(min-width:1024px)');

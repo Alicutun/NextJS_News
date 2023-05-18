@@ -1,5 +1,5 @@
-import { createContext } from 'react';
 import { NetworkRequest } from '@/common';
+import { createContext } from 'react';
 import { Socket, io } from 'socket.io-client';
 
 export const socket = io(`${NetworkRequest.BASE_URL}`, {

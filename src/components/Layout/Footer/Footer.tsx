@@ -2,10 +2,9 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import LinkIcon from '@mui/icons-material/Link';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { Box, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { MenuFooter } from './MenuFooter';
-import Image from 'next/image';
 
 const useStyles = makeStyles()(() => ({
   addressRes: {

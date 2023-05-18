@@ -9,6 +9,7 @@ export const ItemIssue: React.FC<{
   listLink?: string;
 }> = ({ nameBox, colorBackground, listLink }) => {
   const w1024 = useMediaQuery('(min-width:1024px)');
+
   return (
     <Box sx={{ background: `${colorBackground}` }} mb={2}>
       <Grid container height={75} padding="0 20px" border="1px solid rgba(0,0,0,0.1)">

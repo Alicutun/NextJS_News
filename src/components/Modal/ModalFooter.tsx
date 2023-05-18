@@ -1,7 +1,7 @@
+import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 
 export const ModalFooter: React.FC<{

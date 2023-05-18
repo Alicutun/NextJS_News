@@ -19,7 +19,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const SkeletonListArticle = () => {
-  //
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w640 = useMediaQuery('(min-width:640px)');

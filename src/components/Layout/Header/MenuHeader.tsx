@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { IDaTaTopic, NetworkRequest } from '@/common';
+import { ModalSearch } from '@/components/Modal';
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import SearchIcon from '@mui/icons-material/Search';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { makeStyles } from 'tss-react/mui';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import EmailIcon from '@mui/icons-material/Email';
-import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-import { NetworkRequest, IDaTaTopic } from '@/common';
 import { useRouter } from 'next/router';
-import Button from '@mui/material/Button';
-import { ModalSearch } from '@/components/Modal';
+import { useEffect, useState } from 'react';
+import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
   boxMenu: {
@@ -48,17 +48,14 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const MenuHeader = () => {
-  //
   const { classes } = useStyles();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [fixedMenu, setFixedMenu] = useState<boolean>(false);
   const w1220 = useMediaQuery('(min-width:1220px)');
   const w1024 = useMediaQuery('(min-width:1024px)');
 
-  //
   const [listTopics, setListTopics] = useState<IDaTaTopic[]>([]);
 
-  // handle Scroll
   useEffect(() => {
     const handleScroll = () => {
       setFixedMenu(window.scrollY >= 140);
@@ -76,7 +73,7 @@ export const MenuHeader = () => {
   useEffect(() => {
     axios.get(`${NetworkRequest.BASE_URL}/topics`).then((rs) => {
       const { data } = rs;
-      setListTopics(data);
+      setListTopics(data.data);
     });
 
     return () => {};

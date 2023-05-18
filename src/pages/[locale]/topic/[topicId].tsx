@@ -8,11 +8,8 @@ const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
 
   return (
     <Container disableGutters>
-      {/* header_topstory */}
       <TopStory />
-      {/* ad */}
       <Advertise />
-      {/* Content */}
       <Grid container columnSpacing={5} mt={w1024 ? '30px' : '20px'}>
         <Grid item xs={w1024 ? 9 : 12}>
           <ListArticle listArticle={articles.data} total={articles.total} />
@@ -30,6 +27,7 @@ export default Menu;
 export async function getServerSideProps(context: any) {
   const { query } = context;
   const { topicId, page } = query;
+
   const filter = {
     where: {
       status: 'PUBLIC',
@@ -45,6 +43,7 @@ export async function getServerSideProps(context: any) {
     limit: LIMIT_PAGE,
     offset: page ? (page - 1) * LIMIT_PAGE : 0,
   };
+
   const { data } = await axios.get(
     `${NetworkRequest.BASE_URL}/topics/${topicId}/articles?filter=${encodeURIComponent(
       JSON.stringify(filter)

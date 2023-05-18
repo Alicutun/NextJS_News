@@ -1,4 +1,3 @@
-// export const NetworkRequest.BASE_URL = "http://192.168.0.72:3000";
 // export const NetworkRequest.BASE_URL = "http://develop.decenter-be.minimaltek.com/";
 
 export class NetworkRequest {
@@ -13,8 +12,6 @@ export class NetworkRequest {
   //   ARTICLE: this.ARTICLE,
   //   NEWS: this.NEWS,
   // };
-
-  // static readonly PRODUCTION = {};
 }
 
 // export enum RestPaths {

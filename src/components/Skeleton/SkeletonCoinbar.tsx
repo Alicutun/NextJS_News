@@ -18,7 +18,6 @@ const useStyles = makeStyles()(() => ({
     fontSize: '30px',
     color: 'blue',
   },
-
   boxSearchFixed: {
     background: 'white',
     position: 'fixed',
@@ -62,7 +61,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const SkeletonCoinbar = () => {
-  //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w500 = useMediaQuery('(min-width:500px)');

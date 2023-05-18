@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { IDataArticle, IDetailArticle, NetworkRequest } from '@/common';
+import { formatTimeToYMD } from '@/utilities';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { makeStyles } from 'tss-react/mui';
-import { NetworkRequest, IDataArticle, IDetailArticle } from '@/common';
 import axios from 'axios';
-import { formatTimeToYMD } from '@/utilities';
-import { format } from 'timeago.js';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { format } from 'timeago.js';
+import { makeStyles } from 'tss-react/mui';
 const useStyles = makeStyles()(() => ({
   boxLive: {
     marginTop: '10px',
@@ -66,13 +66,11 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const BoxLive = () => {
-  //
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   const [listData, setListData] = useState<IDataArticle[]>([]);
 
-  // call get top10 news
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(
       `${NetworkRequest.BASE_URL}/articles?filter=${encodeURIComponent(

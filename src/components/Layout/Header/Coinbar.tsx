@@ -1,4 +1,7 @@
+import { IDataSocket } from '@/common';
 import { SkeletonCoinbar } from '@/components/Skeleton';
+import { SocketContext } from '@/context';
+import { formatPrice } from '@/utilities';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Box from '@mui/material/Box';
@@ -7,13 +10,10 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import React, { useContext, useEffect, useState } from 'react';
-import { makeStyles } from 'tss-react/mui';
-import { formatPrice } from '@/utilities';
-import Link from 'next/link';
-import { IDataSocket } from '@/common';
-import { SocketContext } from '@/context';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useContext, useState } from 'react';
+import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
   backgroundf2f2f2: {

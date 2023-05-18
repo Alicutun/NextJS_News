@@ -1,8 +1,5 @@
 @import './_color';
 
-@import './components';
-@import './pages';
-
 * {
   box-sizing: border-box;
   padding: 0;
