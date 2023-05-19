@@ -1,5 +1,5 @@
-import { Box, useMediaQuery } from '@mui/material';
-import Image from 'next/image';
+import { useMediaQuery } from '@mui/material';
+import { CustomImage } from '../SubComponents';
 import { BoxLive } from './BoxLive';
 import { BoxNews } from './BoxNews';
 
@@ -8,20 +8,15 @@ export const AsidePage = () => {
 
   return (
     <aside>
-      <Box
-        display={w1024 ? '' : 'none'}
+      <CustomImage
         sx={{
           width: '100%',
           aspectRatio: '1/1',
-          position: 'relative',
+          display: w1024 ? '' : 'none',
         }}
-      >
-        <Image
-          fill
-          src="https://tpc.googlesyndication.com/simgad/6687191721012509281"
-          alt="image 1"
-        />
-      </Box>
+        src="https://tpc.googlesyndication.com/simgad/6687191721012509281"
+        altImage="image 1"
+      />
       <BoxNews />
       <BoxLive />
     </aside>

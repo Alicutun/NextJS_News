@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
+import { CustomImage } from '../SubComponents';
 
 const useStyles = makeStyles()(() => ({
   box: {
@@ -56,7 +57,6 @@ export const BoxNews: React.FC<{}> = () => {
   const w480 = useMediaQuery('(min-width:480px)');
 
   const [listData, setListData] = useState<IDataArticle[]>([]);
-  console.log('listData:', listData);
 
   const fetchListTop10Article = async () => {
     const { data } = await axios.get(

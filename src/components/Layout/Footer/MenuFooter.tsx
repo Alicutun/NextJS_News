@@ -1,7 +1,7 @@
 import { ModalFooter } from '@/components/Modal';
 import { Autocomplete, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import TextField from '@mui/material/TextField';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({

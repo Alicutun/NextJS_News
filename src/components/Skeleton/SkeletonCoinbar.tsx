@@ -5,6 +5,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import Image from 'next/image';
 import React from 'react';
 import { makeStyles } from 'tss-react/mui';
+import { CustomImage } from '../SubComponents/CustomImage';
 
 const useStyles = makeStyles()(() => ({
   backgroundf2f2f2: {
@@ -104,14 +105,12 @@ export const SkeletonCoinbar = () => {
             container
           >
             <Link href="https://www.bithumb.com">
-              <Box sx={{ height: '12px', width: '54px', position: 'relative' }}>
-                <Image
-                  fill
-                  style={{ objectFit: 'contain' }}
-                  src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png"
-                  alt=""
-                />
-              </Box>
+              <CustomImage
+                sx={{ height: '12px', width: '54px', position: 'relative' }}
+                style={{ objectFit: 'contain' }}
+                src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png"
+                altImage=""
+              />
             </Link>
           </Grid>
         </Grid>

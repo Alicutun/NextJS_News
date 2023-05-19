@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { CustomImage } from '@/components/SubComponents';
 
 const useStyles = makeStyles()(() => ({
   boxSearch: {
@@ -75,37 +76,31 @@ export const Search = () => {
             paddingLeft={w1220 ? '' : '20px'}
             sx={{ width: '100%' }}
           >
-            <Box sx={{ position: 'relative', height: '30px' }}>
-              <Image
-                fill
-                style={{ objectFit: 'contain' }}
-                src="https://branchimg.sedaily.com/Decenter/top_verbal.jpg"
-                alt="블록체인의 모든 것, 디센터"
-              />
-            </Box>
+            <CustomImage
+              sx={{ height: '30px' }}
+              style={{ objectFit: 'contain' }}
+              src="https://branchimg.sedaily.com/Decenter/top_verbal.jpg"
+              altImage="블록체인의 모든 것, 디센터"
+            />
           </Box>
         </Stack>
         {/* Search mid */}
-        <Box
-          height={w1024 ? 60 : 27}
-          width="100%"
+        <CustomImage
           sx={{
             position: 'relative',
             cursor: 'pointer',
+            width: '100%',
+            height: w1024 ? 60 : 27,
           }}
-        >
-          <Image
-            fill
-            style={{ objectFit: 'contain' }}
-            src={
-              w1024
-                ? 'https://branchimg.sedaily.com/Decenter/logo2.png'
-                : 'https://branchimg.sedaily.com/Decenter/decenter_m_logo.svg'
-            }
-            alt="Decenter"
-            onClick={routePage}
-          />
-        </Box>
+          style={{ objectFit: 'contain' }}
+          src={
+            w1024
+              ? 'https://branchimg.sedaily.com/Decenter/logo2.png'
+              : 'https://branchimg.sedaily.com/Decenter/decenter_m_logo.svg'
+          }
+          altImage="Decenter"
+          onClick={routePage}
+        />
         {/* Search right */}
         <Stack
           direction="row"

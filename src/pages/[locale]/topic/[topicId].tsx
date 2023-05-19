@@ -27,8 +27,10 @@ export default Menu;
 export async function getServerSideProps(context: any) {
   const { query } = context;
   const { topicId, page } = query;
+  console.log('topicId:', topicId);
 
   const filter = {
+    order: 'publishAt DESC',
     where: {
       status: 'PUBLIC',
     },
@@ -50,6 +52,12 @@ export async function getServerSideProps(context: any) {
     )}`
   );
 
+  console.log(
+    'link url:',
+    `${NetworkRequest.BASE_URL}/topics/${topicId}/articles?filter=${encodeURIComponent(
+      JSON.stringify(filter)
+    )}`
+  );
   return {
     props: { articles: data },
   };

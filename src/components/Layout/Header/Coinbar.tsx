@@ -1,5 +1,6 @@
 import { IDataSocket } from '@/common';
 import { SkeletonCoinbar } from '@/components/Skeleton';
+import { CustomImage } from '@/components/SubComponents';
 import { SocketContext } from '@/context';
 import { formatPrice } from '@/utilities';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -12,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 
 const useStyles = makeStyles()(() => ({
@@ -38,9 +39,14 @@ export const Coinbar = () => {
   const [dataSocket, setDataSocket] = useState<IDataSocket[]>([]);
   const { socket } = useContext(SocketContext);
 
-  socket.on('market-price', (args) => {
-    setDataSocket(args);
-  });
+  useEffect(() => {
+    socket.on('market-price', (args) => {
+      setDataSocket(args);
+    });
+    return () => {
+      socket.off('market-price');
+    };
+  }, [socket]);
 
   return (
     <>
@@ -110,14 +116,12 @@ export const Coinbar = () => {
                 container
               >
                 <Link href="https://www.bithumb.com">
-                  <Box sx={{ height: '12px', width: '54px', position: 'relative' }}>
-                    <Image
-                      fill
-                      style={{ objectFit: 'contain' }}
-                      src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png"
-                      alt=""
-                    />
-                  </Box>
+                  <CustomImage
+                    sx={{ height: '12px', width: '54px', position: 'relative' }}
+                    style={{ objectFit: 'contain' }}
+                    src="https://branchimg.sedaily.com/Decenter/bittumb_pc.png"
+                    altImage=""
+                  />
                 </Link>
               </Grid>
             </Grid>

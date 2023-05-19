@@ -1,4 +1,5 @@
 import { IDataArticle, IDetailArticle } from '@/common';
+import { CustomImage } from '@/components/SubComponents';
 import { Box, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -64,20 +65,19 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
         xs={w1024 ? 7 : 12}
         padding={w1024 ? '' : '0 20px'}
         overflow={w1024 ? 'hidden' : ''}
-        height="100%"
-        sx={{
-          width: '100%',
-          position: 'relative',
-        }}
       >
         {w1024 ? (
-          <Image
-            fill
+          <CustomImage
+            sx={{
+              height: '100%',
+              width: '100%',
+              position: 'relative',
+            }}
             src={
               listArticles[0]?.details?.find((el: IDetailArticle) => el.locale === 'en_US')
                 ?.summaryImage ?? ''
             }
-            alt=""
+            altImage=""
           />
         ) : (
           <Grid container spacing={2}>
@@ -97,15 +97,15 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                   }}
                   width="100%"
                 >
-                  <Box
+                  <CustomImage
                     sx={{
                       width: '100%',
                       position: 'relative',
                       aspectRatio: '16/9',
                     }}
-                  >
-                    <Image fill src={summaryImage ?? ''} alt="" />
-                  </Box>
+                    src={summaryImage}
+                    altImage=""
+                  />
                   <Typography fontSize="15px" color="#333" className={classes.textHeight40}>
                     {summary}
                   </Typography>
@@ -150,15 +150,15 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                   overflow="hidden"
                   display={w1024 ? '' : 'none'}
                 >
-                  <Box
+                  <CustomImage
                     sx={{
                       width: '100%',
                       aspectRatio: '16/9',
                       position: 'relative',
                     }}
-                  >
-                    <Image fill src={summaryImage ?? ''} alt="" />
-                  </Box>
+                    src={summaryImage ?? ''}
+                    altImage=""
+                  />
                 </Grid>
                 <Grid width="100%" item padding={w1024 ? '0 14px' : ''}>
                   <Typography

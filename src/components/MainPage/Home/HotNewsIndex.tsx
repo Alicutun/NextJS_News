@@ -1,4 +1,5 @@
 import { IDataArticle, IDetailArticle } from '@/common';
+import { CustomImage } from '@/components/SubComponents';
 import { formatTimeToYMD } from '@/utilities';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Stack, Typography, useMediaQuery } from '@mui/material';
@@ -129,18 +130,17 @@ export const HotNewsIndex: React.FC<{
                 </Typography>
               </Box>
             </Grid>
-            <Grid
-              item
-              justifyContent="flex-end"
-              xs={3}
-              width="100%"
-              height={w480 ? '120px' : '70px'}
-              sx={{
-                position: 'relative',
-                border: '1px solid #ced2d7',
-              }}
-            >
-              <Image fill style={{ objectFit: 'contain' }} src={summaryImage ?? ''} alt="" />
+            <Grid item justifyContent="flex-end" xs={3}>
+              <CustomImage
+                sx={{
+                  border: '1px solid #ced2d7',
+                  width: '100%',
+                  height: w480 ? '120px' : '70px',
+                }}
+                style={{ objectFit: 'contain' }}
+                src={summaryImage ?? ''}
+                altImage=""
+              />
             </Grid>
           </Grid>
         )}
@@ -189,15 +189,15 @@ export const HotNewsIndex: React.FC<{
                   }
                 >
                   {w1024 ? (
-                    <Box
+                    <CustomImage
                       sx={{
                         width: '100%',
                         aspectRatio: '16/9',
                         position: 'relative',
                       }}
-                    >
-                      <Image fill src={summaryImage ?? ''} alt="" />
-                    </Box>
+                      src={summaryImage}
+                      altImage=""
+                    />
                   ) : (
                     ''
                   )}

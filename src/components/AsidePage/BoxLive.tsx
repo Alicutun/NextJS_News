@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { format } from 'timeago.js';
 import { makeStyles } from 'tss-react/mui';
+import { CustomImage } from '../SubComponents';
 const useStyles = makeStyles()(() => ({
   boxLive: {
     marginTop: '10px',
@@ -96,15 +97,15 @@ export const BoxLive = () => {
         direction="row"
         className={w1024 ? classes.nameBox : classes.nameBoxRes}
       >
-        <Box
+        <CustomImage
           sx={{
             height: '55%',
             aspectRatio: '2/1',
             position: 'relative',
           }}
-        >
-          <Image fill src="https://img.sedaily.com/Html/Special/politics/politics_13.png" alt="" />
-        </Box>
+          src="https://img.sedaily.com/Html/Special/politics/politics_13.png"
+          altImage=""
+        />
         <Typography fontSize="16px" fontWeight="bold">
           Wire
         </Typography>
@@ -152,18 +153,16 @@ export const BoxLive = () => {
                     김지현 기자 {formatTimeToYMD(item.createdAt)} 블록체인
                   </Typography>
                 </Grid>
-                {/* Image */}
-                <Box
+                <CustomImage
                   sx={{
-                    position: 'relative',
                     margin: w1024 ? '0 20px 5px' : '0 10px',
                     height: w1024 ? '80px' : '63px',
                     width: '140px',
                     border: '1px solid #ced2d7',
                   }}
-                >
-                  <Image fill style={{ objectFit: 'contain' }} src={summaryImage ?? ''} alt="" />
-                </Box>
+                  style={{ objectFit: 'contain' }}
+                  src={summaryImage}
+                />
               </Stack>
             </Grid>
           );

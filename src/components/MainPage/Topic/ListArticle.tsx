@@ -34,7 +34,6 @@ const useStyles = makeStyles()(() => ({
 }));
 
 export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
-  //
   const { classes } = useStyles();
   const w1220 = useMediaQuery('(min-width:1220px)');
   const router = useRouter();
@@ -56,7 +55,6 @@ export const ListArticle: React.FC<IListArticle> = ({ listArticle, total }) => {
         <DoneIcon style={{ color: 'orange' }} />
         <Typography>By most recent | By accuracy</Typography>
       </Stack>
-
       {listArticle ? (
         listArticles?.length === 0 ? (
           <Typography>No data</Typography>
