@@ -7,8 +7,7 @@ import { makeStyles } from 'tss-react/mui';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
-import { CustomImage } from '@/components/SubComponents';
+import { CustomImage, SelectLocale } from '@/components';
 
 const useStyles = makeStyles()(() => ({
   boxSearch: {
@@ -87,7 +86,6 @@ export const Search = () => {
         {/* Search mid */}
         <CustomImage
           sx={{
-            position: 'relative',
             cursor: 'pointer',
             width: '100%',
             height: w1024 ? 60 : 27,
@@ -109,6 +107,7 @@ export const Search = () => {
           columnGap={1.5}
           width={150}
         >
+          <SelectLocale />
           <SearchIcon sx={{ fontSize: '35px', display: w1024 ? 'none' : '' }} />
         </Stack>
       </Stack>

@@ -4,6 +4,7 @@ import { Container, Grid, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 
 const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
+  console.log('articles:', articles);
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (
@@ -26,14 +27,14 @@ export default Menu;
 
 export async function getServerSideProps(context: any) {
   const { query } = context;
-  const { topicId, page } = query;
-  console.log('topicId:', topicId);
+  const { topicId, page, locale } = query;
 
   const filter = {
     order: 'publishAt DESC',
-    where: {
-      status: 'PUBLIC',
-    },
+    // where: {
+    //   status: 'PUBLIC',
+    // },
+
     include: [
       {
         relation: 'user',
@@ -49,15 +50,14 @@ export async function getServerSideProps(context: any) {
   const { data } = await axios.get(
     `${NetworkRequest.BASE_URL}/topics/${topicId}/articles?filter=${encodeURIComponent(
       JSON.stringify(filter)
-    )}`
+    )}`,
+    {
+      params: {
+        locale,
+      },
+    }
   );
 
-  console.log(
-    'link url:',
-    `${NetworkRequest.BASE_URL}/topics/${topicId}/articles?filter=${encodeURIComponent(
-      JSON.stringify(filter)
-    )}`
-  );
   return {
     props: { articles: data },
   };

@@ -5,6 +5,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { makeStyles } from 'tss-react/mui';
 import { MenuFooter } from './MenuFooter';
+import { CustomImage } from '@/components/SubComponents';
 
 const useStyles = makeStyles()(() => ({
   addressRes: {
@@ -44,14 +45,15 @@ export const Footer = () => {
           sx={{ background: w1024 ? 'white' : '#303030' }}
           className={w1024 ? '' : classes.addressRes}
         >
-          <img
-            width="155px"
+          <CustomImage
+            sx={{ height: '43px', width: '160px' }}
+            style={{ objectFit: 'contain' }}
             src={
               w1024
                 ? 'https://branchimg.sedaily.com/Decenter/footer_logo.jpg'
                 : 'https://branchimg.sedaily.com/Decenter/m_footer_log.svg'
             }
-            alt=""
+            altImage=""
           />
           <Grid container>
             <Typography>주소 : 서울 종로구 율곡로 6, 비동 14층</Typography>

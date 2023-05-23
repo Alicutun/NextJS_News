@@ -1,15 +1,13 @@
 export interface IDataArticle {
-  clickCount: number;
+  article?: any;
+  articleId: number;
+  content: string;
   createdAt: string;
-  details: IDetailArticle[];
-  modifiedAt: string;
   id: number;
-  jobId: string;
-  publishAt: string;
-  shareCount?: number;
-  status: string;
-  user?: any;
-  userId: number;
+  languageId: number;
+  modifiedAt: string;
+  summary: string;
+  summaryImage: string;
 }
 
 export interface IDetailArticle {

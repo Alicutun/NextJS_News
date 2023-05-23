@@ -3,6 +3,7 @@ import { HotNewsIndex, TopIndex, TopStory } from '@/components';
 import axios from 'axios';
 
 const Index: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
+  console.log('articles:', articles);
   return (
     <section>
       <TopStory display={true} />
@@ -33,19 +34,16 @@ export default Index;
 
 export async function getServerSideProps(context: any) {
   const { query } = context;
-  const { page } = query;
+  const { page, locale } = query;
   const filter = {
-    where: {
-      status: 'PUBLIC',
-    },
-    include: [
-      {
-        relation: 'user',
-        scope: {
-          include: [{ relation: 'profile' }],
-        },
-      },
-    ],
+    // include: [
+    //   {
+    //     relation: 'user',
+    //     scope: {
+    //       include: [{ relation: 'profile' }],
+    //     },
+    //   },
+    // ],
     limit: LIMIT_PAGE,
     offset: page ? (page - 1) * LIMIT_PAGE : 0,
   };
@@ -53,7 +51,12 @@ export async function getServerSideProps(context: any) {
   const { data } = await axios.get(
     `${NetworkRequest.BASE_URL}/topics/${3}/articles?filter=${encodeURIComponent(
       JSON.stringify(filter)
-    )}`
+    )}`,
+    {
+      params: {
+        locale,
+      },
+    }
   );
 
   return {

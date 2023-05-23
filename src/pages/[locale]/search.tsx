@@ -107,6 +107,7 @@ export async function getServerSideProps(context: any) {
   const { query } = context;
 
   const { text, topicName, period, periodS, periodE, page, locale } = query;
+
   const searchData = await axios.get(`${NetworkRequest.BASE_URL}/articles/search`, {
     params: {
       text,
