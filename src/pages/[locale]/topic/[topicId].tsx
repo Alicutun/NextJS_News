@@ -4,7 +4,6 @@ import { Container, Grid, useMediaQuery } from '@mui/material';
 import axios from 'axios';
 
 const Menu: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
-  console.log('articles:', articles);
   const w1024 = useMediaQuery('(min-width:1024px)');
 
   return (

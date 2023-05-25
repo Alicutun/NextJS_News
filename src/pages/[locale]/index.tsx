@@ -3,7 +3,6 @@ import { HotNewsIndex, TopIndex, TopStory } from '@/components';
 import axios from 'axios';
 
 const Index: React.FC<{ articles: IDataTopic }> = ({ articles }) => {
-  console.log('articles:', articles);
   return (
     <section>
       <TopStory display={true} />
@@ -49,7 +48,7 @@ export async function getServerSideProps(context: any) {
   };
 
   const { data } = await axios.get(
-    `${NetworkRequest.BASE_URL}/topics/${3}/articles?filter=${encodeURIComponent(
+    `${NetworkRequest.BASE_URL}/topics/${5}/articles?filter=${encodeURIComponent(
       JSON.stringify(filter)
     )}`,
     {

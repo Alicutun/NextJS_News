@@ -13,6 +13,7 @@ const useStyles = makeStyles()(() => ({
     marginBottom: '50px',
   },
   containerTopIndexRes: {
+    marginBottom: '50px',
     width: '100%',
   },
   itemTopIndex: {
@@ -71,6 +72,7 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
               height: '100%',
               width: '100%',
               position: 'relative',
+              cursor: 'pointer',
             }}
             src={
               listArticles[0]?.summaryImage ??
@@ -92,6 +94,7 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
                   });
                 }}
                 width="100%"
+                sx={{ cursor: 'pointer' }}
               >
                 <CustomImage
                   sx={{
@@ -137,7 +140,11 @@ export const TopIndex: React.FC<{ listArticles: IDataArticle[] }> = ({ listArtic
               });
             }}
           >
-            <Grid className={w1024 ? classes.itemTopIndex : ''} container>
+            <Grid
+              className={w1024 ? classes.itemTopIndex : ''}
+              container
+              sx={{ cursor: 'pointer' }}
+            >
               <Grid
                 item
                 height="120px"

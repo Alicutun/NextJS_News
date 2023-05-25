@@ -13,6 +13,7 @@ import { format } from 'timeago.js';
 import { makeStyles } from 'tss-react/mui';
 import { CustomImage } from '../SubComponents';
 import { useRouter } from 'next/router';
+import { useTrans } from '@/hooks';
 const useStyles = makeStyles()(() => ({
   boxLive: {
     marginTop: '10px',
@@ -73,6 +74,7 @@ export const BoxLive = () => {
 
   const router = useRouter();
   const { locale } = router.query;
+  const trans = useTrans();
 
   const [listData, setListData] = useState<IDataArticle[]>([]);
 
@@ -115,7 +117,7 @@ export const BoxLive = () => {
           altImage=""
         />
         <Typography fontSize="16px" fontWeight="bold">
-          Wire
+          {trans.asidePage.name_Live}
         </Typography>
       </Stack>
 

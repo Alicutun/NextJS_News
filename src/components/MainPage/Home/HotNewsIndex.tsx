@@ -1,11 +1,10 @@
-import { IDataArticle, IDetailArticle } from '@/common';
+import { IDataArticle } from '@/common';
 import { CustomImage } from '@/components/SubComponents';
 import { formatTimeToYMD } from '@/utilities';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Stack, Typography, useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
@@ -53,6 +52,7 @@ export const HotNewsIndex: React.FC<{
 
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
   const [listArticles, setDataListArticles] = useState<IDataArticle[]>([]);
+
   useEffect(() => {
     if (listArticle) {
       setDataListArticles(listArticle);
@@ -103,6 +103,7 @@ export const HotNewsIndex: React.FC<{
                 query: { id: listArticle[0].id, locale: router.query.locale },
               });
             }}
+            sx={{ cursor: 'pointer' }}
           >
             <Grid item xs={9}>
               <Box paddingRight="20px">
@@ -119,11 +120,12 @@ export const HotNewsIndex: React.FC<{
                   fontSize="14px"
                   margin="10px 0"
                   className={classes.textHeight40}
-                >
-                  {listArticles[0]?.content}
-                </Typography>
+                  dangerouslySetInnerHTML={{
+                    __html: listArticles[0]?.content ?? '',
+                  }}
+                />
                 <Typography color="#999" fontSize="12px" display={w480 ? '' : 'none'}>
-                  도예리 기자 yeri.do@ | {formatTimeToYMD(listArticle[0].createdAt)}
+                  도예리 기자 yeri.do@ | {formatTimeToYMD(listArticles[0]?.createdAt)}
                 </Typography>
               </Box>
             </Grid>
@@ -147,9 +149,9 @@ export const HotNewsIndex: React.FC<{
         {/*  */}
         <Grid
           container
-          spacing={w1024 ? 1 : 2}
+          spacing={w1024 ? 1 : 0}
+          columnSpacing={w1024 ? 0 : 2}
           padding={w1024 ? '' : '0 20px'}
-          height={w1024 ? '' : 105}
           overflow={w1024 ? '' : 'hidden'}
         >
           {listArticles?.slice(w1024 ? 0 : 1).map((item) => (
@@ -201,7 +203,7 @@ export const HotNewsIndex: React.FC<{
                 ) : (
                   ''
                 )}
-                <Box padding={w1024 ? '20px 15px' : ''}>
+                <Grid padding={w1024 ? '20px 15px' : ''} sx={{ cursor: 'pointer' }}>
                   <Typography
                     noWrap={w1024 ? false : true}
                     className={w1024 ? classes.text1024 : classes.textRes}
@@ -226,7 +228,7 @@ export const HotNewsIndex: React.FC<{
                   >
                     임진혁 기자 {formatTimeToYMD(item.createdAt)}
                   </Typography>
-                </Box>
+                </Grid>
               </Box>
             </Grid>
           ))}

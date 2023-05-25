@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from 'tss-react/mui';
 import { CustomImage } from '../SubComponents';
+import { useTrans } from '@/hooks';
 
 const useStyles = makeStyles()(() => ({
   box: {
@@ -51,7 +52,7 @@ const useStyles = makeStyles()(() => ({
 
 export const BoxNews: React.FC<{}> = () => {
   const router = useRouter();
-
+  const trans = useTrans();
   const { locale } = router.query;
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
@@ -84,7 +85,7 @@ export const BoxNews: React.FC<{}> = () => {
   return (
     <Box className={w1024 ? classes.box : classes.boxRes}>
       <Typography fontSize={16} className={w1024 ? classes.nameBox : classes.nameBoxRes}>
-        Best click
+        {trans.asidePage.name_BestClick}
       </Typography>
       <Grid container>
         {listData

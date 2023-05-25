@@ -85,4 +85,5 @@ export enum IColorTopic {
 export enum LOCALES {
   US = 'en_US',
   KR = 'ko_KR',
+  VN = 'vi_VN',
 }

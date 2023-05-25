@@ -1,0 +1,12 @@
+{
+  "mainPage": {
+    "topStory": "Top Story",
+    "createdAt": "createdAt",
+    "modifiedAt": "modifiedAt"
+  },
+  "asidePage": {
+    "name_BestClick": "Best click",
+    "name_BestShare": "Most Shared Articles",
+    "name_Live": "Wire"
+  }
+}

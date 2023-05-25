@@ -1,0 +1,12 @@
+{
+  "mainPage": {
+    "topStory": "톱 뉴스",
+    "createdAt": "입력",
+    "modifiedAt": "수정"
+  },
+  "asidePage": {
+    "name_BestClick": "베스트 클릭",
+    "name_BestShare": "가장 많이 공유된 기사",
+    "name_Live": "와이어"
+  }
+}

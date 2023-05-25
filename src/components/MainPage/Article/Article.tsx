@@ -17,6 +17,7 @@ import {
 import { IDataArticle, IDetailArticle, LIMIT_COMMENT } from '@/common';
 import { formatTimeToYMD_HMS } from '@/utilities';
 import Image from 'next/image';
+import { useTrans } from '@/hooks';
 
 const useStyles = makeStyles()(() => ({
   main: {
@@ -47,6 +48,7 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
   const { classes } = useStyles();
   const w1024 = useMediaQuery('(min-width:1024px)');
   const w1220 = useMediaQuery('(min-width:1220px)');
+  const trans = useTrans();
 
   const [text, setText] = useState<string>('');
   const [count, setCount] = useState<number>(0);
@@ -61,13 +63,10 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
     setAnchorEl(null);
   };
 
-  const { summary, content } =
-    dataNews?.details.find((el: IDetailArticle) => el.locale === 'en_US') ?? {};
-
   // fix bug dangerouslySetInnerHTML Error: Hydration failed because the initial UI does not match what was rendered on the server.
   const [dataContent, setDataContent] = useState<any>('');
   useEffect(() => {
-    setDataContent(content);
+    setDataContent(dataNews.content);
     return () => {};
   }, []);
 
@@ -99,12 +98,16 @@ export const Article: React.FC<{ dataNews: IDataArticle }> = ({ dataNews }) => {
       </Box>
       <Grid container direction="column" className={classes.topNews}>
         <Typography marginBottom="10px" variant="h2" fontSize="32px" fontWeight="bold">
-          {summary}
+          {dataNews.summary}
         </Typography>
 
         <Grid item container marginBottom="15px" fontSize={12} gap="32px">
-          <Box>입력 {formatTimeToYMD_HMS(dataNews.createdAt)}</Box>
-          <Box>수정 {formatTimeToYMD_HMS(dataNews.modifiedAt)}</Box>
+          <Box>
+            {trans.mainPage.createdAt} {formatTimeToYMD_HMS(dataNews.createdAt)}
+          </Box>
+          <Box>
+            {trans.mainPage.modifiedAt} {formatTimeToYMD_HMS(dataNews.modifiedAt)}
+          </Box>
           <Box>김정우 기자</Box>
         </Grid>
 
